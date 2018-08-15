@@ -16,7 +16,7 @@ Page({
         "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
         "detailId": "22222222",
         "clickNum": "2366",
-        "title": "abc测试",
+        "title": "abc测试sss",
         "likeNum": "1266"
       },
       "recommendList": [{
