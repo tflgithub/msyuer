@@ -1,0 +1,56 @@
+<!--pages/babyinfo/babyinfo.wxml-->
+<import src="../../res/components/showToast/showToast.wxml" />
+<template is="toast" data="{{..._toast_}}"/>
+<view class="page">
+  <view class="top">
+    <image class="img" src="../../image/ic_note.png" mode='aspectFit'></image>
+    <text class="text">精确的年龄更有助于帮助妈妈准备适合宝宝的辅食喔</text>
+  </view>
+  <view class="label">
+    <image class="img" src='../../image/ic_babyname.png' mode='aspectFit' />
+    <text class="text">宝宝昵称</text>
+  </view>
+  <view class="weui-cell" style='margin-left:48rpx;margin-right:48rpx;'>
+    <input class="weui-input" bindinput='bindInputNickName' maxlength="16" disabled='{{inputDisabled}}' placeholder="填写宝宝昵称" value="{{nickName}}"/>
+  </view>
+
+  <view class="label">
+    <image class="img" src='../../image/ic_babydate.png' mode='aspectFit' />
+    <text class="text">宝宝生日</text>
+  </view>
+  <view class="weui-cell" style='margin-left:48rpx;margin-right:48rpx;'>
+    <input class="weui-input" bindinput='bindInputBorthDay' maxlength='10' disabled='{{inputDisabled}}' value="{{birthDay}}" placeholder="请输入宝宝生日" />
+  </view>
+
+  <view class="label">
+    <image class="img" src='../../image/ic_babygender.png' mode='aspectFit' />
+    <text class="text">宝宝性别</text>
+  </view>
+
+  <radio-group class="sex_radio" bindchange="radioCheckedChange">
+      <view class="sex_item">
+        <block wx:if="{{radioCheckVal!=1}}">
+          <image class="img" src='../../image/ic_babymale_default.png' mode='aspectFit' />
+        </block>
+        <block wx:else>
+          <image class="img" src='../../image/ic_babymale_click.png' mode='aspectFit' />
+        </block>
+        <label class="{{radioCheckVal==1?'active':''}}">男宝宝          <radio value="1" hidden="true"></radio>
+        </label>
+      </view>
+      <view class="sex_item">
+        <block wx:if="{{radioCheckVal==1}}">
+          <image class="img" src='../../image/ic_babyfemale_default.png' mode='aspectFit' />
+        </block>
+        <block wx:else>
+          <image class="img" src='../../image/ic_babyfemale_click.png' mode='aspectFit' />
+        </block>
+        <label class="{{radioCheckVal==2?'active':''}}">女宝宝
+          <radio value="2" hidden="true"></radio>
+        </label>
+      </view>
+  </radio-group>
+  <block wx:if="{{showBtn}}">
+  <button class="btn " bindtap='completed'>完成绑定</button>
+  </block>
+</view>

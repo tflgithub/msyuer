@@ -1,0 +1,28 @@
+<!--pages/classification/classification.wxml-->
+<view class="page">
+  <image class="top" src="../../image/bar.png" />
+  <view class="label">
+    <image class="img" src='../../image/ic_month.png' mode='aspectFit' />
+    <text class="text">宝宝月份选择</text>
+  </view>
+  <view class="month">
+    <navigator class="item" wx:for="{{month}}" wx:for-item="item" url="../infolist/infolist?typeId={{item.value}}">
+      <image class="img" src="{{item.imageUrl}}" />
+      <text class="text">{{item.text}}</text>
+    </navigator>
+  </view>
+
+  <view class="line" />
+
+  <view class="label">
+    <image class="img" src='../../image/ic_classification.png' mode='aspectFit' />
+    <text class="text">辅食选择</text>
+  </view>
+
+  <view class="classification">
+    <navigator class="item" wx:for="{{foods}}" wx:for-item="item" url="../infolist/infolist?foodId={{item.value}}">
+      <image class="img" src="{{item.imageUrl}}" />
+      <text class="text">{{item.text}}</text>
+    </navigator>
+  </view>
+</view>

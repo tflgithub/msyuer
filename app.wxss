@@ -1,0 +1,28 @@
+@import 'style/weui.wxss';
+@import "res/iconfont/iconfont.wxss";
+@import 'res/components/showToast/showToast.wxss';
+
+page{
+    background-color: #FFF;
+    font-size: 16px;
+    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.layout_horizontal{
+  display: flex;
+  /*row 横向  column 列表  */
+  flex-direction: row;
+}
+
+/*纵向布局  */
+.layout_vertical{
+  display: flex;
+  /*row 横向  column 列表  */
+  flex-direction: column;
+}
+
+/*划线  */
+.line {
+   background-color: #E3E3E3;
+   height: 1px;
+   width: 100%; 
+}

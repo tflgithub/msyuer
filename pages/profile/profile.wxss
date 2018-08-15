@@ -1,0 +1,64 @@
+/* pages/profile/profile.wxss */
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  padding: 15rpx;
+  justify-content: space-between;
+  align-items: center;
+  height: 234rpx;
+  background-color: #ffe037;
+}
+
+.userinfo .left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 40rpx;
+  justify-content: flex-start;
+}
+
+.userinfo .avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  margin-right: 66rpx;
+}
+
+.userinfo .nickname {
+  color: #2e2e2e;
+  font-size: 38rpx;
+  font-weight: bold;
+}
+
+.userinfo .mobile {
+  color: #666;
+  font-size: 30rpx;
+}
+
+.badyinfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.babyinfo .img {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 30rpx;
+  margin-right: 10rpx;
+  margin-top: 30rpx;
+}
+
+.babyinfo .text {
+  color: #444;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+.line{
+  height: 1rpx;
+  color: #E3E3E3;
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+}

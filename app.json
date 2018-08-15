@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/bindaccount/bindaccount",
+    "pages/detail/detail",
+    "pages/infolist/infolist",
+    "pages/profile/profile",
+    "pages/classification/classification",
+    "pages/babyinfo/babyinfo"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+     "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "米勺育儿",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor": "#F9D943",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "image/ic_home_default.png",
+        "selectedIconPath": "image/ic_home_click.png"
+      },
+      {
+        "pagePath": "pages/classification/classification",
+        "text": "分类",
+        "iconPath": "image/ic_fenlei_default.png",
+        "selectedIconPath": "image/ic_fenlei_click.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "image/ic_me_default.png",
+        "selectedIconPath": "image/ic_me_click.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 20000,
+    "connectSocket": 20000,
+    "uploadFile": 20000,
+    "downloadFile": 20000
+  }
+}

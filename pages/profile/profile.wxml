@@ -1,0 +1,32 @@
+<view class="page">
+
+  <view class="userinfo">
+    <view class="left">
+      <text class="nickname">{{userInfo.nickName}}</text>
+      <block wx:if="{{setUserInfo}}">
+      <text class="mobile">1234452***</text>
+      </block>
+      <block wx:else>
+      <text class="mobile" bindtap='bindAccount'>立刻去绑定</text>
+      </block>
+    </view>
+    <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+  </view>
+
+  <navigator style='height:120rpx;' url="../babyinfo/babyinfo?type=get" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__hd" style="margin:30rpx;">
+      <image src="../../image/ic_information.png" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
+    </view>
+    <view class="weui-cell__bd">宝宝资料</view>
+    <image style="width:32rpx;32rpx;margin:30rpx" class="weui-cell__ft weui-cell__ft_in-access" />
+  </navigator>
+
+  <navigator style='height:120rpx;' url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__hd" style="margin:30rpx;">
+      <image src="../../image/ic_aboutus.png" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
+    </view>
+    <view class="weui-cell__bd">关于我们</view>
+    <image style="width:32rpx;32rpx;margin:30rpx" class="weui-cell__ft weui-cell__ft_in-access" />
+  </navigator>
+
+</view>

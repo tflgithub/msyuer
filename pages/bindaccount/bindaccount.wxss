@@ -1,0 +1,14 @@
+/* pages/bindaccount/bindaccount.wxss */
+.btn{
+  font-size: 34rpx;
+  margin-bottom: 14rpx;
+  background-color: #F9D943
+}
+
+.btn2{
+  font-size: 44rpx;
+  margin-top:70rpx;
+  margin-left:56rpx;
+  margin-right:56rpx;
+  background-color: #F9D943
+}

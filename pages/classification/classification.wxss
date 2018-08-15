@@ -1,0 +1,94 @@
+/* pages/classification/classification.wxss */
+
+.top {
+  width: 702rpx;
+  height: 350rpx;
+  margin: 24rpx;
+}
+
+.label {
+  display: flex;
+  direction: row;
+  margin-top: 16rpx;
+  margin-left: 54rpx;
+  align-items: center;
+}
+
+.label .img {
+  width: 42rpx;
+  height: 42rpx;
+  margin-right: 10rpx;
+}
+
+.label .text {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #303030;
+}
+
+.month {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  align-items: center;
+  margin-left: 30rpx;
+}
+
+.month .item {
+  display: flex;
+  flex-direction: column;
+  padding-left: 35rpx;
+  padding-right: 35rpx;
+  padding-top:10rpx;
+  padding-bottom: 10rpx;
+  margin-top: 28rpx;
+}
+
+.month .item .img {
+  width: 68rpx;
+  height: 68rpx;
+}
+
+.month .item .text {
+  font-size: 30rpx;
+  color: #555;
+  text-align: center;
+}
+
+.line {
+  background-color: #e3e3e3;
+  height: 1px;
+  width: 100%;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.classification{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: 30rpx;
+}
+
+.classification .item{
+  display: flex;
+  padding-left: 35rpx;
+  padding-right: 35rpx;
+  padding-top:10rpx;
+  padding-bottom: 10rpx;
+  margin-top: 28rpx;
+  flex-direction: column;
+}
+
+.classification .item .img {
+  width: 68rpx;
+  height: 68rpx;
+  align-items: center;
+}
+
+.classification .item .text {
+  font-size: 30rpx;
+  color: #555;
+  text-align: center;
+}

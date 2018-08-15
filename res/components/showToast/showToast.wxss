@@ -1,0 +1,36 @@
+.toast-content-wrap {
+    display: flex;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.toast-content {
+    display: flex;
+    height: 196rpx;
+    width: 360rpx;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.60);
+    border-radius: 8px;
+}
+
+.toast-content .iconfont {
+    font-size: 60rpx;
+}
+
+.toast-content .content-text {
+    font-size: 16px;
+    margin:20rpx;
+}
+
+.toast-loading {
+    width: 90rpx;
+    height: 90rpx;
+}

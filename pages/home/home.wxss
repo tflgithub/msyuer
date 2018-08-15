@@ -1,0 +1,73 @@
+/* pages/home.wxss */
+
+.swiper{
+ margin: 24rpx;
+}
+
+.swiper image {
+  width: 100%;
+  height: auto;
+}
+
+.cell {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  position: relative;
+  justify-items: center;
+  margin-right: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.image {
+  width: 339rpx;
+  height: 440rpx;
+  border-top-left-radius: 8rpx;
+  border-top-right-radius: 8rpx;
+}
+
+.nickname {
+  margin-top: 270rpx;
+  margin-left: 20rpx;
+  float: left;
+  color: #5c5c5c;
+  background: #fff;
+  padding: 10rpx;
+  border-radius: 8rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 24rpx;
+}
+
+.title {
+  float: right;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  bottom: 0;
+  padding: 5rpx;
+  margin-bottom: 15rpx;
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.month-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 18rpx;
+  margin-bottom: 10rpx;
+}
+
+.month-box .img {
+  width: 342rpx;
+  height: 210rpx;
+  border-radius: 8rpx;
+}
+
+.month-box .text {
+  font-size: 30rpx;
+  color: #333;
+}
