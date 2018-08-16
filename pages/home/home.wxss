@@ -1,7 +1,42 @@
 /* pages/home.wxss */
 
-.swiper{
- margin: 24rpx;
+.wrap {
+  height: auto;
+  position: relative;
+}
+
+.swiper {
+  margin: 24rpx;
+}
+
+/*用来包裹所有的小圆点  */
+
+.dots {
+  width: 100%;
+  height: 36rpx;
+  display: flex;
+  flex-direction: row-reverse;
+  right: 30rpx;
+  position: absolute;
+  bottom:0;
+}
+
+/*未选中时的小圆点样式 */
+.dot {
+  width: 6rpx;
+  height: 6rpx;
+  margin-right: 16rpx;
+  background-color:#4c4322;
+  border-radius: 30%;
+  font-size: 26rpx;
+  line-height: 32rpx;
+}
+
+/*选中以后的小圆点样式  */
+.active {
+  width: 26rpx;
+  height: 6rpx;
+  background-color: #4c4322;
 }
 
 .swiper image {
@@ -13,42 +48,42 @@
   display: flex;
   flex-wrap: wrap;
 }
-
+.cell .title{
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #303030;
+}
 .card {
   position: relative;
   justify-items: center;
-  margin-right: 24rpx;
+  margin-left: 16rpx;
+  margin-right: 14rpx;
   margin-bottom: 20rpx;
 }
 
-.image {
-  width: 339rpx;
+.card .image {
+  width: 321rpx;
   height: 440rpx;
   border-top-left-radius: 8rpx;
   border-top-right-radius: 8rpx;
 }
 
-.nickname {
-  margin-top: 270rpx;
-  margin-left: 20rpx;
-  float: left;
+.card .nickname {
+  top: 250rpx;
+  left: 20rpx;
   color: #5c5c5c;
   background: #fff;
   padding: 10rpx;
   border-radius: 8rpx;
   position: absolute;
-  top: 0;
-  left: 0;
   font-size: 24rpx;
 }
 
-.title {
-  float: right;
+.card .title {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  bottom: 0;
-  padding: 5rpx;
-  margin-bottom: 15rpx;
+  bottom: 15rpx;
+  padding: 10rpx;
   color: #fff;
   font-size: 30rpx;
 }
@@ -58,7 +93,6 @@
   flex-direction: column;
   align-items: center;
   margin-right: 18rpx;
-  margin-bottom: 10rpx;
 }
 
 .month-box .img {

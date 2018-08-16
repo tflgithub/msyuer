@@ -12,6 +12,7 @@ Page({
 <p>sfvfdbb&nbsp; &nbsp;</p >
 <p>发送方代表v</p >`,
         "duration": "16.23",
+        "islike":"true",
         "videoUrl": "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400",
         "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
         "detailId": "22222222",
@@ -37,9 +38,9 @@ Page({
         }
       ]
     },
-    showCenterBtn: false,
+    showCenterBtn: true,
     autoPlay: false,
-    showCover: false,
+    showCover: true,
     isWifi: false
   },
   /**
@@ -92,11 +93,15 @@ Page({
     var detailId=this.data.data.detailInfo.detailId;
     console.log(detailId);
     request.like(detailId, function(res) {
-      if (res.data.code === 1) {
-        wx.hideLoading();
-      } else {
-        wx.hideLoading();
-      }
+      request.getVedioDetail(detailId, function (res) {
+        this.setData({
+          data: res.data
+        })
+      }, function (res) {
+
+      })
+    },function(res){
+
     })
   },
   fenxiang: function (e) {

@@ -1,7 +1,7 @@
 // pages/home.js
 const request = require('../../api/request.js');
+const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -9,6 +9,31 @@ Page({
     //bar data
     barItems: [{
         "id": "1",
+        "url": "../../image/ic_banner.png"
+      },
+      {
+        "id": "2",
+        "url": "../../image/ic_banner.png"
+      },
+      {
+        "id": "2",
+        "url": "../../image/ic_banner.png"
+      },
+      {
+        "id": "2",
+        "url": "../../image/ic_banner.png"
+      }, {
+        "id": "2",
+        "url": "../../image/ic_banner.png"
+      },
+      {
+        "id": "2",
+        "url": "../../image/ic_banner.png"
+      }, {
+        "id": "2",
+        "url": "../../image/ic_banner.png"
+      }, {
+        "id": "2",
         "url": "../../image/ic_banner.png"
       },
       {
@@ -23,18 +48,6 @@ Page({
             "note": "为***定制",
             "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
             "detailId": "123",
-            "title": "12个月宝宝的营养辅食妈妈必看"
-          },
-          {
-            "note": "为***定制",
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "234",
-            "title": "12个月宝宝的营养辅食妈妈必看"
-          },
-          {
-            "note": "为***定制",
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "234",
             "title": "12个月宝宝的营养辅食妈妈必看"
           },
           {
@@ -75,7 +88,7 @@ Page({
         }
       ]
     },
-    indicatorDots: true,
+    indicatorDots:false,
     autoplay: true,
     interval: 5000,
     duration: 1000,
@@ -88,9 +101,10 @@ Page({
   },
   /**图片轮播改变 */
   swiperChange(e) {
-    let current = e.detail.current;
+    this.setData({
+      current: e.detail.current
+    })
   },
-
   getMore: function(e) {
     wx.navigateTo({
       url: `../infolist/infolist?typeId=${e.currentTarget.dataset.id}`
@@ -118,7 +132,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    
   },
 
   /**

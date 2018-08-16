@@ -6,11 +6,12 @@
     "pages/infolist/infolist",
     "pages/profile/profile",
     "pages/classification/classification",
-    "pages/babyinfo/babyinfo"
+    "pages/babyinfo/babyinfo",
+    "pages/auth/auth"
   ],
   "window": {
     "backgroundTextStyle": "light",
-     "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "米勺育儿",
     "navigationBarTextStyle": "black"
   },
@@ -42,5 +43,6 @@
     "connectSocket": 20000,
     "uploadFile": 20000,
     "downloadFile": 20000
-  }
+  },
+  "debug":true
 }

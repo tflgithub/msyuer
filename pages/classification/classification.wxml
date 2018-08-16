@@ -6,7 +6,7 @@
     <text class="text">宝宝月份选择</text>
   </view>
   <view class="month">
-    <navigator class="item" wx:for="{{month}}" wx:for-item="item" url="../infolist/infolist?typeId={{item.value}}">
+    <navigator wx:for="{{month}}" wx:for-item="item" class="item" url="../infolist/infolist?typeId={{item.value}}">
       <image class="img" src="{{item.imageUrl}}" />
       <text class="text">{{item.text}}</text>
     </navigator>

@@ -5,7 +5,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10rpx;
 }
 
 .midlle .cell {
@@ -13,7 +12,6 @@
   flex-direction: row;
   margin-left: 30rpx;
   margin-right: 30rpx;
-  justify-content: flex-start;
 }
 
 .midlle .cell .item {

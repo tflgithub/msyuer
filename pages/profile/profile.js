@@ -16,22 +16,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this
-    console.log(app.globalData);
-    that.setData({
-      userInfo: app.globalData.userInfo,
-      setUserInfo: app.globalData.setUserInfo
-    })
+   
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    
   },
-  bindAccount:function()
-  {
+  bindAccount: function() {
     wx.navigateTo({
       url: '../bindaccount/bindaccount',
     })
@@ -40,7 +34,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    var that = this
+    console.log(app.globalData.userInfo)
+    if (app.globalData.userInfo) {
+      that.setData({
+        userInfo: app.globalData.userInfo,
+        setUserInfo: app.globalData.setUserInfo
+      })
+    } else {
+      wx.getUserInfo({
+        success: function (res) {
+          app.globalData.userInfo = res.userInfo
+          that.setData({
+            userInfo: res.userInfo
+          })
+        }
+      })
+    }
   },
 
   /**

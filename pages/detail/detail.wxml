@@ -1,7 +1,7 @@
 <import src="../../wxParse/wxParse.wxml" />
 <view class='pages'>
 
-  <video id="myVideo" src='{{data.detailInfo.videoUrl}}' show-fullscreen-btn='true' poster="{{data.detailInfo.phoUrl}}" autoplay='{{autoPlay}}' show-center-play-btn='{{showCenterBtn}}'>
+  <video id="myVideo" src='{{data.detailInfo.videoUrl}}' objectFit="cover" show-fullscreen-btn='true' poster="{{data.detailInfo.phoUrl}}" autoplay='{{autoPlay}}' show-center-play-btn='{{showCenterBtn}}'>
     <block wx:if="{{showCover}}">
       <cover-image style='height:422rpx' src="{{data.detailInfo.phoUrl}}">
       </cover-image>
@@ -23,7 +23,7 @@
   <view style='margin-left:30rpx;font-weight:bold;font-size:38rpx;'>{{data.detailInfo.title}}</view>
 
   <view class='midlle'>
-    <view class='cell'>
+    <view class='cell' style='margin-bottom:20rpx'>
       <view class='item'>
         <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
         <view class="weui-media-box__info">{{data.detailInfo.clickNum}}</view>
@@ -34,21 +34,28 @@
       </view>
     </view>
     <view class="cell">
-      <button open-type="share" plain='true' style='width:60rpx;height:60rpx;border:none;padding:0;'>
-        <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx;'></image>
+      <button open-type="share" plain='true' style='border:none;'>
+        <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx'></image>
       </button>
-      <image bindtap='dolike' src="../../image/ic_like_default.png" style='width:40rpx;height:40rpx;margin:20rpx' />
+      <button disabled="{{data.detailInfo.islike}}" bindtap='dolike' style='border:none;background-color:white' plain='true'>
+        <block wx:if="{{data.detailInfo.islike}}">
+          <image src="../../image/ic_like_click.png" style='width:40rpx;height:40rpx;' />
+        </block>
+        <block wx:else>
+          <image src="../../image/ic_like_default.png" style='width:40rpx;height:40rpx;' />
+          </block>
+      </button>
     </view>
   </view>
   <view class='line'></view>
   <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>简介</view>
-  <view style='margin:30rpx;color:#666666;font-size:30rpx'>
+  <view style='margin-left:30rpx;margin-top:20rpx;margin-bottom:30rpx;color:#666666;font-size:30rpx'>
     <view class="wxParse">
       <template is="wxParse" data="{{wxParseData:article.nodes}}" />
     </view>
   </view>
   <view class='line'></view>
-  <view style='margin-left:30rpx;margin-top:30rpx;margin-bottom:10rpx;font-weight:bold;font-size:34rpx;'>推荐</view>
+  <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>推荐</view>
 
   <block wx:for="{{data.recommendList}}" wx:for-item="item">
     <view bindtap='gotoDetail' data-id="{{item.detailId}}" class="weui-media-box weui-media-box_appmsg">
