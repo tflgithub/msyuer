@@ -1,10 +1,24 @@
 // pages/classification/classification.js
+const request = require('../../api/request.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    autoplay: true,
+    interval: 5000,
+    duration: 1000,
+    current: 0,
+    barItems: [{
+      "id": "1",
+      "url": "../../image/ic_banner.png"
+    },
+    {
+      "id": "2",
+      "url": "../../image/ic_banner.png"
+    }
+    ],
     month: [{
         imageUrl: '../../image/ic_six.png',
         text: '0-6月',
@@ -90,12 +104,26 @@ Page({
       }
     ]
   },
-
+  /**图片轮播改变 */
+  swiperChange(e) {
+    this.setData({
+      current: e.detail.current
+    })
+  },
+  gotoDetail: function (e) {
+    wx.navigateTo({
+      url: `../detail/detail?id=${e.currentTarget.dataset.id}`
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    request.getHomeBar(function (res) {
+      this.setData({
+        barItems: res.data
+      })
+    }, function (res) { })
   },
 
   /**

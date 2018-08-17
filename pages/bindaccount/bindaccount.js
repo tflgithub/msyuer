@@ -9,22 +9,13 @@ Page({
     msgCode: '',
     getCodeButtonText: '获取验证码',
     disabledGetMsg: true,
-    countryCodes: ["+86", "+80", "+84", "+87"],
-    countryCodeIndex: 0,
-    countries: ["中国", "美国", "英国"],
-    countryIndex: 0,
-  },
-  bindCountryCodeChange: function(e) {
-    this.setData({
-      countryCodeIndex: e.detail.value
-    })
   },
   nextStep: function(event) {
     if (this.data.mobile === '') {
       this.show({
-        imageToast:'',
+        imageToast: '',
         iconToast: 'icon-warning', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: '请输入手机号'
+        textToast: '请输入手机号码'
       })
       return
     }
@@ -38,18 +29,23 @@ Page({
     }
 
     request.vailPassCode(this.data.mobile, this.data.msgCode, function(res) {
-      if (res.data.code === 0) {
+      if (res.flag) {
         wx.navigateTo({
           url: "../babyinfo/babyinfo?mobile=" + this.data.mobile + "&msgCode=" + this.data.msgCode
         });
-      }
-      else{
+      } else {
         this.show({
           imageToast: '',
           iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-          textToast: `${res.data.msg}`
+          textToast: `${res.msg}`
         })
       }
+    }, function(res) {
+      this.show({
+        imageToast: '',
+        iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
+        textToast: `${res.msg}`
+      })
     })
   },
   /**
@@ -64,22 +60,19 @@ Page({
     if (!this.bindCheckMobile(this.data.mobile)) {
       return
     }
-
     request.getPassCode(this.data.mobile, function(res) {
-      if (res.data.code === 0) {
-        this.show({
-          imageToast: '',
-          iconToast: 'icon-dui', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-          textToast: '验证码已发送'
-        })
-        that.countDownPassCode()
-      } else {
-        this.show({
-          imageToast: '',
-          iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-          textToast: `${res.data.msg}`
-        })
-      }
+      this.show({
+        imageToast: '',
+        iconToast: 'icon-dui', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
+        textToast: '验证码已发送'
+      })
+      that.countDownPassCode()
+    }, function(res) {
+      this.show({
+        imageToast: '',
+        iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
+        textToast: `${res.msg}`
+      })
     })
   },
   bindInputMobile: function(e) {

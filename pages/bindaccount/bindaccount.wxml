@@ -1,29 +1,20 @@
 <import src="../../res/components/showToast/showToast.wxml" />
-<template is="toast" data="{{..._toast_}}"/>
+<template is="toast" data="{{..._toast_}}" />
 <view class="page">
   <view style='text-align:center'>
     <image style="width:168rpx;height:168rpx;margin-top:78rpx;" src="../../image/ic_logo.png" />
   </view>
-
   <view style="margin-top:128rpx;margin-left:56rpx;margin-right:56rpx;" class="weui-cell">
-    <view class="weui-cell__hd" style="width: 105px">
-      <picker disabled="true" bindchange="bindCountryCodeChange" value="{{countryCodeIndex}}" range="{{countryCodes}}">
-        <view class="weui-select">{{countryCodes[countryCodeIndex]}}</view>
-      </picker>
-    </view>
-    <view class="weui-cell__bd weui-cell__bd_in-select-before">
-      <input class="weui-input" bindinput='bindInputMobile' placeholder="请填写手机号码" maxlength='11' value='{{mobile}}' />
-    </view>
+    <input class="input" bindinput='bindInputMobile' placeholder="请填写手机号码" maxlength='11' value='{{mobile}}' />
   </view>
-
   <view style="margin-top:70rpx;margin-left:56rpx;margin-right:56rpx;" class="weui-cell weui-cell_input weui-cell_vcode">
     <view class="weui-cell__bd">
-      <input bindinput='bindInputMsgCode' class="weui-input" placeholder="请填写验证码" />
+      <input bindinput='bindInputMsgCode' class="input" placeholder="请填写验证码" />
     </view>
     <view class="weui-cell__ft">
       <button class="btn" disabled='{{disableGetMobileCode}}' bindtap='bindGetPassCode'>{{getCodeButtonText}}</button>
     </view>
-    
+
   </view>
   <button class="btn2" bindtap='nextStep'>下一步</button>
 </view>

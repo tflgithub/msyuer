@@ -11,7 +11,7 @@
     <text class="text">宝宝昵称</text>
   </view>
   <view class="weui-cell" style='margin-left:48rpx;margin-right:48rpx;'>
-    <input class="weui-input" bindinput='bindInputNickName' maxlength="16" disabled='{{inputDisabled}}' placeholder="填写宝宝昵称" value="{{nickName}}"/>
+    <input class="input" bindinput='bindInputNickName' maxlength="16" disabled='{{inputDisabled}}' placeholder="填写宝宝昵称" value="{{nickName}}"/>
   </view>
 
   <view class="label">
@@ -19,7 +19,7 @@
     <text class="text">宝宝生日</text>
   </view>
   <view class="weui-cell" style='margin-left:48rpx;margin-right:48rpx;'>
-    <input class="weui-input" bindinput='bindInputBorthDay' maxlength='10' disabled='{{inputDisabled}}' value="{{birthDay}}" placeholder="请输入宝宝生日" />
+    <input class="input" bindinput='bindInputBorthDay' maxlength='10' disabled='{{inputDisabled}}' value="{{birthDay}}" placeholder="请输入宝宝生日" />
   </view>
 
   <view class="label">
@@ -35,7 +35,7 @@
         <block wx:else>
           <image class="img" src='../../image/ic_babymale_click.png' mode='aspectFit' />
         </block>
-        <label class="{{radioCheckVal==1?'active':''}}">男宝宝          <radio value="1" hidden="true"></radio>
+        <label class="{{radioCheckVal==1?'active':'normal'}}">男宝宝         <radio value="1" hidden="true"></radio>
         </label>
       </view>
       <view class="sex_item">
@@ -45,7 +45,7 @@
         <block wx:else>
           <image class="img" src='../../image/ic_babyfemale_click.png' mode='aspectFit' />
         </block>
-        <label class="{{radioCheckVal==2?'active':''}}">女宝宝
+        <label class="{{radioCheckVal==2?'active':'normal'}}">女宝宝
           <radio value="2" hidden="true"></radio>
         </label>
       </view>

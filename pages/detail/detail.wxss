@@ -22,12 +22,9 @@
 }
 
 .time {
-  float: right;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  margin-left: 220rpx;
-  margin-bottom: 40rpx;
+  bottom: 40rpx;
+  left: 200rpx;
   color: #fff;
   font-size: 28rpx;
 }

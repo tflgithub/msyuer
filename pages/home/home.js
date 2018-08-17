@@ -1,6 +1,5 @@
 // pages/home.js
 const request = require('../../api/request.js');
-const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -9,31 +8,6 @@ Page({
     //bar data
     barItems: [{
         "id": "1",
-        "url": "../../image/ic_banner.png"
-      },
-      {
-        "id": "2",
-        "url": "../../image/ic_banner.png"
-      },
-      {
-        "id": "2",
-        "url": "../../image/ic_banner.png"
-      },
-      {
-        "id": "2",
-        "url": "../../image/ic_banner.png"
-      }, {
-        "id": "2",
-        "url": "../../image/ic_banner.png"
-      },
-      {
-        "id": "2",
-        "url": "../../image/ic_banner.png"
-      }, {
-        "id": "2",
-        "url": "../../image/ic_banner.png"
-      }, {
-        "id": "2",
         "url": "../../image/ic_banner.png"
       },
       {
@@ -48,7 +22,7 @@ Page({
             "note": "为***定制",
             "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
             "detailId": "123",
-            "title": "12个月宝宝的营养辅食妈妈必看"
+            "title": "12个月宝宝的营养辅食"
           },
           {
             "note": "为***定制",
@@ -88,7 +62,6 @@ Page({
         }
       ]
     },
-    indicatorDots:false,
     autoplay: true,
     interval: 5000,
     duration: 1000,

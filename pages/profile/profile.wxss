@@ -50,10 +50,9 @@
   margin-top: 30rpx;
 }
 
-.babyinfo .text {
+.text {
   color: #444;
   font-size: 32rpx;
-  text-align: center;
 }
 
 .line{

@@ -1,14 +1,27 @@
 /* pages/bindaccount/bindaccount.wxss */
-.btn{
+
+.btn {
   font-size: 34rpx;
   margin-bottom: 14rpx;
-  background-color: #F9D943
+  background-color: #f9d943;
 }
 
-.btn2{
+.input {
+  font-size: 32rpx;
+  color: #000;
+  padding-top: 40rpx;
+  padding-bottom: 10rpx;
+}
+
+.select {
+  font-size: 32rpx;
+  color: #000;
+}
+
+.btn2 {
   font-size: 44rpx;
-  margin-top:70rpx;
-  margin-left:56rpx;
-  margin-right:56rpx;
-  background-color: #F9D943
+  margin-top: 70rpx;
+  margin-left: 56rpx;
+  margin-right: 56rpx;
+  background-color: #f9d943;
 }

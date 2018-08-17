@@ -1,28 +1,34 @@
 <view class="page">
-  <image src="{{data.barUrl}}" style="width: {{imageWidth}}px;height:190rpx"/>
-      <navigator wx:for="{{data.items}}" wx:for-item="item" url="../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-          <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
+  <image src="{{data.barUrl}}" style="width: {{imageWidth}}px;height:190rpx" />
+  <navigator wx:for="{{data.items}}" wx:for-item="item" url="../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+      <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
+    </view>
+    <view class="weui-media-box__bd_in-appmsg">
+      <view class="weui-media-box__desc">{{item.title}}
+        <text class="time">{{item.duration}}</text>
+      </view>
+      <view class='cell'>
+        <view class='item'>
+          <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+          <view class="weui-media-box__info">{{item.clickNum}}</view>
         </view>
-        <view class="weui-media-box__bd_in-appmsg">
-          <view class="weui-media-box__desc">{{item.title}}
-            <text class="time">{{item.duration}}</text>
-          </view>
-          <view class='cell'>
-            <view class='item'>
-              <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-              <view class="weui-media-box__info">{{item.clickNum}}</view>
-            </view>
-            <view class="item">
-              <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-              <view class="weui-media-box__info">{{item.likeNum}}</view>
-            </view>
-          </view>
+        <view class="item">
+          <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+          <view class="weui-media-box__info">{{item.likeNum}}</view>
         </view>
-      </navigator>
-
-      <block wx:if="{{!data.haveNext}}">
-      <view class="bottom">没有更多啦~</view>
-      </block>
-
+      </view>
+    </view>
+  </navigator>
+  <block wx:if="{{data.haveNext && showLoading}}">
+    <view class="weui-loadmore">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+  </block>
+  <block wx:if="{{!data.haveNext}}">
+    <view class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了~</view>
+    </view>
+  </block>
 </view>

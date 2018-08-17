@@ -1,49 +1,4 @@
 /* pages/home.wxss */
-
-.wrap {
-  height: auto;
-  position: relative;
-}
-
-.swiper {
-  margin: 24rpx;
-}
-
-/*用来包裹所有的小圆点  */
-
-.dots {
-  width: 100%;
-  height: 36rpx;
-  display: flex;
-  flex-direction: row-reverse;
-  right: 30rpx;
-  position: absolute;
-  bottom:0;
-}
-
-/*未选中时的小圆点样式 */
-.dot {
-  width: 6rpx;
-  height: 6rpx;
-  margin-right: 16rpx;
-  background-color:#4c4322;
-  border-radius: 30%;
-  font-size: 26rpx;
-  line-height: 32rpx;
-}
-
-/*选中以后的小圆点样式  */
-.active {
-  width: 26rpx;
-  height: 6rpx;
-  background-color: #4c4322;
-}
-
-.swiper image {
-  width: 100%;
-  height: auto;
-}
-
 .cell {
   display: flex;
   flex-wrap: wrap;
@@ -55,7 +10,6 @@
 }
 .card {
   position: relative;
-  justify-items: center;
   margin-left: 16rpx;
   margin-right: 14rpx;
   margin-bottom: 20rpx;
@@ -82,7 +36,7 @@
 .card .title {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  bottom: 15rpx;
+  bottom: 10rpx;
   padding: 10rpx;
   color: #fff;
   font-size: 30rpx;

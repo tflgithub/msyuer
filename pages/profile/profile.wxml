@@ -17,16 +17,17 @@
     <view class="weui-cell__hd" style="margin:30rpx;">
       <image src="../../image/ic_information.png" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
     </view>
-    <view class="weui-cell__bd">宝宝资料</view>
-    <image style="width:32rpx;32rpx;margin:30rpx" class="weui-cell__ft weui-cell__ft_in-access" />
+    <view class="weui-cell__bd text">宝宝资料</view>
+    <image src="../../image/ic_jiantou.png" style="width:32rpx;height:32rpx;margin:30rpx;vertical-align: middle" class="weui-cell__ft" />
   </navigator>
 
   <navigator style='height:120rpx;' url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <view class="weui-cell__hd" style="margin:30rpx;">
       <image src="../../image/ic_aboutus.png" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
     </view>
-    <view class="weui-cell__bd">关于我们</view>
-    <image style="width:32rpx;32rpx;margin:30rpx" class="weui-cell__ft weui-cell__ft_in-access" />
+    <view class="weui-cell__bd text">关于我们</view>
+    <image style="width:32rpx;height:32rpx;margin:30rpx"
+    src="../../image/ic_jiantou.png" class="weui-cell__ft" />
   </navigator>
 
 </view>

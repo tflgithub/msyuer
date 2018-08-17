@@ -1,5 +1,4 @@
 /* pages/classification/classification.wxss */
-
 .top {
   width: 702rpx;
   height: 350rpx;

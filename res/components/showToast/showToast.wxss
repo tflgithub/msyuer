@@ -11,7 +11,7 @@
 .toast-content {
     display: flex;
     height: 196rpx;
-    width: 360rpx;
+    width: 250rpx;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -26,11 +26,11 @@
 }
 
 .toast-content .content-text {
-    font-size: 16px;
+    font-size: 26rpx;
     margin:20rpx;
 }
 
 .toast-loading {
-    width: 90rpx;
     height: 90rpx;
+    width: 90rpx;
 }

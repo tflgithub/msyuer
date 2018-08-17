@@ -4,19 +4,18 @@
 
 page{
     background-color: #FFF;
-    font-size: 16px;
     font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
+/**横向布局
+*/
 .layout_horizontal{
   display: flex;
-  /*row 横向  column 列表  */
   flex-direction: row;
 }
 
 /*纵向布局  */
 .layout_vertical{
   display: flex;
-  /*row 横向  column 列表  */
   flex-direction: column;
 }
 
@@ -25,4 +24,47 @@ page{
    background-color: #E3E3E3;
    height: 1px;
    width: 100%; 
+}
+
+/**轮播图样式**/
+.wrap {
+  height: auto;
+  position: relative;
+}
+
+.swiper {
+  margin: 24rpx;
+}
+
+/*用来包裹所有的小圆点  */
+.dots {
+  width: 100%;
+  height: 36rpx;
+  display: flex;
+  flex-direction: row-reverse;
+  right: 30rpx;
+  position: absolute;
+  bottom:0;
+}
+
+/*未选中时的小圆点样式 */
+.dot {
+  width: 6rpx;
+  height: 6rpx;
+  margin-right: 16rpx;
+  background-color:#4c4322;
+  font-size: 26rpx;
+  line-height: 32rpx;
+}
+
+/*选中以后的小圆点样式  */
+.active {
+  width: 26rpx;
+  height: 6rpx;
+  background-color: #4c4322;
+}
+
+.swiper image {
+  width: 100%;
+  height: auto;
 }

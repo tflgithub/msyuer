@@ -6,6 +6,7 @@ Page({
    */
   data: {
     imageWidth: wx.getSystemInfoSync().windowWidth, //图片宽度
+    showLoading: false,
     typeId: [],
     foods: [],
     moment: [],
@@ -101,7 +102,7 @@ Page({
           "likeNum": "1266"
         },
       ],
-      "haveNext": true
+      "haveNext": false
     }
   },
 
@@ -113,7 +114,7 @@ Page({
     console.log(options.foodId);
     this.setData({
       typeId: [options.typeId],
-      foods:[options.foodId]
+      foods: [options.foodId]
     })
     wx.setNavigationBarTitle({
       title: this.data.data.barTitle,
@@ -180,16 +181,20 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    var that = this;
+    var that = this
+    this.showLoading=true
     request.getVedioList(this.data.typeId, this.data.foods, this.data.data.lastTimeStamp, 10, function(res) {
       var moment_list = that.data.moment;
       for (var i = 0; i < res.data.items.length; i++) {
         moment_list.push(res.data.items[i]);
       }
+      this.showLoading=false;
       // 设置数据
       that.setData({
-        moment: that.data.moment
+        moment: that.data.moment,
       })
+    }, function(res) {
+      this.showLoading = false;
     })
   },
 
