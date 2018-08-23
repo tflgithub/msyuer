@@ -1,21 +1,39 @@
 const app = getApp()
 //公共请求方法  仅支持post
 function request(obj) {
-  if (!app.globalData.token) {
-    login()
+  if (app.globalData.netWorkType === 'none') {
+    wx.showToast({
+      title: '无网络连接',
+      icon: 'none'
+    })
     return
   }
-  console.log("服务器token:" + app.globalData.token);
+  checkLoginStatus(obj);
+}
+
+//检查登录状态
+function checkLoginStatus(obj) {
+  app.getLoginStatus(function(res) {
+    console.log("获取token:" + res.data.token)
+    console.log("获取绑定状态:" + res.data.setUserInfo)
+    app.globalData.setUserInfo = res.data.setUserInfo
+    obj.token = res.data.token
+    doRequest(obj)
+  }, function(res) {
+    console.log("获取登录状态失败，重新登录")
+    relogin()
+  })
+}
+
+//发起服务器请求
+function doRequest(obj) {
+  console.log("实际请求token:" + obj.token)
   console.log("请求地址:" + obj.url)
   console.log("请求参数:" + JSON.stringify(obj.data))
   var header = obj.header || {}
-  if (!header['content-type']) {
-    header['content-type'] = 'application/json'
-  }
-  if (!header['ms-token']) {
-    header['ms-token'] = app.globalData.token
-  }
-  if (obj.message != "") {
+  header['content-type'] = 'application/json'
+  header['ms-token'] = obj.token
+  if (obj.message) {
     wx.showLoading({
       title: obj.message,
       mask: true
@@ -27,14 +45,17 @@ function request(obj) {
     method: 'post',
     header: header,
     success: function(res) {
-      if (obj.message != "") {
+      if (obj.message) {
         wx.hideLoading()
       }
-      if (res.data.code === 0) {
+      if (res.data.code === 403) {
+        console.log("token失效：" + JSON.stringify(res.data))
+        relogin()
+      } else if (res.data.code === 0) {
         console.log("响应报文：" + JSON.stringify(res.data))
         obj.success(res.data)
       } else {
-        console.log("请求失败：" + JSON.stringify(res.data.msg))
+        console.log("请求失败返回：" + JSON.stringify(res))
         obj.fail(res.data.msg)
       }
     },
@@ -50,7 +71,7 @@ function request(obj) {
   })
 }
 
-function login() {
+function relogin() {
   wx.login({
     success: function(res) {
       if (res.code) {
@@ -62,12 +83,24 @@ function login() {
             code: res.code
           },
           success: function(res) {
+            console.log("登录：" + JSON.stringify(res))
             if (res.data.code === 0) {
-              app.globalData.token = res.data.token;
-              app.globalData.setUserInfo = res.data.setUserInfo;
+              wx.clearStorage();
+              wx.setStorage({
+                key: 'loginStatus',
+                data: res.data.data,
+                success: function(res) {
+                  getCurrentPages()[getCurrentPages().length - 1].onLoad()
+                },
+                fail: function(res) {
+                  console.log("保存登录状态失败：" + JSON.stringify(res))
+                }
+              })
             }
           },
-          fail: function(res) {}
+          fail: function(res) {
+            console.log("登录失败：" + JSON.stringify(res))
+          }
         })
       } else {
         console.log('登录失败！' + res.errMsg)
@@ -166,7 +199,7 @@ export function getHomeVedio(resolve, reject) {
  * 获取视频列表
  */
 export function getVedioList(st, mt, nextPage, pageSize, resolve, reject) {
-  var message = ""
+  var message = null
   if (nextPage === 0) {
     message = "正在加载..."
   }
@@ -209,6 +242,15 @@ export function like(id, resolve, reject) {
     data: {
       detailId: id
     },
+    success: resolve,
+    fail: reject
+  })
+}
+
+export function getUserInfo(resolve, reject) {
+  request({
+    message: "正在加载",
+    url: `${app.globalData.API_URL}/api/wxa/v1/user/getUserInfo`,
     success: resolve,
     fail: reject
   })

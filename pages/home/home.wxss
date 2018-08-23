@@ -1,13 +1,16 @@
 /* pages/home.wxss */
+
 .cell {
   display: flex;
   flex-wrap: wrap;
 }
-.cell .title{
+
+.cell .title {
   font-size: 34rpx;
   font-weight: bold;
   color: #303030;
 }
+
 .card {
   position: relative;
   margin-left: 16rpx;
@@ -36,7 +39,12 @@
 .card .title {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  bottom: 10rpx;
+  width: 100%;
+  bottom: 15rpx;
+  overflow-wrap: break-word;
+}
+
+.card .title .text {
   padding: 10rpx;
   color: #fff;
   font-size: 30rpx;

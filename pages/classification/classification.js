@@ -10,97 +10,89 @@ Page({
     interval: 5000,
     duration: 1000,
     current: 0,
-    barItems: [{
-      "id": "1",
-      "url": "../../image/ic_banner.png"
-    },
-    {
-      "id": "2",
-      "url": "../../image/ic_banner.png"
-    }
-    ],
+    barItems: [],
     month: [{
         imageUrl: '../../image/ic_six.png',
         text: '0-6月',
-        value: '6'
+        value: '8'
       },
       {
         imageUrl: '../../image/ic_seven.png',
         text: '7月',
-        value: '7'
+        value: '9'
       },
       {
         imageUrl: '../../image/ic_eight.png',
         text: '8月',
-        value: '6'
+        value: '10'
       },
       {
         imageUrl: '../../image/ic_nine.png',
         text: '9月',
-        value: '9'
+        value: '11'
       },
       {
         imageUrl: '../../image/ic_ten.png',
         text: '10月',
-        value: '10'
+        value: '12'
       }, {
         imageUrl: '../../image/ic_eleven.png',
         text: '11月',
-        value: '11'
+        value: '13'
       }, {
         imageUrl: '../../image/ic_twelve.png',
         text: '12月',
-        value: '12'
+        value: '14'
       },
       {
         imageUrl: '../../image/ic_eighteen.png',
         text: '18月',
-        value: '18'
+        value: '15'
       },
       {
         imageUrl: '../../image/ic_twenty_four.png',
         text: '24月',
-        value: '24'
+        value: '16'
       }
     ],
     foods: [{
         imageUrl: '../../image/ic_steamed.png',
         text: '蒸',
-        value: 'zheng'
+        value: '5'
       },
       {
         imageUrl: '../../image/ic_boil.png',
         text: '煮',
-        value: 'zhu'
+        value: '6'
       },
       {
         imageUrl: '../../image/ic_porridge.png',
         text: '粥',
-        value: 'zhou'
+        value: '7'
       },
       {
         imageUrl: '../../image/ic_noodles.png',
         text: '面',
-        value: 'mian'
+        value: '8'
       },
       {
         imageUrl: '../../image/ic_friut.png',
-        text: '果蔬',
-        value: 'guoshu'
+        text: '果蔬泥',
+        value: '9'
       }, {
         imageUrl: '../../image/ic_egg.png',
-        text: '肉蛋',
-        value: 'egg'
+        text: '肉/蛋泥',
+        value: '10'
       },
       {
         imageUrl: '../../image/ic_bake.png',
         text: '烘焙',
-        value: 'hongbei'
+        value: '11'
       },
       {
         imageUrl: '../../image/ic_gril.png',
         text: '煎炸',
-        value: 'jianzha'
+        value: '12'
       }
     ]
   },
@@ -110,20 +102,33 @@ Page({
       current: e.detail.current
     })
   },
-  gotoDetail: function (e) {
-    wx.navigateTo({
-      url: `../detail/detail?id=${e.currentTarget.dataset.id}`
-    })
+  gotoDetail: function(e) {
+    var item = e.currentTarget.dataset.id;
+    console.log(JSON.stringify(item))
+    if (item.type === "2") {
+      wx.navigateTo({
+        url: `../detail/detail?id=${item.id}`
+      })
+    } else if (item.type === "1") {
+      wx.navigateTo({
+        url: `../infolist/infolist?typeId=${item.id}`
+      })
+    } else {
+      wx.navigateTo({
+        url: `../infolist/infolist?foodId=${item.id}`
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    request.getHomeBar(function (res) {
-      this.setData({
+    var that = this;
+    request.getHomeBar(function(res) {
+      that.setData({
         barItems: res.data
       })
-    }, function (res) { })
+    }, function(res) {})
   },
 
   /**

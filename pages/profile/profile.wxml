@@ -3,8 +3,8 @@
   <view class="userinfo">
     <view class="left">
       <text class="nickname">{{userInfo.nickName}}</text>
-      <block wx:if="{{setUserInfo}}">
-      <text class="mobile">1234452***</text>
+      <block wx:if="{{isBindMobile}}">
+      <text class="mobile">{{mobile}}</text>
       </block>
       <block wx:else>
       <text class="mobile" bindtap='bindAccount'>立刻去绑定</text>
@@ -13,7 +13,7 @@
     <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
   </view>
 
-  <navigator style='height:120rpx;' url="../babyinfo/babyinfo?type=get" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+  <navigator wx:if="{{isBindMobile}}" style='height:120rpx;' url="../babyinfo/babyinfo?type=get" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <view class="weui-cell__hd" style="margin:30rpx;">
       <image src="../../image/ic_information.png" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
     </view>

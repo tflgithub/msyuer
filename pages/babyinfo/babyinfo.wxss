@@ -79,7 +79,9 @@
 }
 
 .sex_item label {
-  width: 50%;
+  width: 100%;
+  height:100%;
+  background-color: white;
 }
 
 .sex_item label.active {

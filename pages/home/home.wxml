@@ -1,9 +1,9 @@
 <view class="page">
   <view class="wrap">
-    <swiper style="height:350rpx;margin-left:24rpx" bindchange="swiperChange" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <swiper style="height:350rpx;margin-left:24rpx;margin-right:24rpx" bindchange="swiperChange" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{barItems}}" wx:for-item="item" wx:key="id">
         <swiper-item>
-          <image src="{{item.url}}" style='width:100%;height:100%' bindtap='gotoDetail' data-id="{{item.id}}" />
+          <image src="{{item.url}}" style='width:100%;height:100%;border-radius:18rpx' bindtap='gotoDetail' data-id="{{item}}" />
         </swiper-item>
       </block>
     </swiper>
@@ -14,7 +14,9 @@
       </block>
     </view>
   </view>
-  <view class="line " style='margin-top:20rpx' />
+ 
+  <block wx:if="{{mainItem.todayRecommend.items}}">
+   <view class="line " style='margin-top:20rpx' />
   <view class="cell" style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;'>
     <image src="../../image/ic_recommended.png" style="width:42rpx;height:42rpx;margin-right:10rpx " />
     <view class='title'>{{mainItem.todayRecommend.title}}</view>
@@ -22,31 +24,41 @@
 
   <view class="cell" style='margin-left:24rpx;margin-top:18rpx;'>
     <view class="card" wx:for="{{mainItem.todayRecommend.items}}" wx:for-item="item" wx:key="id">
-      <view bindtap="gotoDetail" data-id="{{item.detailId}}">
-        <image class="image" src="{{item.phoUrl}}" />
+      <view bindtap="goPlay" data-id="{{item.detailId}}">
+        <image class="image" src="{{item.phoUrl}}"  />
         <block wx:if="{{item.note}}">
-          <text class="nickname">{{item.note}}</text>
+          <text class="nickname">为{{item.note}}定制</text>
         </block>
-        <view class="title ">{{item.title}}</view>
+        <view class="title">
+        <view class="text">
+        {{item.title}}
+        </view>
+        </view>
       </view>
     </view>
   </view>
-  <view class="line" />
-  <view class="vertical_layout" wx:for="{{mainItem.list}}" wx:for-item="item" wx:key="typeId">
+  </block>
+  
+  <block wx:if="{{mainItem.lists}}">
+  <view class="line" style='margin-top:20rpx'/>
+  <view class="vertical_layout" wx:for="{{mainItem.lists}}" wx:for-item="item" wx:key="typeId">
+  <block  wx:if="{{item.items.length>0}}">
     <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
       <image src="../../image/ic_month.png " style="width:35rpx; height:35rpx;margin-top:10rpx;margin-right:15rpx" />
       <view class="weui-cell__bd title">{{item.title}}</view>
       <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' bindtap='getMore' data-id="{{item.typeId}}" />
     </view>
-
+  
     <view class="cell" style="margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;">
       <view class="cell" wx:for="{{item.items}}" wx:for-item="item" wx:key="detailId">
-        <view class="month-box" bindtap="gotoDetail" data-id="{{item.detailId}}">
-          <image class="img" src="{{item.phoUrl}}" />
+        <view class="month-box" bindtap="goPlay" data-id="{{item.detailId}}">
+          <image  class="img" src="{{item.phoUrl}}" />
           <text class="text ">{{item.title}}</text>
         </view>
       </view>
     </view>
+    </block>
   </view>
-
+  
+</block>
 </view>

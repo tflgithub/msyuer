@@ -7,121 +7,42 @@ Page({
   data: {
     imageWidth: wx.getSystemInfoSync().windowWidth, //图片宽度
     showLoading: false,
+    showNoMore: false,
+    items: [],
     typeId: [],
-    foods: [],
-    moment: [],
-    data: {
-      "lastTimeStamp": 1533805768335,
-      "barUrl": "../../image/list_bar.png",
-      "barTitle": "测试bar Title",
-      "items": [{
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        }, {
-          "duration": "04:30",
-          "phoUrl": "../../image/list_bar.png",
-          "detailId": "234rrfgeh920",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-      ],
-      "haveNext": false
-    }
+    foodId: [],
+    data: {},
+    pageSize: 10,
+    showTip: '正在加载...'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options.typeId);
-    console.log(options.foodId);
-    this.setData({
-      typeId: [options.typeId],
-      foods: [options.foodId]
-    })
-    wx.setNavigationBarTitle({
-      title: this.data.data.barTitle,
-    })
-    request.getVedioList(this.data.typeId, this.data.foods, 0, 10, function(res) {
-      this.setData({
-        data: res.data
+    console.log("月份:" + options.typeId);
+    console.log("辅食:" + options.foodId);
+    if (options.typeId) {
+      this.data.typeId = [options.typeId]
+    }
+    if (options.foodId) {
+      this.data.foodId = [options.foodId]
+    }
+    var that = this;
+    request.getVedioList(this.data.typeId, this.data.foodId, 0, this.data.pageSize, function(res) {
+      if (res.data.barTitle) {
+        wx.setNavigationBarTitle({
+          title: res.data.barTitle,
+        })
+      }
+      if (res.data.items.length === 0) {
+        that.setData({
+          showTip: '暂无数据'
+        })
+      }
+      that.setData({
+        data: res.data,
+        items: res.data.items
       })
     }, function(res) {
 
@@ -160,15 +81,13 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    var that = this;
+    var that = this
+    that.data.showNoMore = false
     wx.showNavigationBarLoading();
-    request.getVedioList(this.data.typeId, this.data.foods, this.data.data.lastTimeStamp, 10, function(res) {
+    request.getVedioList(this.data.typeId, this.data.foodId, 0, this.data.pageSize, function(res) {
       that.setData({
-        moment: res.data
-      });
-      // 设置数组元素
-      that.setData({
-        moment: that.data.moment
+        data: res.data,
+        items: res.data.items
       });
       // 隐藏导航栏加载框
       wx.hideNavigationBarLoading();
@@ -182,20 +101,26 @@ Page({
    */
   onReachBottom: function() {
     var that = this
-    this.showLoading=true
-    request.getVedioList(this.data.typeId, this.data.foods, this.data.data.lastTimeStamp, 10, function(res) {
-      var moment_list = that.data.moment;
-      for (var i = 0; i < res.data.items.length; i++) {
-        moment_list.push(res.data.items[i]);
-      }
-      this.showLoading=false;
-      // 设置数据
-      that.setData({
-        moment: that.data.moment,
+    if (!that.data.showNoMore && that.data.data.haveNext) {
+      this.showLoading = true
+      request.getVedioList(this.data.typeId, this.data.foodId, this.data.data.lastTimeStamp, this.data.pageSize, function(res) {
+        that.showLoading = false
+        var list = that.data.items;
+        if (res.data.items.length > 0) {
+          list = list.concat(res.data.items);
+        }
+        that.setData({
+          items: list,
+          data: res.data
+        })
+      }, function(res) {
+        that.showLoading = false
       })
-    }, function(res) {
-      this.showLoading = false;
-    })
+    } else {
+      that.setData({
+        showNoMore: true
+      })
+    }
   },
 
   /**

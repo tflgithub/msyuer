@@ -1,73 +1,37 @@
 // pages/home.js
 const request = require('../../api/request.js');
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     //bar data
-    barItems: [{
-        "id": "1",
-        "url": "../../image/ic_banner.png"
-      },
-      {
-        "id": "2",
-        "url": "../../image/ic_banner.png"
-      }
-    ],
-    mainItem: {
-      "todayRecommend": {
-        "title": "今日推荐",
-        "items": [{
-            "note": "为***定制",
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "123",
-            "title": "12个月宝宝的营养辅食"
-          },
-          {
-            "note": "为***定制",
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "234",
-            "title": "12个月宝宝的营养辅食妈妈必看"
-          }
-        ]
-      },
-      list: [{
-          "typeId": "9",
-          "title": "9月哺食",
-          "type": "1",
-          "items": [{
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "234rrfgfh900",
-            "title": "abc测试"
-          }, {
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "234rrfgfh900",
-            "title": "abc测试"
-          }]
-        },
-        {
-          "typeId": "6",
-          "title": "6月哺食",
-          "type": "1",
-          "items": [{
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "234rrfgfh900",
-            "title": "abc测试"
-          }, {
-            "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-            "detailId": "234rrfgfh900",
-            "title": "abc测试"
-          }]
-        }
-      ]
-    },
+    barItems: [],
+    mainItem: {},
     autoplay: true,
     interval: 5000,
     duration: 1000,
     current: 0
   },
   gotoDetail: function(e) {
+    var item = e.currentTarget.dataset.id;
+    console.log(JSON.stringify(item))
+    if (item.type === "2") {
+      wx.navigateTo({
+        url: `../detail/detail?id=${item.id}`
+      })
+    } else if (item.type === "1") {
+      wx.navigateTo({
+        url: `../infolist/infolist?typeId=${item.id}`
+      })
+    } else {
+      wx.navigateTo({
+        url: `../infolist/infolist?foodId=${item.id}`
+      })
+    }
+  },
+  goPlay: function(e) {
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.id}`
     })
@@ -88,16 +52,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    request.getHomeBar(function(res) {
-      this.setData({
+    var that = this;
+    request.getHomeBar(function (res) {
+      console.log(JSON.stringify(res));
+      that.setData({
         barItems: res.data
       })
-    }, function(res) {})
-    request.getHomeVedio(function(res) {
-      this.setData({
+    }, function (res) { })
+    request.getHomeVedio(function (res) {
+      that.setData({
         mainItem: res.data
       })
-    }, function(res) {
+    }, function (res) {
 
     })
   },
@@ -105,7 +71,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    
+
   },
 
   /**

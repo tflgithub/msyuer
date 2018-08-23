@@ -9,7 +9,7 @@
   </view>
   <view style="margin-top:70rpx;margin-left:56rpx;margin-right:56rpx;" class="weui-cell weui-cell_input weui-cell_vcode">
     <view class="weui-cell__bd">
-      <input bindinput='bindInputMsgCode' class="input" placeholder="请填写验证码" />
+      <input bindinput='bindInputMsgCode' class="input" placeholder="请填写验证码" value='{{msgCode}}'/>
     </view>
     <view class="weui-cell__ft">
       <button class="btn" disabled='{{disableGetMobileCode}}' bindtap='bindGetPassCode'>{{getCodeButtonText}}</button>

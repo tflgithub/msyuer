@@ -1,6 +1,16 @@
-<view class="page">
-  <image src="{{data.barUrl}}" style="width: {{imageWidth}}px;height:190rpx" />
-  <navigator wx:for="{{data.items}}" wx:for-item="item" url="../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+<view class="page" wx:if="{{data}}">
+  <block wx:if="{{data.barUrl}}">
+    <image src="{{data.barUrl}}" style="width: {{imageWidth}}px;height:190rpx" />
+  </block>
+  <block wx:else>
+  <view></view>
+  </block>
+  <block wx:if="{{items.length===0}}">
+    <view class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">{{showTip}}</view>
+    </view>
+  </block>
+  <navigator wx:for="{{items}}" wx:for-item="item" url="../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
       <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
     </view>
@@ -20,15 +30,15 @@
       </view>
     </view>
   </navigator>
-  <block wx:if="{{data.haveNext && showLoading}}">
+  <block wx:if="{{showLoading}}">
     <view class="weui-loadmore">
       <view class="weui-loading"></view>
       <view class="weui-loadmore__tips">正在加载</view>
     </view>
   </block>
-  <block wx:if="{{!data.haveNext}}">
+  <block wx:if="{{showNoMore}}">
     <view class="weui-loadmore weui-loadmore_line">
-      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了~</view>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
     </view>
   </block>
 </view>

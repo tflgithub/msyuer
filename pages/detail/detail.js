@@ -6,38 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    data: {
-      "detailInfo": {
-        "summary": `<p>efesgvfv</p >
-<p>sfvfdbb&nbsp; &nbsp;</p >
-<p>发送方代表v</p >`,
-        "duration": "16.23",
-        "islike":"true",
-        "videoUrl": "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400",
-        "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-        "detailId": "22222222",
-        "clickNum": "2366",
-        "title": "abc测试sss",
-        "likeNum": "1266"
-      },
-      "recommendList": [{
-          "duration": "04:30",
-          "phoUrl": "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
-          "detailId": "22222222",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        },
-        {
-          "duration": "04:30",
-          "phoUrl": "../../image/bar.png",
-          "detailId": "22222222",
-          "clickNum": "2366",
-          "title": "abc测试",
-          "likeNum": "1266"
-        }
-      ]
-    },
+    data: {},
+    likeNum:'',
+    hadLike:false,
     showCenterBtn: true,
     autoPlay: false,
     showCover: true,
@@ -48,27 +19,30 @@ Page({
    */
   onLoad: function(options) {
     let app = getApp()
+    var that = this;
     console.log("当前网络:" + app.globalData.netWorkType)
-    if (app.globalData.netWorkType === 'wifi') {
+    if (app.globalData.setUserInfo=== 1) {
       this.setData({
-        isWifi: true
-      })
-    }
-    if (app.globalData.setUserInfo) {
-      this.setData({
-        showCenterBtn: true,
-        autoPlay: true,
         showCover: false
       })
     }
-    var article = this.data.data.detailInfo.summary;
-    WxParse.wxParse('article', 'html', article, this, 5);
+    if (app.globalData.netWorkType === 'wifi' && app.globalData.setUserInfo === 1) {
+      this.setData({
+        isWifi: true,
+        autoPlay:true
+      })
+    }
+
     console.log("当前ID：" + options.id);
-    request.getVedioDetail(options.id,function(res){
-        this.setData({
-          data:res.data
-        })
-    },function(res){
+    request.getVedioDetail(options.id, function(res) {
+      var article = res.data.detailInfo.summary;
+      WxParse.wxParse('article', 'html', article, that, 5);
+      that.setData({
+        data: res.data,
+        likeNum: res.data.detailInfo.likeNum,
+        hadLike: res.data.detailInfo.hadLike
+      })
+    }, function(res) {
 
     })
   },
@@ -77,7 +51,7 @@ Page({
       url: `../detail/detail?id=${e.currentTarget.dataset.id}`
     })
   },
-  login: function() {
+  bindaccount: function() {
     wx.navigateTo({
       url: '../bindaccount/bindaccount',
     })
@@ -90,24 +64,22 @@ Page({
     })
   },
   dolike: function(e) {
-    var detailId=this.data.data.detailInfo.detailId;
+    var that = this;
+    var detailId = this.data.data.detailInfo.detailId;
     console.log(detailId);
     request.like(detailId, function(res) {
-      request.getVedioDetail(detailId, function (res) {
-        this.setData({
-          data: res.data
-        })
-      }, function (res) {
-
-      })
-    },function(res){
+       that.setData({
+          likeNum:res.data.likeNum,
+          hadLike:true
+       })
+    }, function(res) {
 
     })
   },
-  fenxiang: function (e) {
+  fenxiang: function(e) {
     wx.updateShareMenu({
       withShareTicket: true,
-      success() { }
+      success() {}
     })
   },
   /**

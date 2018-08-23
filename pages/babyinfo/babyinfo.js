@@ -1,12 +1,13 @@
 // pages/babyinfo/babyinfo.js
 const request = require('../../api/request.js')
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    showBtn: false,
+    isRegister: false,
     inputDisabled: true,
     radioCheckVal: 1,
     mobile: '',
@@ -23,6 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log("传进来的参数：" + JSON.stringify(options))
     let app = getApp();
     new app.ShowAlert();
     if (options.type === 'get') {
@@ -32,7 +34,7 @@ Page({
         mobile: options.mobile,
         msgCode: options.msgCode,
         inputDisabled: false,
-        showBtn: true
+        isRegister: true
       })
     }
   },
@@ -41,21 +43,15 @@ Page({
       nickName: e.detail.value
     })
   },
-  bindInputBorthDay: function(e) {
-    this.setData({
-      borthDay: e.detail.value
-    })
-  },
   getBabyInfo: function() {
+    var that = this;
     request.getBabyInfo(function(res) {
-        this.setData({
-          nickName:res.data.nickName,
-          borthDay: res.data.birthDay,
-          radioCheckVal:res.data.sex
-        })
-    },function(res){
-      this.showToast('cuo', res.data.msg)
-    })
+      that.setData({
+        nickName: res.data.nickName,
+        birthDay: res.data.birthDay,
+        radioCheckVal: res.data.sex
+      })
+    }, function(res) {})
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -70,7 +66,13 @@ Page({
       textToast: text
     })
   },
+  bindDateChange: function(e) {
+    this.setData({
+      birthDay: e.detail.value
+    })
+  },
   completed: function(e) {
+    var that = this;
     var mobile = this.data.mobile;
     var msgCode = this.data.msgCode;
     var nickName = this.data.nickName;
@@ -83,12 +85,31 @@ Page({
       this.showToast('icon-warning', '请填写宝宝生日')
       return
     }
-    var sex = this.data.radioCheckVal;
+    var sex = this.data.radioCheckVal + '';
     request.register(mobile, msgCode, nickName, birthDay, sex, function(res) {
-        this.showToast('icon-dui','注册成功');
-        this.goHomePage();
-    },function(res){
-      this.showToast('icon-cuo', res.data.message);
+      console.log("注册返回:" + JSON.stringify(res))
+      let loginStatus = {
+        token: res.data.token,
+        setUserInfo: 1
+      }
+      wx.clearStorage();
+      wx.setStorage({
+        key: 'loginStatus',
+        data: loginStatus,
+        success: function(res) {
+          wx.reLaunch({
+            url: '../home/home',
+          })
+        },
+        fail: function(res) {
+          console.log("保存登录状态失败：" + res)
+        }
+      })
+    }, function(res) {
+      wx.showToast({
+        title: res,
+        icon: 'none'
+      })
     })
   },
   /**

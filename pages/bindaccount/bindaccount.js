@@ -8,9 +8,10 @@ Page({
     mobile: '',
     msgCode: '',
     getCodeButtonText: '获取验证码',
-    disabledGetMsg: true,
+    disableGetMobileCode: false
   },
   nextStep: function(event) {
+    var that=this;
     if (this.data.mobile === '') {
       this.show({
         imageToast: '',
@@ -29,23 +30,19 @@ Page({
     }
 
     request.vailPassCode(this.data.mobile, this.data.msgCode, function(res) {
-      if (res.flag) {
+      if (res.data.flag) {
+        console.log("手机号："+that.data.mobile +"验证码："+that.data.msgCode)
         wx.navigateTo({
-          url: "../babyinfo/babyinfo?mobile=" + this.data.mobile + "&msgCode=" + this.data.msgCode
+          url: "../babyinfo/babyinfo?mobile=" + that.data.mobile + "&msgCode=" + that.data.msgCode
         });
       } else {
-        this.show({
-          imageToast: '',
-          iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-          textToast: `${res.msg}`
+        wx.showToast({
+          title: '无效验证码',
+          icon:'none'
         })
       }
     }, function(res) {
-      this.show({
-        imageToast: '',
-        iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: `${res.msg}`
-      })
+      console.log("无效验证码");
     })
   },
   /**
@@ -60,18 +57,27 @@ Page({
     if (!this.bindCheckMobile(this.data.mobile)) {
       return
     }
+    that.setData({
+      disableGetMobileCode:true
+    })
     request.getPassCode(this.data.mobile, function(res) {
-      this.show({
+      that.setData({
+        disableGetMobileCode:false
+      })
+      that.show({
         imageToast: '',
         iconToast: 'icon-dui', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
         textToast: '验证码已发送'
       })
-      that.countDownPassCode()
-    }, function(res) {
-      this.show({
+      that.countDownPassCode();
+    }, function(msg) {
+      that.setData({
+        disableGetMobileCode:false
+      })
+      that.show({
         imageToast: '',
         iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: `${res.msg}`
+        textToast: `${msg}`
       })
     })
   },
@@ -81,6 +87,7 @@ Page({
     })
   },
   bindInputMsgCode: function(e) {
+    console.log(e.detail.value)
     this.setData({
       msgCode: e.detail.value,
     })

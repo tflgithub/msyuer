@@ -14,6 +14,16 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+/*获取当前页url*/
+function getCurrentPageUrl() {
+  var pages = getCurrentPages()    //获取加载的页面
+  var currentPage = pages[pages.length - 1]    //获取当前页面的对象
+  var url = currentPage.route    //当前页面url
+  console.log("当前页面："+url)
+  return url
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  getCurrentPageUrl: getCurrentPageUrl
 }

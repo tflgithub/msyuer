@@ -12,34 +12,36 @@ App({
       }
     })
     wx.onNetworkStatusChange(function(res) {
-      that.globalData.isConnected = res.isConnected
-      that.globalData.netWorkType = res.networkType
-    })
-    this.checkAuth()
-    // request.getHomeBar(function (res) {
-    //   this.setData({
-    //     barItems: res.data
-    //   })
-    // }, function (res) { })
-  },
-  checkAuth: function() {
-    wx.getSetting({
-      success: res => {
-        if (!res.authSetting['scope.userInfo']) {
-          // 未授权，跳转到授权页面
-          wx.reLaunch({
-            url: '/pages/auth/auth',
-          })
+        that.globalData.netWorkType = res.networkType
+      }),
+      wx.getSetting({
+        success: res => {
+          if (!res.authSetting['scope.userInfo']) {
+            // 未授权，跳转到授权页面
+            wx.reLaunch({
+              url: '/pages/auth/auth',
+            })
+          } else {
+            wx.getUserInfo({
+              success: function(res) {
+                that.globalData.userInfo = res.userInfo
+              }
+            })
+          }
         }
-      }
+      })
+  },
+  getLoginStatus: function(resovle, reject) {
+    wx.getStorage({
+      key: 'loginStatus',
+      success: resovle,
+      fail: reject
     })
   },
   globalData: {
     netWorkType: null,
-    isConnected: null,
-    token: null,
     userInfo: null,
     setUserInfo: null,
-    API_URL: "http://xxx"
+    API_URL: "http://10.30.31.8:8080"
   },
 })
