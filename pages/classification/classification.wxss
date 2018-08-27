@@ -72,18 +72,20 @@
 
 .classification .item{
   display: flex;
-  padding-left: 35rpx;
-  padding-right: 35rpx;
-  padding-top:10rpx;
-  padding-bottom: 10rpx;
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  padding-top:15rpx;
+  padding-bottom: 15rpx;
   margin-top: 28rpx;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:20%;
 }
 
 .classification .item .img {
   width: 68rpx;
   height: 68rpx;
-  align-items: center;
 }
 
 .classification .item .text {

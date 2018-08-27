@@ -26,6 +26,7 @@
   direction: row;
   margin-top: 30rpx;
   margin-left: 48rpx;
+ 
 }
 
 .label .img {

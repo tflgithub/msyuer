@@ -1,3 +1,9 @@
+<template name="label">
+  <view class="label">
+    <image class="img" src='{{img}}' mode='aspectFit' />
+    <text class="text">{{text}}</text>
+  </view>
+</template>
 <!--pages/babyinfo/babyinfo.wxml-->
 <import src="../../res/components/showToast/showToast.wxml" />
 <template is="toast" data="{{..._toast_}}" />
@@ -6,29 +12,20 @@
     <image class="img" src="../../image/ic_note.png" mode='aspectFit'></image>
     <text class="text">精确的年龄更有助于帮助妈妈准备适合宝宝的辅食喔</text>
   </view>
-  <view class="label">
-    <image class="img" src='../../image/ic_babyname.png' mode='aspectFit' />
-    <text class="text">宝宝昵称</text>
-  </view>
+  <template is="label" data="{{text:'宝宝昵称',img:'../../image/ic_babyname.png'}}" />
   <view class="weui-cell" style='margin-left:48rpx;margin-right:48rpx;'>
     <input class="input" bindinput='bindInputNickName' maxlength="16" disabled='{{inputDisabled}}' placeholder="填写宝宝昵称" value="{{nickName}}" />
   </view>
 
-  <view class="label">
-    <image class="img" src='../../image/ic_babydate.png' mode='aspectFit' />
-    <text class="text">宝宝生日</text>
-  </view>
+  <template is="label" data="{{text:'宝宝生日',img:'../../image/ic_babydate.png'}}" />
+
   <view class="weui-cell" style='margin-left:48rpx;margin-right:48rpx;'>
 
     <picker disabled='{{inputDisabled}}' class="weui-btn" mode="date" value="{{birthDay}}" start="2016-09-01" end="2018-03-01" bindchange="bindDateChange">
       <input class="input" bindinput='bindInputBirthDay' maxlength='10' disabled='true' value="{{birthDay}}" placeholder="请选择宝宝生日" />
     </picker>
   </view>
-
-  <view class="label">
-    <image class="img" src='../../image/ic_babygender.png' mode='aspectFit' />
-    <text class="text">宝宝性别</text>
-  </view>
+  <template is="label" data="{{text:'宝宝性别',img:'../../image/ic_babygender.png'}}" />
 
   <block wx:if="{{isRegister}}">
     <radio-group class="sex_radio" bindchange="radioCheckedChange">

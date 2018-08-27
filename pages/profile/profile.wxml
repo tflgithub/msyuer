@@ -1,33 +1,29 @@
+<template name="item_list">
+  <view class="weui-cell__hd" style="margin:30rpx;">
+    <image src="{{img}}" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
+  </view>
+  <view class="weui-cell__bd text">{{text}}</view>
+  <image src="../../image/ic_jiantou.png" style="width:32rpx;height:32rpx;margin:30rpx;vertical-align: middle" class="weui-cell__ft" />
+</template>
+
 <view class="page">
 
   <view class="userinfo">
     <view class="left">
       <text class="nickname">{{userInfo.nickName}}</text>
       <block wx:if="{{isBindMobile}}">
-      <text class="mobile">{{mobile}}</text>
+        <text class="mobile">{{mobile}}</text>
       </block>
       <block wx:else>
-      <text class="mobile" bindtap='bindAccount'>立刻去绑定</text>
+        <text class="mobile" bindtap='bindAccount'>立刻去绑定</text>
       </block>
     </view>
     <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
   </view>
 
-  <navigator wx:if="{{isBindMobile}}" style='height:120rpx;' url="../babyinfo/babyinfo?type=get" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <view class="weui-cell__hd" style="margin:30rpx;">
-      <image src="../../image/ic_information.png" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
-    </view>
-    <view class="weui-cell__bd text">宝宝资料</view>
-    <image src="../../image/ic_jiantou.png" style="width:32rpx;height:32rpx;margin:30rpx;vertical-align: middle" class="weui-cell__ft" />
-  </navigator>
-
   <navigator style='height:120rpx;' url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <view class="weui-cell__hd" style="margin:30rpx;">
-      <image src="../../image/ic_aboutus.png" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
-    </view>
-    <view class="weui-cell__bd text">关于我们</view>
-    <image style="width:32rpx;height:32rpx;margin:30rpx"
-    src="../../image/ic_jiantou.png" class="weui-cell__ft" />
+    <template is="item_list" data="{{text:'关于我们',img:'../../image/ic_aboutus.png'}}"/>
+
   </navigator>
 
 </view>

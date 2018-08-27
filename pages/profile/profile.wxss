@@ -13,7 +13,6 @@
 .userinfo .left {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-left: 40rpx;
   justify-content: flex-start;
 }

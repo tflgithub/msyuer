@@ -11,7 +11,7 @@ Page({
     disableGetMobileCode: false
   },
   nextStep: function(event) {
-    var that=this;
+    var that = this;
     if (this.data.mobile === '') {
       this.show({
         imageToast: '',
@@ -29,21 +29,47 @@ Page({
       return
     }
 
-    request.vailPassCode(this.data.mobile, this.data.msgCode, function(res) {
-      if (res.data.flag) {
-        console.log("手机号："+that.data.mobile +"验证码："+that.data.msgCode)
-        wx.navigateTo({
-          url: "../babyinfo/babyinfo?mobile=" + that.data.mobile + "&msgCode=" + that.data.msgCode
-        });
-      } else {
-        wx.showToast({
-          title: '无效验证码',
-          icon:'none'
-        })
+    request.register(mobile, msgCode, function(res) {
+      console.log("注册返回:" + JSON.stringify(res))
+      let loginStatus = {
+        token: res.data.token,
+        setUserInfo: 1
       }
+      wx.clearStorage();
+      wx.setStorage({
+        key: 'loginStatus',
+        data: loginStatus,
+        success: function(res) {
+          wx.reLaunch({
+            url: '../home/home',
+          })
+        },
+        fail: function(res) {
+          console.log("保存登录状态失败：" + res)
+        }
+      })
     }, function(res) {
-      console.log("无效验证码");
+      wx.showToast({
+        title: res,
+        icon: 'none'
+      })
     })
+
+    // request.vailPassCode(this.data.mobile, this.data.msgCode, function(res) {
+    //   if (res.data.flag) {
+    //     console.log("手机号："+that.data.mobile +"验证码："+that.data.msgCode)
+    //     wx.navigateTo({
+    //       url: "../babyinfo/babyinfo?mobile=" + that.data.mobile + "&msgCode=" + that.data.msgCode
+    //     });
+    //   } else {
+    //     wx.showToast({
+    //       title: '无效验证码',
+    //       icon:'none'
+    //     })
+    //   }
+    // }, function(res) {
+    //   console.log("无效验证码");
+    // })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -58,11 +84,11 @@ Page({
       return
     }
     that.setData({
-      disableGetMobileCode:true
+      disableGetMobileCode: true
     })
     request.getPassCode(this.data.mobile, function(res) {
       that.setData({
-        disableGetMobileCode:false
+        disableGetMobileCode: false
       })
       that.show({
         imageToast: '',
@@ -72,7 +98,7 @@ Page({
       that.countDownPassCode();
     }, function(msg) {
       that.setData({
-        disableGetMobileCode:false
+        disableGetMobileCode: false
       })
       that.show({
         imageToast: '',

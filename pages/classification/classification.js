@@ -1,5 +1,4 @@
 // pages/classification/classification.js
-const request = require('../../api/request.js');
 Page({
 
   /**
@@ -95,40 +94,11 @@ Page({
         value: '12'
       }
     ]
-  },
-  /**图片轮播改变 */
-  swiperChange(e) {
-    this.setData({
-      current: e.detail.current
-    })
-  },
-  gotoDetail: function(e) {
-    var item = e.currentTarget.dataset.id;
-    console.log(JSON.stringify(item))
-    if (item.type === "2") {
-      wx.navigateTo({
-        url: `../detail/detail?id=${item.id}`
-      })
-    } else if (item.type === "1") {
-      wx.navigateTo({
-        url: `../infolist/infolist?typeId=${item.id}`
-      })
-    } else {
-      wx.navigateTo({
-        url: `../infolist/infolist?foodId=${item.id}`
-      })
-    }
-  },
+  }, 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this;
-    request.getHomeBar(function(res) {
-      that.setData({
-        barItems: res.data
-      })
-    }, function(res) {})
   },
 
   /**

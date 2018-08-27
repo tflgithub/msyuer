@@ -79,5 +79,12 @@ Page({
         }
       }
     })
+  },
+  onShow:function()
+  {
+   
+  },
+  onLoad:function(){
+    
   }
 })
