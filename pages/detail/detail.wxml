@@ -60,11 +60,11 @@
       <template is="wxParse" data="{{wxParseData:article.nodes}}" />
     </view>
   </view>
- <block wx:if="{{data.recommendList.length>0}}">
+ <block wx:if="{{recommendList.length>0}}">
  <view class='line'></view>
   <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>推荐</view>
   </block>
-  <block wx:for="{{data.recommendList}}" wx:for-item="item">
+  <block wx:for="{{recommendList}}" wx:for-item="item">
     <view bindtap='gotoDetail' data-id="{{item.detailId}}" class="weui-media-box weui-media-box_appmsg">
       <view class="weui-media-box__hd_in-appmsg">
         <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />

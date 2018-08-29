@@ -1,23 +1,19 @@
 <!--pages/classification/classification.wxml-->
 <view class="page">
 
-  <image style="height:350rpx;width:702rpx;margin-left:24rpx" src='../../image/classification_top.png' />
-  <view class="label">
-    <image class="img" src='../../image/ic_month.png' mode='aspectFit' />
-    <text class="text">宝宝月份选择</text>
+  <view class="title" style='margin-top:36rpx;margin-bottom:60rpx'>
+    <image class="img" src='../../image/ic_cook.png' mode='aspectFit' />
   </view>
-  <view class="month">
-    <navigator wx:for="{{month}}" wx:for-item="item" class="item" url="../infolist/infolist?typeId={{item.value}}">
+
+  <view class="classification">
+    <navigator wx:for="{{cook}}" wx:for-item="item" class="item" url="../infolist/infolist?typeId={{item.value}}">
       <image class="img" src="{{item.imageUrl}}" />
       <text class="text">{{item.text}}</text>
     </navigator>
   </view>
 
-  <view class="line" />
-
-  <view class="label">
-    <image class="img" src='../../image/ic_classification.png' mode='aspectFit' />
-    <text class="text">辅食选择</text>
+  <view class="title" style='margin-top:90rpx;margin-bottom:60rpx'>
+    <image class="img" src='../../image/ic_fenlei.png' mode='aspectFit' />
   </view>
 
   <view class="classification">

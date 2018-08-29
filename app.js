@@ -12,8 +12,12 @@ App({
       }
     })
     wx.onNetworkStatusChange(function(res) {
-        that.globalData.netWorkType = res.networkType
-      }),
+      that.globalData.netWorkType = res.networkType
+    })
+  },
+  getLoginStatus: function() {
+    var that = this
+    return new Promise(function(resolve, reject) {
       wx.getSetting({
         success: res => {
           if (!res.authSetting['scope.userInfo']) {
@@ -21,7 +25,9 @@ App({
             wx.reLaunch({
               url: '/pages/auth/auth',
             })
+            reject('未登录');
           } else {
+            resolve('已登录');
             wx.getUserInfo({
               success: function(res) {
                 that.globalData.userInfo = res.userInfo
@@ -30,12 +36,16 @@ App({
           }
         }
       })
+    })
   },
-  getLoginStatus: function(resovle, reject) {
-    wx.getStorage({
-      key: 'loginStatus',
-      success: resovle,
-      fail: reject
+  saveLoginStatus: function (data) {
+    return new Promise(function(resolve, reject) {
+        wx.setStorage({
+          key: 'loginStatus',
+          data: data,
+          success:resolve,
+          fail:reject
+        }) 
     })
   },
   globalData: {

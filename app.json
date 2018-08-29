@@ -6,7 +6,6 @@
     "pages/infolist/infolist",
     "pages/profile/profile",
     "pages/classification/classification",
-    "pages/babyinfo/babyinfo",
     "pages/auth/auth"
   ],
   "window": {

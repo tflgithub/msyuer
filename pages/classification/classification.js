@@ -5,92 +5,82 @@ Page({
    * 页面的初始数据
    */
   data: {
-    autoplay: true,
-    interval: 5000,
-    duration: 1000,
-    current: 0,
-    barItems: [],
-    month: [{
-        imageUrl: '../../image/ic_six.png',
-        text: '0-6月',
+    cook: [{
+        imageUrl: '../../image/ic_fry.png',
+        text: '炒',
         value: '8'
       },
       {
-        imageUrl: '../../image/ic_seven.png',
-        text: '7月',
-        value: '9'
-      },
-      {
-        imageUrl: '../../image/ic_eight.png',
-        text: '8月',
-        value: '10'
-      },
-      {
-        imageUrl: '../../image/ic_nine.png',
-        text: '9月',
-        value: '11'
-      },
-      {
-        imageUrl: '../../image/ic_ten.png',
-        text: '10月',
-        value: '12'
-      }, {
-        imageUrl: '../../image/ic_eleven.png',
-        text: '11月',
-        value: '13'
-      }, {
-        imageUrl: '../../image/ic_twelve.png',
-        text: '12月',
-        value: '14'
-      },
-      {
-        imageUrl: '../../image/ic_eighteen.png',
-        text: '18月',
-        value: '15'
-      },
-      {
-        imageUrl: '../../image/ic_twenty_four.png',
-        text: '24月',
-        value: '16'
-      }
-    ],
-    foods: [{
         imageUrl: '../../image/ic_steamed.png',
         text: '蒸',
-        value: '5'
+        value: '9'
       },
       {
         imageUrl: '../../image/ic_boil.png',
         text: '煮',
-        value: '6'
-      },
-      {
-        imageUrl: '../../image/ic_porridge.png',
-        text: '粥',
-        value: '7'
-      },
-      {
-        imageUrl: '../../image/ic_noodles.png',
-        text: '面',
-        value: '8'
-      },
-      {
-        imageUrl: '../../image/ic_friut.png',
-        text: '果蔬泥',
-        value: '9'
-      }, {
-        imageUrl: '../../image/ic_egg.png',
-        text: '肉/蛋泥',
         value: '10'
       },
       {
-        imageUrl: '../../image/ic_bake.png',
-        text: '烘焙',
+        imageUrl: '../../image/ic_ban.png',
+        text: '拌',
         value: '11'
       },
       {
         imageUrl: '../../image/ic_gril.png',
-        text: '煎炸',
+        text: '煎/炸',
+        value: '12'
+      }, {
+        imageUrl: '../../image/ic_dun.png',
+        text: '焖/炖',
+        value: '13'
+      }, {
+        imageUrl: '../../image/ic_bake.png',
+        text: '烘焙',
+        value: '14'
+      },
+      {
+        imageUrl: '../../image/ic_other.png',
+        text: '其他',
+        value: '15'
+      }
+    ],
+    foods: [{
+        imageUrl: '../../image/ic_meat.png',
+        text: '肉类',
+        value: '5'
+      },
+      {
+        imageUrl: '../../image/ic_egg.png',
+        text: '蛋/奶',
+        value: '6'
+      },
+      {
+        imageUrl: '../../image/ic_bean.png',
+        text: '豆制品',
+        value: '7'
+      },
+      {
+        imageUrl: '../../image/ic_fish.png',
+        text: '鱼虾水产',
+        value: '8'
+      },
+      {
+        imageUrl: '../../image/ic_corn.png',
+        text: '五谷杂粮',
+        value: '9'
+      }, {
+        imageUrl: '../../image/ic_vegetable.png',
+        text: '蔬菜',
+        value: '10'
+      },
+      {
+        imageUrl: '../../image/ic_friut.png',
+        text: '水果',
+        value: '11'
+      },
+      {
+        imageUrl: '../../image/ic_yanxun.png',
+        text: '烟熏类',
         value: '12'
       }
     ]

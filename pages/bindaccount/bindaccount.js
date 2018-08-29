@@ -1,5 +1,6 @@
 // pages/bindaccount/bindaccount.js
 const request = require('../../api/request.js')
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -29,24 +30,16 @@ Page({
       return
     }
 
-    request.register(mobile, msgCode, function(res) {
+    request.register(this.data.mobile, this.data.msgCode, function(res) {
       console.log("注册返回:" + JSON.stringify(res))
       let loginStatus = {
         token: res.data.token,
         setUserInfo: 1
       }
-      wx.clearStorage();
-      wx.setStorage({
-        key: 'loginStatus',
-        data: loginStatus,
-        success: function(res) {
-          wx.reLaunch({
-            url: '../home/home',
-          })
-        },
-        fail: function(res) {
-          console.log("保存登录状态失败：" + res)
-        }
+      app.saveLoginStatus(loginStatus).then(res => {
+        wx.reLaunch({
+          url: '../home/home'
+        })
       })
     }, function(res) {
       wx.showToast({
@@ -54,22 +47,6 @@ Page({
         icon: 'none'
       })
     })
-
-    // request.vailPassCode(this.data.mobile, this.data.msgCode, function(res) {
-    //   if (res.data.flag) {
-    //     console.log("手机号："+that.data.mobile +"验证码："+that.data.msgCode)
-    //     wx.navigateTo({
-    //       url: "../babyinfo/babyinfo?mobile=" + that.data.mobile + "&msgCode=" + that.data.msgCode
-    //     });
-    //   } else {
-    //     wx.showToast({
-    //       title: '无效验证码',
-    //       icon:'none'
-    //     })
-    //   }
-    // }, function(res) {
-    //   console.log("无效验证码");
-    // })
   },
   /**
    * 生命周期函数--监听页面加载

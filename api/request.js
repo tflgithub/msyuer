@@ -13,16 +13,10 @@ function request(obj) {
 
 //检查登录状态
 function checkLoginStatus(obj) {
-  app.getLoginStatus(function(res) {
-    console.log("获取token:" + res.data.token)
-    console.log("获取绑定状态:" + res.data.setUserInfo)
-    app.globalData.setUserInfo = res.data.setUserInfo
-    obj.token = res.data.token
-    doRequest(obj)
-  }, function(res) {
-    console.log("获取登录状态失败，重新登录")
-    relogin()
-  })
+  var loginStatus = wx.getStorageSync('loginStatus')
+  app.globalData.setUserInfo = loginStatus.setUserInfo
+  obj.token = loginStatus.token
+  doRequest(obj)
 }
 
 //发起服务器请求
@@ -85,16 +79,8 @@ function relogin() {
           success: function(res) {
             console.log("登录：" + JSON.stringify(res))
             if (res.data.code === 0) {
-              wx.clearStorage();
-              wx.setStorage({
-                key: 'loginStatus',
-                data: res.data.data,
-                success: function(res) {
-                  getCurrentPages()[getCurrentPages().length - 1].onLoad()
-                },
-                fail: function(res) {
-                  console.log("保存登录状态失败：" + JSON.stringify(res))
-                }
+              app.saveLoginStatus(res.data.data).then(res=>{
+                getCurrentPages()[getCurrentPages().length - 1].onLoad()
               })
             }
           },
@@ -141,7 +127,7 @@ export function vailPassCode(mobile, msgCode, resolve, reject) {
 }
 
 /**
- * 注册宝宝信息
+ * 注册
  */
 export function register(mobile, msgCode, nickName, birthDay, sex, resolve, reject) {
   request({
@@ -154,19 +140,6 @@ export function register(mobile, msgCode, nickName, birthDay, sex, resolve, reje
       birthDay: birthDay,
       sex: sex
     },
-    success: resolve,
-    fail: reject
-  })
-}
-
-/**
- * 获取宝宝信息
- */
-export function getBabyInfo(resolve, reject) {
-  request({
-    message: "正在加载...",
-    url: `${app.globalData.API_URL}/api/wxa/v1/user/getBabyInfo`,
-    data: null,
     success: resolve,
     fail: reject
   })
@@ -192,6 +165,99 @@ export function getHomeVedio(resolve, reject) {
     url: `${app.globalData.API_URL}/api/wxa/v1/video/index`,
     success: resolve,
     fail: reject
+  })
+}
+
+/**
+ * 今日推荐
+ */
+export function getTodayRecommend() {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/todayRecommend`,
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 热门列表
+ */
+export function getHotList(lastTimeStamp, pageSize) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/hotlist`,
+      data: {
+        lastTimeStamp: lastTimeStamp,
+        pageSize: pageSize
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 最新列表
+ */
+export function getNewList(lastTimeStamp, pageSize) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/newlist`,
+      data: {
+        lastTimeStamp: lastTimeStamp,
+        pageSize: pageSize
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+// /**
+//  * 点赞最多列表
+//  */
+// export function getLikeList(lastTimeStamp, pageSize) {
+//   return new Promise(function(resolve, reject) {
+//     request({
+//       url: `${app.globalData.API_URL}/api/wxa/v1/video/likelist`,
+//       data: {
+//         lastTimeStamp: lastTimeStamp,
+//         pageSize: pageSize
+//       },
+//       success: resolve,
+//       fail: reject
+//     })
+//   })
+// }
+
+/**
+ * 烹饪方式列表
+ */
+export function getIndex() {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/index`,
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 推荐
+ */
+export function getRecommend(id) {
+  return new Promise(function(resolve, reject) {
+    request({
+      data: {
+        detailId: id
+      },
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/recommend`,
+      success: resolve,
+      fail: reject
+    })
   })
 }
 

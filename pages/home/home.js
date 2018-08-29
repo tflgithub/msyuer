@@ -1,6 +1,7 @@
 // pages/home.js
 const request = require('../../api/request.js');
 const app = getApp()
+
 Page({
   /**
    * 页面的初始数据
@@ -8,7 +9,10 @@ Page({
   data: {
     //bar data
     barItems: [],
-    mainItem: {},
+    toDayRecommend: {},
+    hots: {},
+    news: {},
+    cooks: {},
     autoplay: true,
     interval: 5000,
     duration: 1000,
@@ -44,7 +48,7 @@ Page({
   },
   getMore: function(e) {
     wx.navigateTo({
-      url: `../infolist/infolist?typeId=${e.currentTarget.dataset.id}`
+      url: `../infolist/infolist?where=${e.currentTarget.dataset.id}`
     })
   },
 
@@ -52,19 +56,50 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this;
-    request.getHomeBar(function (res) {
-      console.log(JSON.stringify(res));
-      that.setData({
-        barItems: res.data
-      })
-    }, function (res) { })
-    request.getHomeVedio(function (res) {
-      that.setData({
-        mainItem: res.data
-      })
-    }, function (res) {
 
+    app.getLoginStatus().then(res => {
+      var that = this;
+      console.log(res)
+      request.getHomeBar(function(res) {
+        console.log(JSON.stringify(res));
+        that.setData({
+          barItems: res.data
+        })
+      }, function(res) {})
+
+      request.getTodayRecommend().then(res => {
+        that.setData({
+          toDayRecommend: res.data
+        })
+      }).catch(res => {
+        console.log("获取今日推荐失败:", res.msg)
+      })
+
+      request.getHotList(0, 4).then(res => {
+        that.setData({
+          hots: res.data
+        })
+      }).catch(res => {
+        console.log("获取热门视频失败:", res.msg)
+      })
+
+      request.getNewList(0, 4).then(res => {
+        that.setData({
+          news: res.data
+        })
+      }).catch(res => {
+        console.log("获取最新视频失败:", res.msg)
+      })
+
+      request.getIndex().then(res => {
+        that.setData({
+          cooks: res.data
+        })
+      }).catch(res => {
+        console.log("获取烹饪方式失败：" + res.msg)
+      })
+    }).catch(res => {
+      console.log(res)
     })
   },
   /**
@@ -72,7 +107,7 @@ Page({
    */
   onReady: function() {
 
-    
+
   },
 
   /**

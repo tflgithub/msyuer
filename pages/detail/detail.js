@@ -7,12 +7,13 @@ Page({
    */
   data: {
     data: {},
-    likeNum:'',
-    hadLike:false,
+    likeNum: '',
+    hadLike: false,
     showCenterBtn: true,
     autoPlay: false,
     showCover: true,
-    isWifi: false
+    isWifi: false,
+    recommendList: []
   },
   /**
    * 生命周期函数--监听页面加载
@@ -21,7 +22,7 @@ Page({
     let app = getApp()
     var that = this;
     console.log("当前网络:" + app.globalData.netWorkType)
-    if (app.globalData.setUserInfo=== 1) {
+    if (app.globalData.setUserInfo === 1) {
       this.setData({
         showCover: false
       })
@@ -29,7 +30,7 @@ Page({
     if (app.globalData.netWorkType === 'wifi' && app.globalData.setUserInfo === 1) {
       this.setData({
         isWifi: true,
-        autoPlay:true
+        autoPlay: true
       })
     }
 
@@ -44,6 +45,14 @@ Page({
       })
     }, function(res) {
 
+    })
+
+    request.getRecommend(options.id).then(res => {
+      that.setData({
+        recommendList: res.data.recommendList
+      })
+    }).catch(res => {
+      console.log("获取推荐失败" + res.msg)
     })
   },
   gotoDetail: function(e) {
@@ -68,10 +77,10 @@ Page({
     var detailId = this.data.data.detailInfo.detailId;
     console.log(detailId);
     request.like(detailId, function(res) {
-       that.setData({
-          likeNum:res.data.likeNum,
-          hadLike:true
-       })
+      that.setData({
+        likeNum: res.data.likeNum,
+        hadLike: true
+      })
     }, function(res) {
 
     })

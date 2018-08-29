@@ -16,5 +16,5 @@
     </view>
 
   </view>
-  <button class="btn2" bindtap='nextStep'>下一步</button>
+  <button class="btn2" bindtap='nextStep'>完成</button>
 </view>
