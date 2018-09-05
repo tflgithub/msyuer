@@ -32,14 +32,10 @@ Page({
 
     request.register(this.data.mobile, this.data.msgCode, function(res) {
       console.log("注册返回:" + JSON.stringify(res))
-      let loginStatus = {
-        token: res.data.token,
-        setUserInfo: 1
-      }
-      app.saveLoginStatus(loginStatus).then(res => {
-        wx.reLaunch({
-          url: '../home/home'
-        })
+      app.globalData.token=res.data.token
+      app.globalData.setUserInfo=1
+      wx.reLaunch({
+        url: '../home/home'
       })
     }, function(res) {
       wx.showToast({

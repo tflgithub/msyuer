@@ -1,6 +1,7 @@
 // pages/profile/profile.js
 const request = require('../../api/request.js');
 const app = getApp()
+import pageState from '../../common/pageState/pageState.js'
 Page({
   /**
    * 页面的初始数据
@@ -10,7 +11,7 @@ Page({
       avatarUrl: '',
       nickName: ''
     },
-    isBindMobile: false,
+    isBindMobile: null,
     mobile: ''
   },
 
@@ -18,24 +19,33 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this
-    this.setData({
-      userInfo: app.globalData.userInfo
+    app.isAuth().then(res => {
+      this.onRetry()
+    }).catch(res => {
+      console.log(res)
+      pageState(this).error(res)
     })
-    if (app.globalData.setUserInfo === 1) {
-      this.setData({
-        isBindMobile: true
-      })
+  },
+  onRetry: function() {
+    this.setData({
+      userInfo: app.globalData.userInfo,
+      isBindMobile: app.globalData.setUserInfo
+    })
+    var that = this
+    console.log("是否绑定手机：" + app.globalData.setUserInfo)
+    if (app.globalData.setUserInfo ===1) {
       request.getUserInfo(function(res) {
+        pageState(that).finish()
         that.setData({
           mobile: res.data.mobile
         })
       }, function(res) {
-
+        pageState(that).error(res)
       })
+    } else {
+      pageState(that).finish()
     }
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

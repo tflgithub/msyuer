@@ -1,5 +1,10 @@
 // pages/infolist/infolist.js
 const request = require('../../api/request.js')
+import pageState from '../../common/pageState/pageState.js'
+const app = getApp()
+const {
+  util
+} = app
 Page({
   /**
    * 页面的初始数据
@@ -13,7 +18,6 @@ Page({
     foodId: [],
     data: {},
     pageSize: 10,
-    showTip: '正在加载...',
     where: null
   },
 
@@ -21,16 +25,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log("传进来的参数" + JSON.stringify(options))
     this.data.where = options.where;
+    if (options.typeId) {
+      this.data.typeId = [options.typeId]
+    }
+    if (options.foodId) {
+      this.data.foodId = [options.foodId]
+    }
+    this.onRetry()
+  },
+  onRetry: function() {
     if (this.data.where) {
       this.getData()
     } else {
-      if (options.typeId) {
-        this.data.typeId = [options.typeId]
-      }
-      if (options.foodId) {
-        this.data.foodId = [options.foodId]
-      }
       var that = this;
       request.getVedioList(this.data.typeId, this.data.foodId, 0, this.data.pageSize, function(res) {
         if (res.data.barTitle) {
@@ -39,20 +47,19 @@ Page({
           })
         }
         if (res.data.items.length === 0) {
+          pageState(that).empty()
+        } else {
+          pageState(that).finish()
           that.setData({
-            showTip: '暂无数据'
+            data: res.data,
+            items: res.data.items
           })
         }
-        that.setData({
-          data: res.data,
-          items: res.data.items
-        })
       }, function(res) {
-
+        pageState(that).error(res)
       })
     }
   },
-
   getData: function() {
     var that = this;
     switch (this.data.where) {
@@ -62,16 +69,17 @@ Page({
         })
         request.getHotList(0, this.data.pageSize).then(res => {
           if (res.data.items.length === 0) {
+            pageState(that).empty()
+          } else {
+            pageState(that).finish()
             that.setData({
-              showTip: '暂无数据'
+              data: res.data,
+              items: res.data.items
             })
           }
-          that.setData({
-            data: res.data,
-            items: res.data.items
-          })
         }).catch(res => {
-          console.log("获取热门视频失败:", res.msg)
+          console.log("获取热门视频失败:", res)
+          pageState(that).error(res)
         })
         break
       case "news":
@@ -80,16 +88,17 @@ Page({
         })
         request.getNewList(0, this.data.pageSize).then(res => {
           if (res.data.items.length === 0) {
+            pageState(that).empty()
+          } else {
+            pageState(that).finish()
             that.setData({
-              showTip: '暂无数据'
+              data: res.data,
+              items: res.data.items
             })
           }
-          that.setData({
-            data: res.data,
-            items: res.data.items
-          })
         }).catch(res => {
-          console.log("获取最新视频失败:", res.msg)
+          console.log("获取最新视频失败:", res)
+          pageState(that).error(res)
         })
         break
       case "likes":
@@ -98,16 +107,17 @@ Page({
         })
         request.getLikeList(0, this.data.pageSize).then(res => {
           if (res.data.items.length === 0) {
+            pageState(that).empty()
+          } else {
+            pageState(that).finish()
             that.setData({
-              showTip: '暂无数据'
+              data: res.data,
+              items: res.data.items
             })
           }
-          that.setData({
-            data: res.data,
-            items: res.data.items
-          })
         }).catch(res => {
           //console.log("获取最喜爱视频失败:", res.msg)
+          pageState(that).error(res)
         })
         break
     }
@@ -244,6 +254,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      title: '米勺美食',
+      imageUrl: this.data.data.barUrl,
+      path: util.getCurrentPageUrl() + '?where=' + this.where + '&typeId=' + this.typeId + '&foodId=' + this.foodId
+    }
   }
 })

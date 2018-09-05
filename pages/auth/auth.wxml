@@ -2,8 +2,8 @@
   <image src="../../image/ic_logo.png" class="img" mode="aspectFill"></image>
   <view class="title">米勺美食</view>
   <view class="describe">欢迎您</view> 
-  <view class="describe">为了给您提供更优质的服务，请使用微信登录</view>
+  <!-- <view class="describe">为了给您提供更优质的服务，请使用微信登录</view> -->
   <button class="btn" open-type='getUserInfo' wx:if="{{canIUse}}" bindgetuserinfo='login'>
-  <image src='../../image/ic_wechat.png'style="vertical-align: middle;width:33rpx;height:33rpx;margin-right:10rpx "/>
-  <text>微信登录</text></button>
+  <image src='../../image/ic_wechat.png'style="vertical-align: middle;width:40rpx;height:33rpx;margin-right:10rpx "/>
+  <text>微信授权</text></button>
 </view>

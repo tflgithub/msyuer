@@ -1,0 +1,31 @@
+/* res/components/shareImage/shareImage.wxss */
+
+.modal-container {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1008;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+.modal-box-container {
+  width: 88%;
+  overflow: hidden;
+  position: fixed;
+  z-index: 1009;
+  top: 10%;
+  margin-left: 50rpx;
+  justify-content: center;
+}
+
+.button_share {
+  margin-top: 8%;
+}

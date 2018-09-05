@@ -1,0 +1,38 @@
+/* res/components/pageState/pageSate.wxss */
+
+.page-state-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.page-state-container {
+  animation: fadein 2s 1 ease-out;
+  height: 100%;
+  width: 100%;
+}
+
+.page-state-container~view {
+  display: none;
+}
+
+.message {
+  width: 65%;
+  margin: 1.5em auto;
+  line-height: 1.6em;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.retrybtn {
+  font-size: 28rpx;
+}
+
+page {
+  height: 100%;
+  overflow-y: auto;
+}

@@ -1,3 +1,5 @@
+<import src="../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" />
 <template name="item_list">
   <view class="weui-cell__hd" style="margin:30rpx;">
     <image src="{{img}}" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
@@ -11,17 +13,17 @@
   <view class="userinfo">
     <view class="left">
       <text class="nickname">{{userInfo.nickName}}</text>
-      <block wx:if="{{isBindMobile}}">
+      <block wx:if="{{isBindMobile===1}}">
         <text class="mobile">{{mobile}}</text>
       </block>
-      <block wx:else>
+      <block wx:elif="{{isBindMobile===2}}">
         <text class="mobile" bindtap='bindAccount'>立刻去绑定</text>
       </block>
     </view>
     <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
   </view>
 
-  <navigator style='height:120rpx;' url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+  <navigator style='height:120rpx;' url="../aboutus/aboutus" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <template is="item_list" data="{{text:'关于我们',img:'../../image/ic_aboutus.png'}}"/>
 
   </navigator>

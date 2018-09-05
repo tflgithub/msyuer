@@ -18,19 +18,12 @@
 
 .classification .item{
   display: flex;
-  padding-left: 15rpx;
-  padding-right: 15rpx;
-  padding-top:15rpx;
-  padding-bottom: 15rpx;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width:20%;
-}
-
-.classification .item .img {
-  width: 68rpx;
-  height: 68rpx;
+  padding-top: 15rpx;
+  padding-bottom: 15rpx;
+  width:25%;
 }
 
 .classification .item .text {

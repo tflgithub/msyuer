@@ -1,6 +1,7 @@
-@import 'style/weui.wxss';
+@import 'common/style/weui.wxss';
 @import "res/iconfont/iconfont.wxss";
 @import 'res/components/showToast/showToast.wxss';
+@import 'common/pageState/pageState.wxss';
 
 page{
     background-color: #FFF;
@@ -25,48 +26,4 @@ page{
    height: 1px;
    width: 100%; 
 }
-
-/**轮播图样式**/
-.wrap {
-  height: auto;
-  position: relative;
-}
-
-.swiper {
-  margin: 24rpx;
-}
-
-/*用来包裹所有的小圆点  */
-.dots {
-  width: 100%;
-  height: 36rpx;
-  display: flex;
-  flex-direction: row-reverse;
-  right: 30rpx;
-  position: absolute;
-  bottom:0;
-}
-
-/*未选中时的小圆点样式 */
-.dot {
-  width: 6rpx;
-  height: 6rpx;
-  margin-right: 16rpx;
-  background-color:#4c4322;
-  font-size: 26rpx;
-  line-height: 32rpx;
-}
-
-/*选中以后的小圆点样式  */
-.active {
-  width: 26rpx;
-  height: 6rpx;
-  background-color: #4c4322;
-}
-
-.swiper image {
-  width: 100%;
-  height: auto  
-}
-
 button::after{ border: none; }

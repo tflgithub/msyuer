@@ -1,7 +1,10 @@
 // pages/home.js
 const request = require('../../api/request.js');
 const app = getApp()
-
+const {
+  util
+} = app
+import pageState from '../../common/pageState/pageState.js'
 Page({
   /**
    * 页面的初始数据
@@ -56,50 +59,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
-    app.getLoginStatus().then(res => {
-      var that = this;
-      console.log(res)
-      request.getHomeBar(function(res) {
-        console.log(JSON.stringify(res));
-        that.setData({
-          barItems: res.data
-        })
-      }, function(res) {})
-
-      request.getTodayRecommend().then(res => {
-        that.setData({
-          toDayRecommend: res.data
-        })
-      }).catch(res => {
-        console.log("获取今日推荐失败:", res.msg)
-      })
-
-      request.getHotList(0, 4).then(res => {
-        that.setData({
-          hots: res.data
-        })
-      }).catch(res => {
-        console.log("获取热门视频失败:", res.msg)
-      })
-
-      request.getNewList(0, 4).then(res => {
-        that.setData({
-          news: res.data
-        })
-      }).catch(res => {
-        console.log("获取最新视频失败:", res.msg)
-      })
-
-      request.getIndex().then(res => {
-        that.setData({
-          cooks: res.data
-        })
-      }).catch(res => {
-        console.log("获取烹饪方式失败：" + res.msg)
-      })
+    app.isAuth().then(res => {
+      this.loadData()
     }).catch(res => {
       console.log(res)
+      pageState(this).error(res)
     })
   },
   /**
@@ -107,9 +71,27 @@ Page({
    */
   onReady: function() {
 
-
+  },
+  onRetry: function() {
+    this.loadData()
   },
 
+  loadData: function() {
+    pageState(this).loading()
+    var that = this;
+    Promise.all([request.getHomeBar(), request.getTodayRecommend(), request.getHotList(0, 4), request.getNewList(0, 4), request.getIndex()]).then(res => {
+      pageState(that).finish()
+      that.setData({
+        barItems: res[0].data,
+        toDayRecommend: res[1].data,
+        hots: res[2].data,
+        news: res[3].data,
+        cooks: res[4].data
+      })
+    }).catch(res => {
+      pageState(this).error(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -135,7 +117,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    wx.showNavigationBarLoading()
+    this.loadData()
+    // 隐藏导航栏加载框
+    wx.hideNavigationBarLoading()
+    // 停止下拉动作
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -149,6 +136,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      title: '米勺美食',
+      imageUrl: this.data.barItems[0].url,
+      path: util.getCurrentPageUrl()
+    }
   }
 })

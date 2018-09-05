@@ -1,32 +1,23 @@
 const app = getApp()
 //公共请求方法  仅支持post
 function request(obj) {
-  if (app.globalData.netWorkType === 'none') {
-    wx.showToast({
-      title: '无网络连接',
-      icon: 'none'
+  if (app.globalData.token === null) {
+    login().then(res => {
+      doRequest(obj)
     })
-    return
+  } else {
+    doRequest(obj)
   }
-  checkLoginStatus(obj);
-}
-
-//检查登录状态
-function checkLoginStatus(obj) {
-  var loginStatus = wx.getStorageSync('loginStatus')
-  app.globalData.setUserInfo = loginStatus.setUserInfo
-  obj.token = loginStatus.token
-  doRequest(obj)
 }
 
 //发起服务器请求
 function doRequest(obj) {
-  console.log("实际请求token:" + obj.token)
+  console.log("实际请求token:" + app.globalData.token)
   console.log("请求地址:" + obj.url)
   console.log("请求参数:" + JSON.stringify(obj.data))
   var header = obj.header || {}
   header['content-type'] = 'application/json'
-  header['ms-token'] = obj.token
+  header['ms-token'] = app.globalData.token
   if (obj.message) {
     wx.showLoading({
       title: obj.message,
@@ -44,7 +35,9 @@ function doRequest(obj) {
       }
       if (res.data.code === 403) {
         console.log("token失效：" + JSON.stringify(res.data))
-        relogin()
+        login().then(res => {
+          getCurrentPages()[getCurrentPages().length - 1].onLoad()
+        })
       } else if (res.data.code === 0) {
         console.log("响应报文：" + JSON.stringify(res.data))
         obj.success(res.data)
@@ -54,44 +47,48 @@ function doRequest(obj) {
       }
     },
     fail: function(res) {
-      if (obj.message != "") {
+      if (obj.message) {
         wx.hideLoading()
       }
-      wx.showToast({
-        title: '糟糕,服务器开小差了~',
-        icon: 'none'
-      })
+      if (app.globalData.netWorkType === 'none') {
+        obj.fail('请检查您的网络连接')
+      } else {
+        obj.fail('糟糕,服务器开小差了~')
+      }
     }
   })
 }
 
-function relogin() {
-  wx.login({
-    success: function(res) {
-      if (res.code) {
-        console.log("登录成功：" + res.code);
-        wx.request({
-          url: `${app.globalData.API_URL}/api/wxa/v1/login/wxCode`,
-          method: 'post',
-          data: {
-            code: res.code
-          },
-          success: function(res) {
-            console.log("登录：" + JSON.stringify(res))
-            if (res.data.code === 0) {
-              app.saveLoginStatus(res.data.data).then(res=>{
-                getCurrentPages()[getCurrentPages().length - 1].onLoad()
-              })
+function login() {
+  return new Promise(function(resolve, reject) {
+    wx.login({
+      success: function(res) {
+        if (res.code) {
+          console.log("登录成功：" + res.code);
+          wx.request({
+            url: `${app.globalData.API_URL}/api/wxa/v1/login/wxCode`,
+            method: 'post',
+            data: {
+              code: res.code
+            },
+            success: function(res) {
+              console.log("登录：" + JSON.stringify(res))
+              if (res.data.code === 0) {
+                app.globalData.token = res.data.data.token
+                app.globalData.setUserInfo = res.data.data.setUserInfo
+                resolve('登录成功')
+              }
+            },
+            fail: function(res) {
+              console.log("登录失败：" + JSON.stringify(res))
+              reject('登录失败')
             }
-          },
-          fail: function(res) {
-            console.log("登录失败：" + JSON.stringify(res))
-          }
-        })
-      } else {
-        console.log('登录失败！' + res.errMsg)
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
       }
-    }
+    })
   })
 }
 /**
@@ -129,16 +126,13 @@ export function vailPassCode(mobile, msgCode, resolve, reject) {
 /**
  * 注册
  */
-export function register(mobile, msgCode, nickName, birthDay, sex, resolve, reject) {
+export function register(mobile, msgCode, resolve, reject) {
   request({
     message: "正在注册...",
     url: `${app.globalData.API_URL}/api/wxa/v1/user/register`,
     data: {
       mobile: mobile,
-      code: msgCode,
-      nickName: nickName,
-      birthDay: birthDay,
-      sex: sex
+      code: msgCode
     },
     success: resolve,
     fail: reject
@@ -148,23 +142,13 @@ export function register(mobile, msgCode, nickName, birthDay, sex, resolve, reje
 /**
  * 获取首页bar
  */
-export function getHomeBar(resolve, reject) {
-  request({
-    url: `${app.globalData.API_URL}/api/wxa/v1/video/indexBar`,
-    success: resolve,
-    fail: reject
-  })
-}
-
-/**
- * 获取首页推荐等数据
- */
-export function getHomeVedio(resolve, reject) {
-  request({
-    message: "正在加载...",
-    url: `${app.globalData.API_URL}/api/wxa/v1/video/index`,
-    success: resolve,
-    fail: reject
+export function getHomeBar() {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/indexBar`,
+      success: resolve,
+      fail: reject
+    })
   })
 }
 
@@ -214,23 +198,6 @@ export function getNewList(lastTimeStamp, pageSize) {
     })
   })
 }
-
-// /**
-//  * 点赞最多列表
-//  */
-// export function getLikeList(lastTimeStamp, pageSize) {
-//   return new Promise(function(resolve, reject) {
-//     request({
-//       url: `${app.globalData.API_URL}/api/wxa/v1/video/likelist`,
-//       data: {
-//         lastTimeStamp: lastTimeStamp,
-//         pageSize: pageSize
-//       },
-//       success: resolve,
-//       fail: reject
-//     })
-//   })
-// }
 
 /**
  * 烹饪方式列表
@@ -286,15 +253,17 @@ export function getVedioList(st, mt, nextPage, pageSize, resolve, reject) {
 /**
  * 获取视频详情
  */
-export function getVedioDetail(id, resolve, reject) {
-  request({
-    message: "正在加载...",
-    url: `${app.globalData.API_URL}/api/wxa/v1/video/detail`,
-    data: {
-      detailId: id
-    },
-    success: resolve,
-    fail: reject
+export function getVedioDetail(id) {
+  return new Promise(function(resolve, reject) {
+    request({
+      message: "正在加载...",
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/detail`,
+      data: {
+        detailId: id
+      },
+      success: resolve,
+      fail: reject
+    })
   })
 }
 

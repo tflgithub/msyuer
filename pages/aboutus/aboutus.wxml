@@ -1,0 +1,12 @@
+<view class="page">
+  <view class="weui-article">
+
+    <view class="weui-article__p">
+      米勺美食隶属于深圳市米勺科技有限公司，公司致力于发现美食、美好厨房、美好生活的一切内容，提倡健康、品质、环保的生活方式，做您随时随地的手机美食顾问。用爱、用心定制幸福厨房，吃好饭、做好菜-米勺美食，让烹饪更美好！
+    </view>
+    <view class="weui-article__title">深圳市米勺科技有限公司
+    </view>
+    <view class="weui-article__title">公司地址：深圳市南山区科发路一号1号楼301室
+    </view>
+  </view>
+</view>

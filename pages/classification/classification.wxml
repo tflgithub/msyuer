@@ -7,7 +7,7 @@
 
   <view class="classification">
     <navigator wx:for="{{cook}}" wx:for-item="item" class="item" url="../infolist/infolist?typeId={{item.value}}">
-      <image class="img" src="{{item.imageUrl}}" />
+      <image style='{{item.style}}' src="{{item.imageUrl}}" />
       <text class="text">{{item.text}}</text>
     </navigator>
   </view>
@@ -18,7 +18,7 @@
 
   <view class="classification">
     <navigator class="item" wx:for="{{foods}}" wx:for-item="item" url="../infolist/infolist?foodId={{item.value}}">
-      <image class="img" src="{{item.imageUrl}}" />
+      <image style='{{item.style}}' src="{{item.imageUrl}}" />
       <text class="text">{{item.text}}</text>
     </navigator>
   </view>

@@ -1,0 +1,8 @@
+<view class='modal-container' hidden='{{hideModal}}'>
+  <view class='modal-mask' bindtap='modal_mask_click'></view>
+  <view class='modal-box-container'>
+    <canvas canvas-id='image' style='width:{{canvasData.width}}rpx;height:{{canvasData.height}}rpx;' />
+    <button class="button_share" type='primary' hidden='{{saveImgBtnHidden}}' catchtap="save">{{canvasData.btnText}}</button>
+    <button type='primary' class="button_share" open-type="openSetting" bindopensetting='handleSetting' hidden='{{openSettingBtnHidden}}'>去授权</button>
+  </view>
+</view>

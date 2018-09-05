@@ -2,22 +2,27 @@
 import {
   ShowAlert
 } from './res/components/showToast/showToast.js'
+const util = require('./utils/util.js')
 App({
   ShowAlert,
+  util,
   onLaunch: function() {
     var that = this
-    wx.getNetworkType({
-      success: function(res) {
-        that.globalData.netWorkType = res.networkType
-      }
-    })
     wx.onNetworkStatusChange(function(res) {
       that.globalData.netWorkType = res.networkType
     })
   },
-  getLoginStatus: function() {
+  isAuth: function() {
     var that = this
     return new Promise(function(resolve, reject) {
+      wx.getNetworkType({
+        success: function(res) {
+          that.globalData.netWorkType = res.networkType
+          if (that.globalData.netWorkType === 'none') {
+            reject('请检查您的网络连接')
+          }
+        }
+      })
       wx.getSetting({
         success: res => {
           if (!res.authSetting['scope.userInfo']) {
@@ -25,33 +30,23 @@ App({
             wx.reLaunch({
               url: '/pages/auth/auth',
             })
-            reject('未登录');
           } else {
-            resolve('已登录');
             wx.getUserInfo({
               success: function(res) {
                 that.globalData.userInfo = res.userInfo
               }
             })
+            resolve('已授权')
           }
         }
       })
-    })
-  },
-  saveLoginStatus: function (data) {
-    return new Promise(function(resolve, reject) {
-        wx.setStorage({
-          key: 'loginStatus',
-          data: data,
-          success:resolve,
-          fail:reject
-        }) 
     })
   },
   globalData: {
     netWorkType: null,
     userInfo: null,
     setUserInfo: null,
-    API_URL: "http://10.30.31.8:8080"
+    token: null,
+    API_URL: "http://10.30.31.62:8080"
   },
 })
