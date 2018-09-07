@@ -1,11 +1,19 @@
 // pages/profile/collect/index.js
+const request = require('../../api/request.js')
+import pageState from '../../common/pageState/pageState.js'
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    showLoading: false,
+    showNoMore: false,
+    items: [{
+      
+    }],
+    pageSize: 10
   },
 
   /**
@@ -54,13 +62,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
   
   }
 })
