@@ -1,2 +1,13 @@
 <!--pages/profile/works/index.wxml-->
-<text>pages/profile/works/index.wxml</text>
+<import src="../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" />
+<view class="page">
+  <view class="item">
+    <view class="item-top-left">
+      dsdsdsdsdsdsdsdsdsdsdsdddddddddsdadsadsadsadsadasdasddasddsdsdsdsdsd
+    </view>
+    <button class="item-top-right">
+      删除
+    </button>
+  </view>
+</view>

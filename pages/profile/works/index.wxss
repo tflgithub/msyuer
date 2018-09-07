@@ -1,1 +1,28 @@
 /* pages/profile/works/index.wxss */
+
+.item {
+  display: flex;
+  position: relative;
+  padding: 20rpx;
+}
+
+.item-top-left {
+  width: 80%;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.item-top-right {
+  width: 20%;
+  height: 50rpx;
+}
+
+.item-middle {
+}
+
+.item-bottom {
+}

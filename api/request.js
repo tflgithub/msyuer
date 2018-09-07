@@ -492,6 +492,21 @@ export function publishWorks(id, content, urls) {
 }
 
 /**
+ * 删除已发布的作品
+ */
+export function deleteWork(id) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/deleteWorks`,
+      data: {
+        workId: id
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+/**
  * 获取当前菜谱视频相关的作品列表
  */
 export function getAboutWorks(id, currentPage, pageSize) {

@@ -138,7 +138,7 @@ Page({
   onShareAppMessage: function() {
     return {
       title: '米勺美食',
-      imageUrl: this.data.barItems[0].url,
+      imageUrl: '../../image/share.png',
       path: util.getCurrentPageUrl()
     }
   }

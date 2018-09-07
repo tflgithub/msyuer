@@ -1,8 +1,8 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-
-  <navigator wx:for="{{items}}" wx:for-item="item" url="../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+<view></view>
+  <navigator wx:for="{{items}}" wx:for-item="item" url="../../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
       <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
     </view>
@@ -12,11 +12,11 @@
       </view>
       <view class='cell'>
         <view class='item'>
-          <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+          <image src="../../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
           <view class="weui-media-box__info">{{item.clickNum}}</view>
         </view>
         <view class="item">
-          <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+          <image src="../../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
           <view class="weui-media-box__info">{{item.likeNum}}</view>
         </view>
       </view>

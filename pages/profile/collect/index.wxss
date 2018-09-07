@@ -1,1 +1,20 @@
 /* pages/profile/collect/index.wxss */
+.time {
+  position: absolute;
+  bottom: 40rpx;
+  left: 200rpx;
+  color: #fff;
+  font-size: 28rpx;
+}
+
+.cell {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell .item {
+  display: flex;
+  flex-direction: row;
+  margin-right:40rpx;
+  align-items: center;
+}

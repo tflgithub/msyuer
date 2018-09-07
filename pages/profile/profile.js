@@ -34,12 +34,12 @@ Page({
     var that = this
     console.log("是否绑定手机：" + app.globalData.setUserInfo)
     if (app.globalData.setUserInfo ===1) {
-      request.getUserInfo(function(res) {
+      request.getUserInfo().then(res=>{
         pageState(that).finish()
         that.setData({
           mobile: res.data.mobile
         })
-      }, function(res) {
+      }).catch(res=>{
         pageState(that).error(res)
       })
     } else {
