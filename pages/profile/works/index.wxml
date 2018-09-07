@@ -2,12 +2,26 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-  <view class="item">
-    <view class="item-top-left">
-      dsdsdsdsdsdsdsdsdsdsdsdddddddddsdadsadsadsadsadasdasddasddsdsdsdsdsd
+  <view class="layout_vertical" wx:for='{{items}}'>
+
+    <view class="item-top">
+      <view class="left">
+        {{item.workContent}}
+      </view>
+      <image src="../../../image/ic_boil.png" class="right" bindtap='deleteWork' data-id='{{item.workId}}' />
     </view>
-    <button class="item-top-right">
-      删除
-    </button>
+
+    <scroll-view class="image-group" scroll-x="true">
+      <image wx:for='{{item.workUrls}}' wx:for-item='item' src="{{item}}"></image>
+    </scroll-view>
+
+    <view class="item-bottom">
+      <view class="left">
+        {{item.videoTitle}}
+      </view>
+      <view>
+        {{item.workCreateTime}}
+      </view>
+    </view>
   </view>
 </view>

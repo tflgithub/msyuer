@@ -1,5 +1,14 @@
 // pages/uploadworks/index.js
 var count = 6
+const request = require('../../api/request.js');
+const app = getApp()
+const {
+  util
+} = app
+const uploadFile = require("../../utils/uploadFile.js")
+const promisify = require("../../utils/promisify.js")
+//转为promise对象
+const uploadImage = promisify(uploadFile.upload)
 Page({
 
   /**
@@ -7,7 +16,14 @@ Page({
    */
   data: {
     hiddenAdd: false,
-    files: []
+    files: [],
+    detailId: '',
+    content: '',
+    max: 10,
+    min: 5,
+    texts: "至少5个字",
+    currentWordNumber: 0,
+    images: []
   },
   chooseImage: function(e) {
     var that = this;
@@ -28,19 +44,71 @@ Page({
       }
     })
   },
-  // previewImage: function (e) {
-  //   wx.previewImage({
-  //     current: e.currentTarget.id, // 当前显示图片的http链接
-  //     urls: this.data.files // 需要预览的图片http链接列表
-  //   })
-  // },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    this.setData({
+      detailId: option.id
+    })
+  },
+  commit: function() {
+    if (this.data.files.length === 0) {
+      util.showToast('至少需要上传一张图片', 'none', 2000)
+      return
+    }
+    if (this.data.content.length < this.data.min) {
+      util.showToast(this.data.texts, 'none', 2000)
+      return
+    }
 
   },
-
+  bindinput: function(e) {
+    var value = e.detail.value;
+    var len = parseInt(value.length);
+    if (len > this.data.min)
+      this.setData({
+        texts: " "
+      })
+    if (len > this.data.max) return;
+    // 当输入框内容的长度大于最大长度限制（max)时，终止setData()的执行
+    this.setData({
+      currentWordNumber: len //当前字数  
+    });
+  },
+  uploadMultiImage: function(paths, token) {
+    let that = this
+    let url = 'https://v.miskitchen.com'
+    const promises = paths.map(function(path) {
+      return upload({
+        url: url,
+        path: path,
+        name: 'file',
+        extra: {
+          token: token
+        },
+      })
+    })
+    wx.showLoading({
+      title: '正在上传...',
+    })
+    Promise.all(promises).then(datas => {
+      //所有上传完成后
+      wx.hideLoading()
+      // 服务器返回的路径
+      let paths = datas.map(data => {
+        return data.data
+      })
+      // 保存，这里可以选择发送一个请求，保存这几条路径
+      images = images.concat(paths)
+      that.setData({
+        images: images
+      })
+    }).catch(res => {
+      wx.hideLoading()
+      util.showToast(res, 'none', 2000)
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

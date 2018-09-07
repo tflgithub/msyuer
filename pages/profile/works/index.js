@@ -19,7 +19,7 @@ Page({
         "videoTitle": "视频标题",
         "workId": 233,
         "workContent": "测试发表",
-        "workUrls": ["http://test.jpg", "http://test.jpg", "http://test.jpg"]
+        "workUrls": ["../../../image/share.png", "../../../image/share.png", "../../../image/share.png"]
       },
       {
         "workCreateTime": "2018-08-09 12:56",
@@ -27,7 +27,7 @@ Page({
         "videoTitle": "视频标题",
         "workId": 234,
         "workContent": "测试发表2",
-        "workUrls": ["http://test.jpg", "http://test.jpg", "http://test.jpg"]
+        "workUrls": ["../../../image/share.png", "../../../image/share.png", "../../../image/share.png"]
       }
     ],
     pageSize: 10,
@@ -83,7 +83,27 @@ Page({
   onReady: function() {
 
   },
-
+  deleteWork: function(e) {
+    var id = e.currentTarget.dataset.id;
+    console.log("要删除的" + id)
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除吗？',
+      success: function(sm) {
+        if (sm.confirm) {
+          // 用户点击了确定 可以调用删除方法了
+          request.deleteWork(id).then(res => {
+            that.getData()
+          }).catch(res => {
+            util.showToast(res, 'none', 2000)
+          })
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */

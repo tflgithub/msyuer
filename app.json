@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/home/home",
     "pages/uploadworks/index",
+    "pages/home/home",
+    
     "pages/detail/detail",
     "pages/bindaccount/bindaccount",
     "pages/infolist/infolist",
@@ -10,7 +11,7 @@
     "pages/auth/auth",
     "pages/aboutus/aboutus",
     "pages/profile/collect/index",
-    "pages/profile/message/inddex",
+    "pages/profile/message/index",
     "pages/profile/works/index",
     "pages/unlock/invite",
     "pages/unlock/help"

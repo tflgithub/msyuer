@@ -19,7 +19,7 @@ Page({
         "msgContent": "消息内容",
         "workId": 233,
         "msgAuthor": "平台",
-        "workUrls": ["http://test.jpg"]
+        "workUrls": ["../../../image/share.png"]
       },
       {
         "msgCreateTime": "2018-08-09 12:56",
@@ -27,7 +27,7 @@ Page({
         "msgContent": "消息内容",
         "workId": 233,
         "msgAuthor": "平台",
-        "workUrls": ["http://test.jpg"]
+        "workUrls": ["../../../image/share.png"]
       }
     ],
     pageSize: 10,

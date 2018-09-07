@@ -1,28 +1,50 @@
 /* pages/profile/works/index.wxss */
 
-.item {
+.item-top {
   display: flex;
-  position: relative;
-  padding: 20rpx;
 }
 
-.item-top-left {
-  width: 80%;
+.item-top .left {
+  flex: 1;
   display: -webkit-box;
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  margin-right: 40rpx;
 }
 
-.item-top-right {
-  width: 20%;
+.item-top .right{
+  width: 50rpx;
   height: 50rpx;
+  margin: 10rpx 10rpx 10rpx 10rpx
 }
 
-.item-middle {
+.image-group {
+  display: flex;
+  white-space: nowrap;
+  margin-top: 30rpx;
+}
+
+.image-group image {
+  display: inline-block;
+  width: 375rpx;
+  height: 180rpx;
+  margin-right: 20rpx;
 }
 
 .item-bottom {
+  display: flex;
+}
+
+.item-bottom .left {
+  flex: 1;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  margin-right: 40rpx;
 }

@@ -1,1 +1,8 @@
 /* pages/uploadworks/index.wxss */
+.hint{
+   font-size: 28rpx;
+   position: absolute;
+   top: 120rpx;
+   left: 30rpx;
+   color: #FF6600;
+}
