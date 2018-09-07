@@ -26,7 +26,9 @@ Page({
    */
   onLoad: function(options) {
     console.log("传进来的参数" + JSON.stringify(options))
-    this.data.where = options.where;
+    if (options.where) {
+      this.data.where = options.where;
+    }
     if (options.typeId) {
       this.data.typeId = [options.typeId]
     }
@@ -36,29 +38,7 @@ Page({
     this.onRetry()
   },
   onRetry: function() {
-    if (this.data.where) {
-      this.getData()
-    } else {
-      var that = this;
-      request.getVedioList(this.data.typeId, this.data.foodId, 0, this.data.pageSize, function(res) {
-        if (res.data.barTitle) {
-          wx.setNavigationBarTitle({
-            title: res.data.barTitle,
-          })
-        }
-        if (res.data.items.length === 0) {
-          pageState(that).empty()
-        } else {
-          pageState(that).finish()
-          that.setData({
-            data: res.data,
-            items: res.data.items
-          })
-        }
-      }, function(res) {
-        pageState(that).error(res)
-      })
-    }
+    this.getData()
   },
   getData: function() {
     var that = this;
@@ -120,6 +100,26 @@ Page({
           pageState(that).error(res)
         })
         break
+      default:
+        request.getVedioList(this.data.typeId, this.data.foodId, 0, this.data.pageSize, function(res) {
+          if (res.data.barTitle) {
+            wx.setNavigationBarTitle({
+              title: res.data.barTitle,
+            })
+          }
+          if (res.data.items.length === 0) {
+            pageState(that).empty()
+          } else {
+            pageState(that).finish()
+            that.setData({
+              data: res.data,
+              items: res.data.items
+            })
+          }
+        }, function(res) {
+          pageState(that).error(res)
+        })
+        break
     }
   },
 
@@ -168,6 +168,19 @@ Page({
           that.showLoading = false
         })
         break
+      default:
+        request.getVedioList(this.data.typeId, this.data.foodId, this.data.data.lastTimeStamp, this.data.pageSize, function(res) {
+          that.showLoading = false
+          var list = that.data.items;
+          list = list.concat(res.data.items);
+          that.setData({
+            items: list,
+            data: res.data
+          })
+        }, function(res) {
+          that.showLoading = false
+        })
+        break
     }
   },
   /**
@@ -205,16 +218,7 @@ Page({
     var that = this
     that.data.showNoMore = false
     wx.showNavigationBarLoading();
-    if (this.data.where) {
-      this.getData()
-    } else {
-      request.getVedioList(this.data.typeId, this.data.foodId, 0, this.data.pageSize, function(res) {
-        that.setData({
-          data: res.data,
-          items: res.data.items
-        });
-      })
-    }
+    this.getData()
     // 隐藏导航栏加载框
     wx.hideNavigationBarLoading();
     // 停止下拉动作
@@ -228,21 +232,7 @@ Page({
     var that = this
     if (!this.data.showNoMore && this.data.data.haveNext) {
       this.showLoading = true
-      if (this.data.where) {
-        this.getMoreData()
-      } else {
-        request.getVedioList(this.data.typeId, this.data.foodId, this.data.data.lastTimeStamp, this.data.pageSize, function(res) {
-          that.showLoading = false
-          var list = that.data.items;
-          list = list.concat(res.data.items);
-          that.setData({
-            items: list,
-            data: res.data
-          })
-        }, function(res) {
-          that.showLoading = false
-        })
-      }
+      this.getMoreData()
     } else {
       this.setData({
         showNoMore: true
@@ -254,10 +244,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
+    var that = this
     return {
-      title: '米勺美食',
-      imageUrl: this.data.data.barUrl,
-      path: util.getCurrentPageUrl() + '?where=' + this.where + '&typeId=' + this.typeId + '&foodId=' + this.foodId
+      title: '这个秋天，邀请你一起来享受美食',
+      imageUrl: '../../image/share.png',
+      path: util.getCurrentPageUrl() + '?where=' + that.data.where + '&typeId=' + that.data.typeId + '&foodId=' + that.data.foodId
     }
   }
 })
