@@ -138,7 +138,7 @@ Page({
   onShareAppMessage: function() {
     return {
       title: '这个秋天，邀请你一起来享受美食',
-      imageUrl:'../../image/share.png',
+      imageUrl: '../../image/share.png',
       path: util.getCurrentPageUrl()
     }
   }

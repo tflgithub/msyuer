@@ -47,6 +47,6 @@ App({
     userInfo: null,
     setUserInfo: null,
     token: null,
-    API_URL: "http://10.30.31.62:8080"
+    API_URL: "https://api.miskitchen.com"
   },
 })
