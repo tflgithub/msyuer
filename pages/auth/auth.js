@@ -5,7 +5,7 @@ Page({
   },
   login: function() {
     wx.reLaunch({
-      url: '../home/home'
+      url: '../unlock/help'
     })
   },
   onShow: function() {

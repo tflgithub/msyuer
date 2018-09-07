@@ -69,13 +69,17 @@ function login() {
             url: `${app.globalData.API_URL}/api/wxa/v1/login/wxCode`,
             method: 'post',
             data: {
-              code: res.code
+              code: res.code,
+              nickName: app.globalData.userInfo.nickName,
+              avatarUrl: app.globalData.userInfo.avatarUrl
             },
             success: function(res) {
               console.log("登录：" + JSON.stringify(res))
               if (res.data.code === 0) {
                 app.globalData.token = res.data.data.token
                 app.globalData.setUserInfo = res.data.data.setUserInfo
+                app.globalData.canSee = res.data.canSee
+                app.globalData.hadMsg = res.data.hadMsg
                 resolve('登录成功')
               }
             },
@@ -106,6 +110,23 @@ export function getPassCode(mobile, resolve, reject) {
   })
 }
 
+/**
+ * 获取小程序二维码
+ */
+export function getWxQrCode(type, path, width) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/login/wxaQrCode`,
+      data: {
+        type: type,
+        page: path,
+        width: width
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
 
 /**
  *  验证短信验证
@@ -126,16 +147,19 @@ export function vailPassCode(mobile, msgCode, resolve, reject) {
 /**
  * 注册
  */
-export function register(mobile, msgCode, resolve, reject) {
-  request({
-    message: "正在注册...",
-    url: `${app.globalData.API_URL}/api/wxa/v1/user/register`,
-    data: {
-      mobile: mobile,
-      code: msgCode
-    },
-    success: resolve,
-    fail: reject
+export function register(mobile, msgCode, uid) {
+  return new Promise(function(resolve, reject) {
+    request({
+      message: "正在注册...",
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/register`,
+      data: {
+        mobile: mobile,
+        code: msgCode,
+        shareUid: uid
+      },
+      success: resolve,
+      fail: reject
+    })
   })
 }
 
@@ -268,25 +292,232 @@ export function getVedioDetail(id) {
 }
 
 /**
- * 视频点赞
+ * 视频点赞收藏
  */
-export function like(id, resolve, reject) {
-  request({
-    message: "正在提交...",
-    url: `${app.globalData.API_URL}/api/wxa/v1/video/like`,
-    data: {
-      detailId: id
-    },
-    success: resolve,
-    fail: reject
+export function like(id) {
+  return new Promise(function(resolve, reject) {
+    request({
+      message: "正在提交...",
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/like`,
+      data: {
+        detailId: id
+      },
+      success: resolve,
+      fail: reject
+    })
   })
 }
 
-export function getUserInfo(resolve, reject) {
-  request({
-    message: "正在加载",
-    url: `${app.globalData.API_URL}/api/wxa/v1/user/getUserInfo`,
-    success: resolve,
-    fail: reject
+/**
+ * 取消点赞收藏
+ */
+export function unlike(id) {
+  return new Promise(function(resolve, reject) {
+    request({
+      message: "正在提交...",
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/unlike`,
+      data: {
+        detailId: id
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 获取当前登录用户信息
+ */
+export function getUserInfo() {
+  return new Promise(function(resolve, reject) {
+    request({
+      message: "正在加载",
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/getUserInfo`,
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 获取用户点赞收藏列表
+ */
+export function getUserLikes(currentPage, pageSize) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/getUserLikes`,
+      data: {
+        lastStamp: currentPage,
+        pageSize: pageSize
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 获取当前登录用户作品列表
+ */
+export function getUserWorks(currentPage, pageSize) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/getUserWorks`,
+      data: {
+        lastStamp: currentPage,
+        pageSize: pageSize
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 获取当前登录用户作品的消息列表
+ */
+export function getUserWorkMsgs(currentPage, pageSize) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/getUserWorkMsgs`,
+      data: {
+        lastStamp: currentPage,
+        pageSize: pageSize
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 获取当前登录用户被助力解锁信息
+ */
+export function getHelpInfo() {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/getUserNeedHelp`,
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 用来判断当前登录用户是否已经助力解锁过
+ * param:uid 需要被助力的用户id
+ */
+export function isHelp(uid) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/isHelp`,
+      data: {
+        uid: uid
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 助力解锁  
+ * param:uid 需要被助力的用户id
+ */
+export function help(uid) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/help`,
+      data: {
+        uid: uid
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 评分
+ * param:id 视频id score 分数  evaluate 评价内容
+ */
+export function score(id, score, evaluate) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/user/help`,
+      data: {
+        detailId: id,
+        score: score,
+        evaluate: evaluate
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 播放视频
+ */
+export function vedioPlay(id) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/play`,
+      data: {
+        detailId: id
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 发布作品
+ * param:id 相关菜谱视频ID  content:内容  urls: 上传完成的图片（支持多张，最多6张）
+ */
+export function publishWorks(id, content, urls) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/works`,
+      data: {
+        detailId: id,
+        content: content,
+        urls: urls
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 获取当前菜谱视频相关的作品列表
+ */
+export function getAboutWorks(id, currentPage, pageSize) {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/worksList`,
+      data: {
+        detailId: id,
+        lastStamp: currentPage,
+        pageSize: pageSize
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
+/**
+ * 获取七牛的token 用来上传图片
+ */
+export function getQiniuToken() {
+  return new Promise(function(resolve, reject) {
+    request({
+      url: `${app.globalData.API_URL}/api/wxa/v1/tools/qiniuToken`,
+      success: resolve,
+      fail: reject
+    })
   })
 }

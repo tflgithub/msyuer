@@ -47,6 +47,9 @@ App({
     userInfo: null,
     setUserInfo: null,
     token: null,
+    canSee:null,
+    hadMsg:null,
+    uid:null,
     API_URL: "http://10.30.31.62:8080"
   },
 })

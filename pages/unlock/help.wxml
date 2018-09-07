@@ -1,0 +1,6 @@
+<!--pages/unlock/help.wxml-->
+<view class="page">
+  <image class='avatar' src='{{avatarUrl}}' />
+  <view class='nickname'>{{nickName}}</view>
+  <button open-type='getUserInfo' wx:if="{{canIUse}}" bindtap='unlock'>帮助解锁</button>
+</view>

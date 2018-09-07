@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "详情",
   "usingComponents": {
-    "share-image": "/res/components/shareImage/shareImage"
+    "share-image": "/res/components/shareImage/shareImage",
+    "custom-modal": "/res/components/customModal/index"
   }
 }

@@ -2,7 +2,18 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class='pages' wx:if="{{data.detailInfo}}">
-  <share-image drawDataList="{{dataList}}" hideModal="{{hideModal}}" />
+<custom-modal hideModal="{{hideModal}}" height='60%' width='80%' left='取消' right='提交' bindcancel="modalCancel" bindconfirm='modalConfirm'>
+  <view class='modal-content' style='margin:10% 0 0 10%'>
+  <block wx:for="{{stars}}">
+      <image class="star-image" style="left: {{item*100}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
+        <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
+        <view class="item" style="left:50rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
+      </image>
+    </block>
+  </view>
+</custom-modal>
+
+  <!-- <share-image drawDataList="{{dataList}}" hideModal="{{hideModal}}" /> -->
   <view wx:if="{{isPlaying}}">
     <video id="myVideo" src='{{data.detailInfo.videoUrl}}' objectFit="cover" show-center-play-btn='false' show-fullscreen-btn='false' poster="{{data.detailInfo.phoUrl}}" controls>
     </video>
@@ -95,4 +106,8 @@
       </view>
     </block>
   </block>
+  <view class="bottom-float">
+<view bindtap='rating'>评论</view>
+<view bindtap='uploadWorks'>上传作品</view>
+</view>
 </view>

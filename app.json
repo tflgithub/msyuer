@@ -1,13 +1,19 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/uploadworks/index",
     "pages/detail/detail",
     "pages/bindaccount/bindaccount",
     "pages/infolist/infolist",
     "pages/profile/profile",
     "pages/classification/classification",
     "pages/auth/auth",
-    "pages/aboutus/aboutus"
+    "pages/aboutus/aboutus",
+    "pages/profile/collect/index",
+    "pages/profile/message/inddex",
+    "pages/profile/works/index",
+    "pages/unlock/invite",
+    "pages/unlock/help"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -29,15 +29,14 @@ Page({
       })
       return
     }
-
-    request.register(this.data.mobile, this.data.msgCode, function(res) {
-      console.log("注册返回:" + JSON.stringify(res))
-      app.globalData.token=res.data.token
-      app.globalData.setUserInfo=1
+    request.register(this.data.mobile, this.data.msgCode).then(res => {
+      app.globalData.token = res.data.token
+      app.globalData.uid = res.data.uid
+      app.globalData.setUserInfo = 1
       wx.reLaunch({
         url: '../home/home'
       })
-    }, function(res) {
+    }).catch(res => {
       wx.showToast({
         title: res,
         icon: 'none'

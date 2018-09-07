@@ -1,0 +1,14 @@
+/* pages/unlock/help.wxss */
+
+.avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  margin-right: 66rpx;
+}
+
+.nickname {
+  color: #2e2e2e;
+  font-size: 38rpx;
+  font-weight: bold;
+}

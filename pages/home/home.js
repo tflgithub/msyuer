@@ -19,7 +19,8 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 1000,
-    current: 0
+    current: 0,
+    hideModal: true
   },
   gotoDetail: function(e) {
     var item = e.currentTarget.dataset.id;
@@ -54,7 +55,6 @@ Page({
       url: `../infolist/infolist?where=${e.currentTarget.dataset.id}`
     })
   },
-
   /**
    * 生命周期函数--监听页面加载
    */

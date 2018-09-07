@@ -1,0 +1,5 @@
+<!--pages/unlock/invite.wxml-->
+<view class="page">
+
+<button open-type="share">邀请朋友助力</button>
+</view>

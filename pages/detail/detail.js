@@ -15,13 +15,18 @@ Page({
     videoContext: null,
     likeNum: '',
     hadLike: false,
-    isPlaying: false,
+    isPlaying: null,
     showCover: true,
     recommendList: [],
     dataList: {},
     hideModal: true,
     detailId: null,
-    isBindMobile: null
+    isBindMobile: null,
+    stars: [0, 1, 2, 3, 4],
+    normalSrc: '../../image/ic_ban.png',
+    selectedSrc: '../../image/ic_boil.png',
+    halfSrc: '../../image/ic_guo.png',
+    key: 0, //评分
   },
   /**
    * 生命周期函数--监听页面加载
@@ -32,11 +37,9 @@ Page({
     this.loadData()
   },
   loadData: function() {
-
     var that = this;
     console.log("当前ID：" + this.detailId);
     Promise.all([request.getVedioDetail(this.detailId), request.getRecommend(this.detailId)]).then(res => {
-      console.log("dededede" + JSON.stringify(res))
       pageState(that).finish()
       var article = res[0].data.detailInfo.summary;
       WxParse.wxParse('article', 'html', article, that, 5);
@@ -47,9 +50,6 @@ Page({
         isBindMobile: res[0].data.setUserInfo,
         recommendList: res[1].data.recommendList
       })
-      if (res[0].data.setUserInfo === 1) {
-        that.startPlay()
-      }
     }).catch(res => {
       pageState(this).error(res)
     })
@@ -68,15 +68,65 @@ Page({
     })
   },
   startPlay: function(e) {
-    this.videoContext.play()
-    this.setData({
-      isPlaying: true
-    })
+    if (app.globalData.canSee) {
+      this.videoContext.play()
+      //如果没有播放过，就发送到服务器
+      if (this.isPlaying === null) {
+        request.vedioPlay(this.detailId).then(res => {
+          console.log("发送播放动作到服务成功")
+        }).catch(res => {
+          console.log("发送播放动作到服务失败：" + res)
+        })
+      }
+      this.setData({
+        isPlaying: true
+      })
+    } else {
+      wx.navigateTo({
+        url: '../unlock/invite',
+      })
+    }
   },
   stopPlay: function() {
     this.videoContext.stop()
     this.setData({
       isPlaying: false
+    })
+  },
+  rating: function(e) {
+    this.setData({
+      hideModal: false
+    })
+  },
+  modalConfirm: function(e) {
+    console.log("点击了提交" + this.data.key + "分")
+  },
+  modalCancel: function(e) {
+    console.log('点击了取消')
+  },
+  //点击左边,半颗星
+  selectLeft: function(e) {
+    console.log("点击左边,半颗星")
+    var key = e.currentTarget.dataset.key
+    if (this.data.key == 0.5 && e.currentTarget.dataset.key == 0.5) {
+      //只有一颗星的时候,再次点击,变为0颗
+      key = 0;
+    }
+    this.setData({
+      key: key
+    })
+  },
+  //点击右边,整颗星
+  selectRight: function(e) {
+    console.log("点击右边,整颗星")
+    var key = e.currentTarget.dataset.key
+    this.setData({
+      key: key
+    })
+  },
+  uploadWorks: function(e) {
+    wx.navigateTo({
+      url: '../uploadworks/index',
     })
   },
   dolike: function(e) {
