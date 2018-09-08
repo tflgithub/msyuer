@@ -1,6 +1,7 @@
 /* pages/profile/profile.wxss */
 
 .userinfo {
+  position: relative;
   display: flex;
   flex-direction: row;
   padding: 15rpx;
@@ -8,6 +9,14 @@
   align-items: center;
   height: 234rpx;
   background-color: #ffe037;
+}
+
+.userinfo .message{
+  position: absolute;
+  left: 660rpx;
+  top:0;
+  width: 44rpx;
+  height: 44rpx;
 }
 
 .userinfo .left {

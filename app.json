@@ -1,18 +1,23 @@
 {
   "pages": [
+    "pages/detail/detail",
+    "pages/profile/profile",
+    "pages/profile/message/index",
+    "pages/profile/collect/index",
+    "pages/profile/works/index",
     "pages/uploadworks/index",
     "pages/home/home",
     
-    "pages/detail/detail",
+    
     "pages/bindaccount/bindaccount",
     "pages/infolist/infolist",
-    "pages/profile/profile",
+   
     "pages/classification/classification",
     "pages/auth/auth",
     "pages/aboutus/aboutus",
-    "pages/profile/collect/index",
-    "pages/profile/message/index",
-    "pages/profile/works/index",
+    
+    
+    
     "pages/unlock/invite",
     "pages/unlock/help"
   ],

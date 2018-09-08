@@ -2,15 +2,17 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-  <view class="layout_vertical" wx:for='{{items}}'>
-    <view class="item-top">
-      <view class="left">
-        {{item.msgAuthor}}回复:{{item.msgContent}}
+  <navigator wx:for='{{items}}'>
+    <view class='item'>
+      <view class='item-left'>
+        <view class='item-content'>
+          <span>{{item.msgAuthor}}回复:</span>
+          {{item.msgContent}}
+        </view>
+        <text class='item-time'>{{item.msgCreateTime}}</text>
       </view>
-      <image src="{{item.workUrls}}" class="right" />
+      <image src="{{item.workUrls}}" class="item-image" />
     </view>
-    <view class="item-bottom">
-      {{item.msgCreateTime}}
-    </view>
-  </view>
+    <view class='line'/>
+  </navigator>
 </view>

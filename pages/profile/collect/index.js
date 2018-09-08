@@ -14,8 +14,31 @@ Page({
     showLoading: false,
     showNoMore: false,
     items: [{
-        "duration": "16.23",
-        "phoUrl": "http://g.hiphotos.baidu.com/image/pic/item/0dd7912397dda1443b5c9090bfb7d0a20cf486bf.jpg",
+        "duration": "16:23",
+        "phoUrl": "../../../image/share.png",
+        "detailId": "234rrfgfh900",
+        "clickNum": "2366",
+        "title": "abc测试dsadasdasdasdasdas",
+        "likeNum": "1266"
+      },
+      {
+        "duration": "16:23",
+        "phoUrl": "../../../image/share.png",
+        "detailId": "234rrfgfh900",
+        "clickNum": "2366",
+        "title": "abc测试dasdasdasdasd",
+        "likeNum": "1266"
+      },
+      {
+        "duration": "16:23",
+        "phoUrl": "../../../image/share.png",
+        "detailId": "234rrfgfh900",
+        "clickNum": "2366",
+        "title": "abc测试",
+        "likeNum": "1266"
+      }, {
+        "duration": "16:23",
+        "phoUrl": "../../../image/share.png",
         "detailId": "234rrfgfh900",
         "clickNum": "2366",
         "title": "abc测试",
@@ -23,7 +46,7 @@ Page({
       },
       {
         "duration": "16.23",
-        "phoUrl": "http://g.hiphotos.baidu.com/image/pic/item/0dd7912397dda1443b5c9090bfb7d0a20cf486bf.jpg",
+        "phoUrl": "../../../image/share.png",
         "detailId": "234rrfgfh900",
         "clickNum": "2366",
         "title": "abc测试",
@@ -32,7 +55,7 @@ Page({
     ],
     pageSize: 10,
     currentPage: 0,
-    haveNext:false
+    haveNext: false
   },
 
   /**

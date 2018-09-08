@@ -89,7 +89,7 @@ Page({
     var that = this
     wx.showModal({
       title: '提示',
-      content: '确定要删除吗？',
+      content: '删除后将不能恢复，确定是要删除吗？',
       success: function(sm) {
         if (sm.confirm) {
           // 用户点击了确定 可以调用删除方法了

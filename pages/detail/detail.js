@@ -23,9 +23,9 @@ Page({
     detailId: null,
     isBindMobile: null,
     stars: [0, 1, 2, 3, 4],
-    normalSrc: '../../image/ic_ban.png',
-    selectedSrc: '../../image/ic_boil.png',
-    halfSrc: '../../image/ic_guo.png',
+    normalSrc: '../../image/ic_star_normal.png',
+    selectedSrc: '../../image/ic_star_full.png',
+    halfSrc: '../../image/ic_star_half.png',
     key: 0, //评分
   },
   /**
@@ -34,7 +34,7 @@ Page({
   onLoad: function(options) {
     this.videoContext = wx.createVideoContext('myVideo')
     this.detailId = options.id
-    this.loadData()
+    //this.loadData()
   },
   loadData: function() {
     var that = this;

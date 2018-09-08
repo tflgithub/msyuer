@@ -1,40 +1,15 @@
 <!--pages/uploadworks/index.wxml-->
-<view class="page">
-  <view class="weui-cells__title">文本域</view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell">
-      <view class="weui-cell__bd">
-        <textarea bindinput="bindinput" minlength="{{min}}" maxlength="{{max}}" class="weui-textarea" placeholder="请输入文本" style="height: 3.3em" />
-        <view class="weui-textarea-counter">{{currentWordNumber}}/{{max}}</view>
-        <text class="hint">{{texts}}</text>
+<view class="page" style='padding:45rpx'>
+  <view class="title">辣椒炒肉</view>
+  <textarea class="textarea" bindinput="bindinput" minlength="{{min}}" maxlength="{{max}}" placeholder="关于这道菜的心得，快快与我们分享吧～" />
+  <view style='margin-top:30rpx;margin-bottom:30rpx;height:450rpx'>
+    <block wx:for="{{files}}" wx:key="*this">
+      <view class='upload-image' id="{{item}}">
+        <image src="{{item}}" class='image' mode="aspectFill" />
+        <image src='../../image/ic_delete.png' class='delete-image' catchtap='deleteImage' data-index='{{index}}' />
       </view>
-    </view>
+    </block>
+    <image src='../../image/ic_add.png' class="add-image" hidden='{{hiddenAdd}}' bindtap="chooseImage" />
   </view>
-  <view class="page__bd">
-    <view class="weui-cells">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <view class="weui-uploader">
-            <view class="weui-uploader__hd">
-              <view class="weui-uploader__title">图片上传</view>
-              <view class="weui-uploader__info">{{files.length}}/6</view>
-            </view>
-            <view class="weui-uploader__bd">
-              <view class="weui-uploader__files" id="uploaderFiles">
-                <block wx:for="{{files}}" wx:key="*this">
-                  <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                  </view>
-                </block>
-              </view>
-              <view hidden='{{hiddenAdd}}' class="weui-uploader__input-box">
-                <view class="weui-uploader__input" bindtap="chooseImage"></view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-  <button class="weui-btn" type="primary" bindtap="commit">提交</button>
+  <button class="button" bindtap="commit">提交</button>
 </view>

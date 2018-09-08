@@ -1,17 +1,18 @@
 <import src="../../wxParse/wxParse.wxml" />
-<import src="../../common/pageState/pageState.wxml" />
-<template is="pageState" data="{{...pageState}}" />
-<view class='pages' wx:if="{{data.detailInfo}}">
-<custom-modal hideModal="{{hideModal}}" height='60%' width='80%' left='取消' right='提交' bindcancel="modalCancel" bindconfirm='modalConfirm'>
-  <view class='modal-content' style='margin:10% 0 0 10%'>
-  <block wx:for="{{stars}}">
-      <image class="star-image" style="left: {{item*100}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
-        <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
-        <view class="item" style="left:50rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
-      </image>
-    </block>
-  </view>
-</custom-modal>
+<!-- <import src="../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" /> -->
+<view class='pages'>
+  <custom-modal hideModal="{{hideModal}}" height='60%' width='80%' left='取消' right='提交' bindcancel="modalCancel" bindconfirm='modalConfirm'>
+    <view class='modal-content' style='margin:40rpx 0 0 10%'>
+    <text style='font-size:34rpx;color:#000'>打分</text>
+      <block wx:for="{{stars}}">
+        <image class="star-image" style="left: {{item*80}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
+          <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
+          <view class="item" style="left:24rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
+        </image>
+      </block>
+    </view>
+  </custom-modal>
 
   <!-- <share-image drawDataList="{{dataList}}" hideModal="{{hideModal}}" /> -->
   <view wx:if="{{isPlaying}}">
@@ -30,84 +31,84 @@
       </view>
     </block>
     <block wx:else>
-    <view class="play_icon">
-       <image src="../../image/ic_video.png" style='width:100rpx;height:100rpx;' bindtap='startPlay' />
+      <view class="play_icon">
+        <image src="../../image/ic_video.png" style='width:100rpx;height:100rpx;' bindtap='startPlay' />
       </view>
     </block>
   </view>
 
-  <block wx:if="{{!data.detailInfo}}">
-    <view class="weui-loadmore weui-loadmore_line">
-      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">正在加载...</view>
+  <view wx:if="{{data.detailInfo.title}}" style='margin-left:30rpx;font-weight:bold;font-size:38rpx;'>{{data.detailInfo.title}}</view>
+  <view class='midlle'>
+    <view class='cell' style='margin-bottom:20rpx'>
+      <view class='item' wx:if="{{data.detailInfo.clickNum}}">
+        <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+        <view class="weui-media-box__info">{{data.detailInfo.clickNum}}</view>
+      </view>
+      <view wx:if="{{likeNum}}" class="item">
+        <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+        <view class="weui-media-box__info">{{likeNum}}</view>
+      </view>
+    </view>
+    <view class="cell">
+
+      <!-- <button bindtap='fenxiang' plain='true' style='border:none;'>
+          <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx'></image>
+        </button> -->
+      <button disabled="{{hadLike}}" bindtap='dolike' style='border:none;background-color:white' plain='true'>
+        <block wx:if="{{hadLike}}">
+          <image src="../../image/ic_like_click.png" style='width:40rpx;height:40rpx;' />
+        </block>
+        <block wx:else>
+          <image src="../../image/ic_like_default.png" style='width:40rpx;height:40rpx;' />
+        </block>
+      </button>
+    </view>
+  </view>
+  <view class='line'></view>
+  <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>简介</view>
+  <view style='margin-left:30rpx;margin-top:20rpx;margin-bottom:30rpx;color:#666666;font-size:30rpx'>
+    <view class="wxParse">
+      <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+    </view>
+  </view>
+  <block wx:if="{{recommendList.length>0}}">
+    <view class='line'></view>
+    <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>推荐</view>
+  </block>
+  <block wx:for="{{recommendList}}" wx:for-item="item" wx:key="{{index}}">
+    <view bindtap='gotoDetail' data-id="{{item.detailId}}" class="weui-media-box weui-media-box_appmsg">
+      <view class="weui-media-box__hd_in-appmsg">
+        <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
+      </view>
+      <view class="weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__desc">{{item.title}}
+          <text class="time">{{item.duration}}</text>
+        </view>
+        <view class='cell'>
+          <view class='item'>
+            <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+            <view class="weui-media-box__info">{{item.clickNum}}</view>
+          </view>
+          <view class="item">
+            <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+            <view class="weui-media-box__info">{{item.likeNum}}</view>
+          </view>
+        </view>
+      </view>
     </view>
   </block>
 
-  <block wx:else>
-    <view wx:if="{{data.detailInfo.title}}" style='margin-left:30rpx;font-weight:bold;font-size:38rpx;'>{{data.detailInfo.title}}</view>
-    <view class='midlle'>
-      <view class='cell' style='margin-bottom:20rpx'>
-        <view class='item' wx:if="{{data.detailInfo.clickNum}}">
-          <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-          <view class="weui-media-box__info">{{data.detailInfo.clickNum}}</view>
-        </view>
-        <view wx:if="{{likeNum}}" class="item">
-          <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-          <view class="weui-media-box__info">{{likeNum}}</view>
-        </view>
-      </view>
-      <view class="cell">
-        <button open-type="share" plain='true' style='border:none;'>
-          <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx'></image>
-        </button>
-        <!-- <button bindtap='fenxiang' plain='true' style='border:none;'>
-          <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx'></image>
-        </button> -->
-        <button disabled="{{hadLike}}" bindtap='dolike' style='border:none;background-color:white' plain='true'>
-          <block wx:if="{{hadLike}}">
-            <image src="../../image/ic_like_click.png" style='width:40rpx;height:40rpx;' />
-          </block>
-          <block wx:else>
-            <image src="../../image/ic_like_default.png" style='width:40rpx;height:40rpx;' />
-          </block>
-        </button>
-      </view>
+  <view class="bottom-float" style='background-image:url(../../image/ic_xuanfukuang.png)'>
+    <view class='pf__image'>
+      <image src='../../image/ic_pf.png' style='width:46rpx;height:43rpx;vertical-align:middle' bindtap='rating' />
     </view>
-    <view class='line'></view>
-    <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>简介</view>
-    <view style='margin-left:30rpx;margin-top:20rpx;margin-bottom:30rpx;color:#666666;font-size:30rpx'>
-      <view class="wxParse">
-        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
-      </view>
+    <view class='zp__image'>
+      <image src='../../image/ic_czp.png' style='width:47rpx;height:42rpx;vertical-align:middle' bindtap='uploadWorks' />
     </view>
-    <block wx:if="{{recommendList.length>0}}">
-      <view class='line'></view>
-      <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>推荐</view>
-    </block>
-    <block wx:for="{{recommendList}}" wx:for-item="item" wx:key="{{index}}">
-      <view bindtap='gotoDetail' data-id="{{item.detailId}}" class="weui-media-box weui-media-box_appmsg">
-        <view class="weui-media-box__hd_in-appmsg">
-          <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
-        </view>
-        <view class="weui-media-box__bd_in-appmsg">
-          <view class="weui-media-box__desc">{{item.title}}
-            <text class="time">{{item.duration}}</text>
-          </view>
-          <view class='cell'>
-            <view class='item'>
-              <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-              <view class="weui-media-box__info">{{item.clickNum}}</view>
-            </view>
-            <view class="item">
-              <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-              <view class="weui-media-box__info">{{item.likeNum}}</view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </block>
-  </block>
-  <view class="bottom-float">
-<view bindtap='rating'>评论</view>
-<view bindtap='uploadWorks'>上传作品</view>
-</view>
+
+    <button open-type="share" plain='true' style='border:none;'>
+      <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx;vertical-align:middle' />
+    </button>
+
+  </view>
 </view>

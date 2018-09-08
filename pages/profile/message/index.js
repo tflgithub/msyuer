@@ -16,7 +16,7 @@ Page({
     items: [{
         "msgCreateTime": "2018-08-09 12:56",
         "msgId": 3234,
-        "msgContent": "消息内容",
+        "msgContent": "消息ddddddddsdadsadsadassd内dsadasdasdsadasdasdas容",
         "workId": 233,
         "msgAuthor": "平台",
         "workUrls": ["../../../image/share.png"]
@@ -24,7 +24,7 @@ Page({
       {
         "msgCreateTime": "2018-08-09 12:56",
         "msgId": 3234,
-        "msgContent": "消息内容",
+        "msgContent": "消息ddddddddsdadsadsadassd内dsadasdasdsadasdasdas容",
         "workId": 233,
         "msgAuthor": "平台",
         "workUrls": ["../../../image/share.png"]

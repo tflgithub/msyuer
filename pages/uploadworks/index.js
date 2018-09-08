@@ -21,7 +21,6 @@ Page({
     content: '',
     max: 10,
     min: 5,
-    texts: "至少5个字",
     currentWordNumber: 0,
     images: []
   },
@@ -57,11 +56,21 @@ Page({
       util.showToast('至少需要上传一张图片', 'none', 2000)
       return
     }
-    if (this.data.content.length < this.data.min) {
-      util.showToast(this.data.texts, 'none', 2000)
-      return
-    }
 
+
+  },
+  deleteImage: function(e) {
+    var files = this.data.files;
+    var index = e.currentTarget.dataset.index;
+    files.splice(index, 1);
+    this.setData({
+      files: files
+    });
+    if (this.data.files.length === 0) {
+      this.setData({
+        hiddenAdd: false
+      })
+    }
   },
   bindinput: function(e) {
     var value = e.detail.value;

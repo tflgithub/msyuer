@@ -2,13 +2,13 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-  <view class="layout_vertical" wx:for='{{items}}'>
+  <view class="layout_vertical" wx:for='{{items}}' style='margin:30rpx;'>
 
-    <view class="item-top">
-      <view class="left">
-        {{item.workContent}}
-      </view>
-      <image src="../../../image/ic_boil.png" class="right" bindtap='deleteWork' data-id='{{item.workId}}' />
+    
+      <image class='item-delete' src="../../../image/ic_delete_2.png" catchtap='deleteWork' data-id='{{item.workId}}' />
+  
+    <view class='item-content'>
+      {{item.workContent}}
     </view>
 
     <scroll-view class="image-group" scroll-x="true">
@@ -17,11 +17,12 @@
 
     <view class="item-bottom">
       <view class="left">
-        {{item.videoTitle}}
+        <image src='../../../image/ic_meishi.png' style='width:34rpx;height:30rpx; vertical-align:middle;margin-right:20rpx' />{{item.videoTitle}}
       </view>
-      <view>
+      <view class='right'>
         {{item.workCreateTime}}
       </view>
     </view>
+    <view class='line' style='margin-top:24rpx' />
   </view>
 </view>

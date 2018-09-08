@@ -20,22 +20,25 @@
         <text class="mobile" bindtap='bindAccount'>立刻去绑定</text>
       </block>
     </view>
-    <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
+    <navigator url="message/index" hover-class="weui-cell_active">
+      <image class='message' src='../../image/ic_no_message.png' />
+    </navigator>
   </view>
 
+  <navigator style='height:120rpx;' url="works/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <template is="item_list" data="{{text:'我的作品',img:'../../image/ic_wodezuopin.png'}}" />
+  </navigator>
   <navigator style='height:120rpx;' url="collect/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <template is="item_list" data="{{text:'我的收藏',img:'../../image/ic_aboutus.png'}}" />
+    <template is="item_list" data="{{text:'我的收藏',img:'../../image/ic_wodeshouc.png'}}" />
   </navigator>
 
-  <navigator style='height:120rpx;' url="works/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <template is="item_list" data="{{text:'我的作品',img:'../../image/ic_aboutus.png'}}" />
-  </navigator>
+
+
   <navigator style='height:120rpx;' url="../aboutus/aboutus" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <template is="item_list" data="{{text:'关于我们',img:'../../image/ic_aboutus.png'}}" />
   </navigator>
-   <navigator style='height:120rpx;' url="message/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <template is="item_list" data="{{text:'我的消息',img:'../../image/ic_aboutus.png'}}" />
-  </navigator>
+
 
 
 </view>

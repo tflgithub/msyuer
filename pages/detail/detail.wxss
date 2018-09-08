@@ -80,6 +80,7 @@ video {
   width: 154rpx;
   background-color: #f9d943;
 }
+
 .play_icon {
   position: absolute;
   left: 0;
@@ -92,32 +93,50 @@ video {
   height: 422rpx;
 }
 
-
-.bottom-float{
-  color: #ffffff;
+.bottom-float {
   position: fixed;
   display: flex;
   align-items: center;
-  justify-content: center;
-  bottom: 20rpx;
-  right: 120rpx;
-  width: 520rpx;
-  height: 120rpx;
-  border-radius: 1%;
-  font-size: 28rpx;
-  background:rgba(0, 0, 0, 0.6);
+  bottom: 36rpx;
+  left: 153rpx;
+  width: 444rpx;
+  height: 96rpx;
+  /*下面的是关键的设置100%显示*/
+  background-size: 100% 100%;
 }
-.star-image{
-  position: absolute;
-  top: 50rpx;
-  margin-left: 20rpx;
-  width: 100rpx;
-  height: 100rpx;
-  src: "../../image/ic_ban.png";
+
+.bottom-float .pf__image {
+  text-align: center;
+  width: 33.33333%;
+  border-right:1rpx solid #666666;
 }
-.star-image .item{
+
+.bottom-float .zp__image {
+  text-align: center;
+  width: 33.33333%;
+  border-right:1rpx solid #666666; 
+}
+
+.modal-content{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+
+.star-image {
+  text-align: center;
   position: absolute;
-  top: 50rpx;
-  width: 100rpx;
-  height: 100rpx;
+  top: 24rpx;
+  margin-left: 60rpx;
+  margin-top: 40rpx;
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.star-image .item {
+  position: absolute;
+  top: 24rpx;
+  width: 48rpx;
+  height: 48rpx;
 }

@@ -1,11 +1,15 @@
 /* pages/profile/message/inddex.wxss */
 
-.item-top {
+.item {
   display: flex;
+  padding: 30rpx;
 }
 
-.item-top .left {
+.item-left {
   flex: 1;
+}
+
+.item-content {
   display: -webkit-box;
   word-break: break-all;
   text-overflow: ellipsis;
@@ -13,14 +17,23 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   margin-right: 40rpx;
+  font-size: 30rpx;
+  color: #000;
 }
 
-.item-top .right {
-  width: 150rpx;
+.item-left span {
+  font-size: 30rpx;
+  color: #fe5151;
+}
+
+.item-time {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #a0a0a0;
+}
+
+.item-image {
+  width: 222rpx;
   height: 150rpx;
-  margin: 10rpx 10rpx 10rpx 10rpx;
-}
-
-.item-bottom {
-  flex: 1;
+  border-radius: 8rpx;
 }

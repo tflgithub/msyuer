@@ -1,8 +1,58 @@
 /* pages/uploadworks/index.wxss */
-.hint{
-   font-size: 28rpx;
-   position: absolute;
-   top: 120rpx;
-   left: 30rpx;
-   color: #FF6600;
+
+.title {
+  font-size: 38rpx;
+  color: #222;
+}
+
+.textarea {
+  padding-top: 20rpx;
+  padding-left: 14rpx;
+  color: #666;
+  font-size: 32rpx;
+  width: 650rpx;
+  height: 248rpx;
+  margin-top: 30rpx;
+  background-color: #e8e8e8;
+  border-radius: 8rpx;
+}
+
+.add-image {
+  height: 210rpx;
+  width: 210rpx;
+}
+
+.image {
+  height: 210rpx;
+  width: 210rpx;
+  border-radius: 4%;
+}
+
+.upload-image {
+  float: left;
+  position: relative;
+  margin-right: 10rpx;
+}
+
+.delete-image {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.button {
+  position: relative;
+  font-size: 34rpx;
+  margin-top: 52rpx;
+  background-color: #f9d943;
+}
+
+.hint {
+  font-size: 28rpx;
+  position: absolute;
+  top: 120rpx;
+  left: 30rpx;
+  color: #f60;
 }
