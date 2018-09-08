@@ -59,7 +59,7 @@ function doRequest(obj) {
   })
 }
 
-function login() {
+export function login() {
   return new Promise(function(resolve, reject) {
     wx.login({
       success: function(res) {

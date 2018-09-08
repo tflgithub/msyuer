@@ -79,17 +79,19 @@ Page({
   loadData: function() {
     pageState(this).loading()
     var that = this;
-    Promise.all([request.getHomeBar(), request.getTodayRecommend(), request.getHotList(0, 4), request.getNewList(0, 4), request.getIndex()]).then(res => {
-      pageState(that).finish()
-      that.setData({
-        barItems: res[0].data,
-        toDayRecommend: res[1].data,
-        hots: res[2].data,
-        news: res[3].data,
-        cooks: res[4].data
+    request.login().then(res=>{
+      Promise.all([request.getHomeBar(), request.getTodayRecommend(), request.getHotList(0, 4), request.getNewList(0, 4), request.getIndex()]).then(res => {
+        pageState(that).finish()
+        that.setData({
+          barItems: res[0].data,
+          toDayRecommend: res[1].data,
+          hots: res[2].data,
+          news: res[3].data,
+          cooks: res[4].data
+        })
+      }).catch(res => {
+        pageState(this).error(res)
       })
-    }).catch(res => {
-      pageState(this).error(res)
     })
   },
   /**
