@@ -4,7 +4,7 @@
 <view class='pages' wx:if="{{data.detailInfo}}">
   <share-image drawDataList="{{dataList}}" hideModal="{{hideModal}}" />
   <view wx:if="{{isPlaying}}">
-    <video id="myVideo" src='{{data.detailInfo.videoUrl}}' objectFit="cover" show-center-play-btn='false' show-fullscreen-btn='false' poster="{{data.detailInfo.phoUrl}}" controls>
+    <video id="myVideo" src='{{data.detailInfo.videoUrl}}' objectFit="cover" show-center-play-btn='false' show-fullscreen-btn='false' poster="{{data.detailInfo.phoUrl}}" controls custom-cache='{{false}}'>
     </video>
   </view>
   <view wx:else>
