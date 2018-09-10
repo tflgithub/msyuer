@@ -27,6 +27,7 @@ Page({
     selectedSrc: '../../image/ic_star_full.png',
     halfSrc: '../../image/ic_star_half.png',
     key: 0, //评分
+    bgImage:null,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -198,7 +199,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    let base64 = wx.arrayBufferToBase64('../../image/ic_xuanfukuang.png');
+    this.data.bgImage = 'data:image/jpg;base64,' + base64;
+    console.log(this.data.bgImage)
   },
 
   /**
