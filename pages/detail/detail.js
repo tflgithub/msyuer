@@ -104,6 +104,9 @@ Page({
   },
   modalCancel: function(e) {
     console.log('点击了取消')
+    this.setData({
+      hideModal: true
+    })
   },
   //点击左边,半颗星
   selectLeft: function(e) {

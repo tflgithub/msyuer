@@ -125,6 +125,14 @@ video {
   align-items: center;
 }
 
+.modal-close{
+  position:absolute;
+  width: 34rpx;
+  height: 34rpx;
+  right: 0;
+  padding: 20rpx;
+}
+
 .star-image {
   text-align: center;
   position: absolute;

@@ -3,15 +3,21 @@
 <template is="pageState" data="{{...pageState}}" /> -->
 <view class='pages'>
   <custom-modal hideModal="{{hideModal}}" height='60%' width='80%' left='取消' right='提交' bindcancel="modalCancel" bindconfirm='modalConfirm'>
-    <view class='modal-content' style='margin:40rpx 0 0 10%'>
-    <text style='font-size:34rpx;color:#000'>打分</text>
-      <block wx:for="{{stars}}">
-        <image class="star-image" style="left: {{item*80}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
-          <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
-          <view class="item" style="left:24rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
-        </image>
-      </block>
+    <view class='modal-content'>
+      <image src='../../image/ic_close.png' class='modal-close' catchtap='modalCancel' />
+      <text style='font-size:34rpx;color:#000;margin-top:40rpx'>打分</text>
+
+      <view>
+        <block wx:for="{{stars}}">
+          <image class="star-image" style="left: {{item*80}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
+            <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
+            <view class="item" style="left:24rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
+          </image>
+        </block>
+      </view>
+      <view style='font-size:34rpx;color:#000'>其他想说的</view>
     </view>
+
   </custom-modal>
 
   <!-- <share-image drawDataList="{{dataList}}" hideModal="{{hideModal}}" /> -->
