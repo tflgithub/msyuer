@@ -38,15 +38,15 @@
   </view>
 
   <block wx:if="{{hots.items.length>0}}">
-    <view class="line" style='margin-top:20rpx' />
+    <view class="line"/>
 
-    <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
+    <view style='margin-left:24rpx;margin-top:18rpx' class="cell">
       <image src="../../image/ic_hot.png " style="width:35rpx; height:35rpx;margin-top:10rpx;margin-right:15rpx" />
       <view class="weui-cell__bd title">{{hots.title}}</view>
       <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' bindtap='getMore' data-id="hots" />
     </view>
 
-    <view class="cell" style="margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;">
+    <view class="cell" style="margin-left:24rpx;margin-top:18rpx;">
       <view class="cell" wx:for="{{hots.items}}" wx:for-item="item" wx:key="detailId">
         <view class="month-box" bindtap="goPlay" data-id="{{item.detailId}}">
           <image class="img" src="{{item.phoUrl}}" />
@@ -57,15 +57,15 @@
   </block>
 
   <block wx:if="{{news.items.length>0}}">
-    <view class="line" style='margin-top:20rpx' />
+    <view class="line" />
 
-    <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
+    <view style='margin-left:24rpx;margin-top:18rpx;' class="cell">
       <image src="../../image/ic_new.png " style="width:35rpx; height:35rpx;margin-top:10rpx;margin-right:15rpx" />
       <view class="weui-cell__bd title">{{news.title}}</view>
       <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' bindtap='getMore' data-id="news" />
     </view>
 
-    <view class="cell" style="margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;">
+    <view class="cell" style="margin-left:24rpx;margin-top:18rpx;">
       <view class="cell" wx:for="{{news.items}}" wx:for-item="item" wx:key="detailId">
         <view class="month-box" bindtap="goPlay" data-id="{{item.detailId}}">
           <image class="img" src="{{item.phoUrl}}" />
@@ -74,11 +74,11 @@
       </view>
     </view>
 
-    <view class="line" style='margin-top:20rpx' />
+    <view class="line"/>
   </block>
   <view class="layout_vertical" wx:for="{{cooks.lists}}" wx:for-item="item" wx:key="index">
     <block wx:if="{{item.items.length>0}}">
-      <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
+      <view style='margin-left:24rpx;margin-top:18rpx;;' class="cell">
         <image src="{{item.iconUrl}}" style="width:35rpx; height:35rpx;margin-top:10rpx;margin-right:15rpx" />
         <view class="weui-cell__bd title">{{item.title}}</view>
         <navigator url="../infolist/infolist?typeId={{item.typeId}}" hover-class="none">
@@ -86,7 +86,7 @@
         </navigator>
       </view>
 
-      <view class="cell" style="margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;">
+      <view class="cell" style="margin-left:24rpx;margin-top:18rpx;">
         <view class="cell" wx:for="{{item.items}}" wx:for-item="item" wx:key="detailId">
           <view class="month-box" bindtap="goPlay" data-id="{{item.detailId}}">
             <image class="img" src="{{item.phoUrl}}" />
