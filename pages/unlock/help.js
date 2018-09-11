@@ -1,5 +1,6 @@
 // pages/unlock/help.js
 const request = require('../../api/request.js')
+const app=getApp()
 Page({
 
   /**
@@ -23,12 +24,16 @@ Page({
       nickName: params[1],
       uid: params[2]
     })
-    request.getUserInfo().then(res => {
-      if (that.data.uid === res.data.uid) {
-        wx.reLaunch({
-          url: 'invite',
-        })
-      }
+    app.isAuth().then(res => {
+      request.getUserInfo().then(res => {
+        if (that.data.uid === res.data.uid) {
+          wx.reLaunch({
+            url: 'invite',
+          })
+        }
+      })
+    }).catch(res => {
+      console.log(res)
     })
   },
 
