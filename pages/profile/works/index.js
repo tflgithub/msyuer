@@ -48,6 +48,7 @@ Page({
   },
   getData: function() {
     var that = this
+    pageState(that).loading()
     request.getUserLikes(this.data.currentPage, this.data.pageSize).then(res => {
       if (res.data.items.length === 0) {
         pageState(that).empty('还没有发布作品哦～', '../../../image/ic_empty_zp.png')
@@ -90,8 +91,11 @@ Page({
     console.log("要删除的" + id)
     var that = this
     wx.showModal({
-      title: '提示',
+      title: '温馨提示',
       content: '删除后将不能恢复，确定是要删除吗？',
+      contentColor:'#0000000',
+      confirmColor: '#000000',
+      cancelColor: '#808080',
       success: function(sm) {
         if (sm.confirm) {
           // 用户点击了确定 可以调用删除方法了

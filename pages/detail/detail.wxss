@@ -41,9 +41,19 @@
   align-items: center;
 }
 
-video {
+.video {
+  width: 750rpx;
+  height: 750rpx;
+}
+
+.video_horizontal {
   width: 100%;
-  height: 422rpx;
+  height: 433rpx;
+}
+
+.video_vertical {
+  width: 750rpx;
+  height: 750rpx;
 }
 
 .cover {
@@ -55,7 +65,7 @@ video {
   margin-top: 161rpx;
   justify-content: center;
   width: 100%;
-  height: 422rpx;
+  height: 750rpx;
 }
 
 .cover .desc {
@@ -91,6 +101,14 @@ video {
   margin-left: 325rpx;
   width: 100%;
   height: 422rpx;
+}
+
+.topnav {
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  background-color: #fff;
+  width: 100%;
 }
 
 .bottom-float {
@@ -162,7 +180,7 @@ video {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content:center;
+  justify-content: center;
 }
 
 .label_normal {

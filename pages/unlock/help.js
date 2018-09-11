@@ -1,6 +1,9 @@
 // pages/unlock/help.js
 const request = require('../../api/request.js')
-const app=getApp()
+const app = getApp()
+const {
+  util
+} = app
 Page({
 
   /**
@@ -10,30 +13,32 @@ Page({
     avatarUrl: 'https://v.miskitchen.com/ic_hiabao.png',
     nickName: '夏天的风',
     uid: '',
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    isBindMobile: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log("接受的参数：" + options.id)
+    console.log("参数：" + options.id)
     var params = options.id.split(',')
     this.setData({
       avatarUrl: params[0],
       nickName: params[1],
       uid: params[2]
     })
-    app.isAuth().then(res => {
-      request.getUserInfo().then(res => {
-        if (that.data.uid === res.data.uid) {
-          wx.reLaunch({
-            url: 'invite',
+    request.getUserInfo().then(res => {
+      if (that.data.uid === res.data.uid) {
+        if (res.data.setUserInfo === 1) {
+          that.setData({
+            isBindMobile: true
           })
         }
-      })
-    }).catch(res => {
-      console.log(res)
+        wx.reLaunch({
+          url: 'invite',
+        })
+      }
     })
   },
 
@@ -44,6 +49,12 @@ Page({
 
   },
   unlock: function(e) {
+    if (!this.data.isBindMobile) {
+      wx.reLaunch({
+        url: '../bindaccount/bindaccount',
+      })
+      return
+    }
     var that = this
     request.isHelp(this.data.uid).then(res => {
       if (res.data.isHelp) {
@@ -64,12 +75,14 @@ Page({
           }
         })
       } else {
-        wx.reLaunch({
-          url: '../bindaccount/bindaccount',
+        request.help(this.data.uid).then(res => {
+          util.showToast('助力成功！', 'none', 2000)
+        }).catch(res => {
+          util.showToast(res, 'none', 2000)
         })
       }
     }).catch(res => {
-
+      console.log('获取助力信息失败', e)
     })
   },
   /**

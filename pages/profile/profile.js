@@ -12,7 +12,8 @@ Page({
       nickName: ''
     },
     isBindMobile: null,
-    mobile: ''
+    mobile: '',
+    hadMsg: true
   },
 
   /**
@@ -29,17 +30,18 @@ Page({
   onRetry: function() {
     this.setData({
       userInfo: app.globalData.userInfo,
-      isBindMobile: app.globalData.setUserInfo
+      isBindMobile: app.globalData.setUserInfo,
+      hadMsg:app.globalData.hadMsg
     })
     var that = this
     console.log("是否绑定手机：" + app.globalData.setUserInfo)
-    if (app.globalData.setUserInfo ===1) {
-      request.getUserInfo().then(res=>{
+    if (app.globalData.setUserInfo === 1) {
+      request.getUserInfo().then(res => {
         pageState(that).finish()
         that.setData({
           mobile: res.data.mobile
         })
-      }).catch(res=>{
+      }).catch(res => {
         pageState(that).error(res)
       })
     } else {

@@ -8,6 +8,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   login: function() {
+    var that = this
     request.login().then(res => {
       wx.reLaunch({
         url: '../home/home'
@@ -19,7 +20,7 @@ Page({
   onShow: function() {
 
   },
-  onLoad: function() {
-
+  onLoad: function(options) {
+    
   }
 })

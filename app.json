@@ -1,18 +1,14 @@
 {
   "pages": [
-    "pages/unlock/invite",
     "pages/home/home",
     "pages/detail/detail",
     "pages/profile/profile",
+    "pages/unlock/invite",
     "pages/unlock/help",
-    
-    
-    
     "pages/profile/message/index",
     "pages/profile/collect/index",
     "pages/profile/works/index",
     "pages/uploadworks/index",
-    
     "pages/bindaccount/bindaccount",
     "pages/infolist/infolist",
     "pages/classification/classification",

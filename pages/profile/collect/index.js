@@ -96,6 +96,7 @@ Page({
   },
   getData: function() {
     var that = this
+    pageState(that).loading()
     request.getUserLikes(this.data.currentPage, this.data.pageSize).then(res => {
       if (res.data.items.length === 0) {
         pageState(that).empty('还没有收藏喜爱的视频哦～', '../../../image/ic_empty_sc.png')

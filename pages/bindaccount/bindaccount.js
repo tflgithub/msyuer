@@ -33,9 +33,12 @@ Page({
       app.globalData.token = res.data.token
       app.globalData.uid = res.data.uid
       app.globalData.setUserInfo = 1
-      wx.reLaunch({
-        url: '../home/home'
-      })
+      // wx.reLaunch({
+      //   url: '../home/home'
+      // })
+      wx.navigateBack({
+        delta: -1
+      });
     }).catch(res => {
       wx.showToast({
         title: res,

@@ -11,13 +11,79 @@ Page({
    * 页面的初始数据
    */
   data: {
-    data: {},
+    data: {
+      "detailInfo": {
+        "summary": "简介222222sssss",
+        "duration": "16.23",
+        "videoUrl": "http://ddsfgrfdsg",
+        "phoUrl": "http://ddsfgrfdsg",
+        "detailId": "22222222",
+        "clickNum": "2366",
+        "title": "abc测试",
+        "likeNum": "1266",
+        "hadLike": true,
+        "score": 4.3,
+        "hadScore": true
+      }
+    },
     videoContext: null,
-    likeNum: '',
-    hadLike: false,
-    isPlaying: null,
+    likeNum: '1',
+    hadLike: '',
+    hadScore: false,
+    isPlaying: false,
     showCover: true,
     recommendList: [],
+    worksList: [{
+        "nickName": "测试用户昵称",
+        "avatarUrl": "https://v.miskitchen.com/ic_hiabao.png",
+        "workId": "22222222",
+        "workContent": "作品内容什么雷德蒙德是的撒，的；是，打撒打撒的撒的",
+        "workUrls": ["https://v.miskitchen.com/ic_hiabao.png", "https://v.miskitchen.com/ic_hiabao.png", 'https://v.miskitchen.com/ic_hiabao.png', 'https://v.miskitchen.com/ic_hiabao.png'],
+        "workCreateTime": "2018-09-01 12:32:30",
+        "replyItems": [{
+          "replyNickName": "平台",
+          "replyContent": "平台回复打开圣诞快乐；撒的快乐撒开的；萨里看到了撒开的了；撒开的撒了点看撒",
+          "replyCreateTime": "2018-09-01 12:32:30"
+        }]
+      },
+      {
+        "nickName": "测试用户昵称",
+        "avatarUrl": "https://v.miskitchen.com/ic_hiabao.png",
+        "workId": "22222222",
+        "workContent": "",
+        "workUrls": ["https://v.miskitchen.com/ic_hiabao.png", "https://v.miskitchen.com/ic_hiabao.png", 'https://v.miskitchen.com/ic_hiabao.png', 'https://v.miskitchen.com/ic_hiabao.png'],
+        "workCreateTime": "2018-09-01 12:32:30",
+        "replyItems": [{
+          "replyNickName": "平台",
+          "replyContent": "平台回复打开圣诞快乐；撒的快乐撒开的；萨里看到了撒开的了；撒开的撒了点看撒",
+          "replyCreateTime": "2018-09-01 12:32:30"
+        }]
+      },
+      {
+        "nickName": "测试用户昵称",
+        "avatarUrl": "https://v.miskitchen.com/ic_hiabao.png",
+        "workId": "22222222",
+        "workContent": "作品内容打撒的撒的；啊的，临时，啊；的，撒的，；撒了",
+        "workUrls": ["https://v.miskitchen.com/ic_hiabao.png", "https://v.miskitchen.com/ic_hiabao.png", 'https://v.miskitchen.com/ic_hiabao.png', 'https://v.miskitchen.com/ic_hiabao.png'],
+        "workCreateTime": "2018-09-01 12:32:30",
+        "replyItems": [{
+            "replyNickName": "平台",
+            "replyContent": "都死了；阿迪力撒的撒了；的撒的撒打撒来的；撒的；是辣的",
+            "replyCreateTime": "2018-09-01 12:32:30"
+          },
+          {
+            "replyNickName": "平台",
+            "replyContent": "都死了；阿迪力撒的撒了；的撒的撒打撒来的；撒的；是辣的",
+            "replyCreateTime": "2018-09-01 12:32:30"
+          },
+          {
+            "replyNickName": "平台",
+            "replyContent": "都死了；阿迪力撒的撒了；的撒的撒打撒来的；撒的；是辣的",
+            "replyCreateTime": "2018-09-01 12:32:30"
+          }
+        ]
+      }
+    ],
     dataList: {},
     hideModal: true,
     detailId: null,
@@ -30,19 +96,26 @@ Page({
     bgImage: null,
     evaluate: ['很难做', '步骤不对', '口感不对', '非常完美', '一般吧'],
     selectedIndex: -1,
+    currentPage: 0,
+    pageSize: 10,
+    haveNext: false,
+    top: 0,
+    videoType: 'video'
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     this.videoContext = wx.createVideoContext('myVideo')
-    this.detailId = options.id
-    //this.loadData()
+    this.setData({
+      detailId: options.id
+    })
+    this.loadData()
   },
   loadData: function() {
     var that = this;
     console.log("当前ID：" + this.detailId);
-    Promise.all([request.getVedioDetail(this.detailId), request.getRecommend(this.detailId)]).then(res => {
+    Promise.all([request.getVedioDetail(this.detailId), request.getRecommend(this.detailId), request.getAboutWorks(this.detailId, this.currentPage, this.pageSize)]).then(res => {
       pageState(that).finish()
       var article = res[0].data.detailInfo.summary;
       WxParse.wxParse('article', 'html', article, that, 5);
@@ -50,8 +123,13 @@ Page({
         data: res[0].data,
         likeNum: res[0].data.detailInfo.likeNum,
         hadLike: res[0].data.detailInfo.hadLike,
+        hadScore: res[0].data.detailInfo.hadScore,
+        videoType: that.setVideoType(res[0].data.detailInfo.sizeType),
         isBindMobile: res[0].data.setUserInfo,
-        recommendList: res[1].data.recommendList
+        recommendList: res[1].data.recommendList,
+        worksList: res[2].data.items,
+        currentPage: res[2].data.lastStamp,
+        haveNext: res[2].data.haveNext
       })
     }).catch(res => {
       pageState(this).error(res)
@@ -103,6 +181,10 @@ Page({
     })
   },
   rating: function(e) {
+    if (this.data.hadScore) {
+      util.showToast('您已经评过分啦～','none',2000)
+      return
+    }
     this.setData({
       hideModal: false
     })
@@ -148,29 +230,27 @@ Page({
   },
   dolike: function(e) {
     var that = this;
-    var detailId = this.data.data.detailInfo.detailId;
-    console.log(detailId);
-    if (hadLike) {
-      request.unlike(detailId).then(res => {
-        that.setData({
-          likeNum: res.data.likeNum,
-          hadLike: false
-        })
-        util.showToast('取消收藏', 'none', 2000)
-      }).catch(res => {
-        util.showToast(res, 'none', 2000)
+    request.like(this.data.detailId).then(res => {
+      that.setData({
+        likeNum: res.data.likeNum,
+        hadLike: true
       })
-    } else {
-      request.like(detailId).then(res => {
-        that.setData({
-          likeNum: res.data.likeNum,
-          hadLike: true
-        })
-        util.showToast('已收藏', 'none', 2000)
-      }).catch(res => {
-        util.showToast(res, 'none', 2000)
+      util.showToast('已收藏', 'none', 2000)
+    }).catch(res => {
+      util.showToast(res, 'none', 2000)
+    })
+  },
+  unlike: function(e) {
+    var that = this;
+    request.unlike(this.data.detailId).then(res => {
+      that.setData({
+        likeNum: res.data.likeNum,
+        hadLike: false
       })
-    }
+      util.showToast('取消收藏', 'none', 2000)
+    }).catch(res => {
+      util.showToast(res, 'none', 2000)
+    })
   },
   fenxiang: function(e) {
     this.stopPlay()
@@ -224,7 +304,29 @@ Page({
       }
     })
   },
-  /**
+  //控制回到顶部按钮的显示与消失
+  scrollTopFun(e) {
+    var that = this
+    that.setData({
+      top: e.detail.scrollTop
+    })
+  },
+  setVideoType: function(sizeType) {
+    var videoType = ''
+    switch (sizeType) {
+      case 1:
+        videoType = 'video'
+        break;
+      case 2:
+        videoType = 'video_horizontal'
+        break
+      case 3:
+        videoType = 'video_vertical'
+    }
+    console.log(sizeType + ':' + videoType)
+    return videoType
+  },
+  /*
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {

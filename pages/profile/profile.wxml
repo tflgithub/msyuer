@@ -22,7 +22,12 @@
     </view>
     <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
     <navigator url="message/index" hover-class="weui-cell_active">
-      <image class='message' src='../../image/ic_no_message.png' />
+      <block wx:if='{{hadMsg}}'>
+        <image class='message' src='../../image/ic_had_message.png' />
+      </block>
+      <block else>
+        <image class='message' src='../../image/ic_no_message.png' />
+      </block>
     </navigator>
   </view>
 
