@@ -1,25 +1,23 @@
 {
   "pages": [
+    "pages/unlock/invite",
+    "pages/home/home",
     "pages/detail/detail",
     "pages/profile/profile",
+    "pages/unlock/help",
+    
+    
+    
     "pages/profile/message/index",
     "pages/profile/collect/index",
     "pages/profile/works/index",
     "pages/uploadworks/index",
-    "pages/home/home",
-    
     
     "pages/bindaccount/bindaccount",
     "pages/infolist/infolist",
-   
     "pages/classification/classification",
     "pages/auth/auth",
-    "pages/aboutus/aboutus",
-    
-    
-    
-    "pages/unlock/invite",
-    "pages/unlock/help"
+    "pages/aboutus/aboutus"
   ],
   "window": {
     "backgroundTextStyle": "light",

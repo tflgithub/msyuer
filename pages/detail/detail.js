@@ -27,7 +27,9 @@ Page({
     selectedSrc: '../../image/ic_star_full.png',
     halfSrc: '../../image/ic_star_half.png',
     key: 0, //评分
-    bgImage:null,
+    bgImage: null,
+    evaluate: ['很难做', '步骤不对', '口感不对', '非常完美', '一般吧'],
+    selectedIndex: -1,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -84,7 +86,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '../unlock/invite',
+        url: '../unlock/help',
       })
     }
   },
@@ -94,6 +96,12 @@ Page({
       isPlaying: false
     })
   },
+  evaluateSelection(e) {
+    var index = e.currentTarget.dataset.index;
+    this.setData({
+      selectedIndex: index
+    })
+  },
   rating: function(e) {
     this.setData({
       hideModal: false
@@ -101,6 +109,11 @@ Page({
   },
   modalConfirm: function(e) {
     console.log("点击了提交" + this.data.key + "分")
+    request.score(this.data.detailId, this.data.key, this.data.evaluate[this.data.selectedIndex]).then(res => {
+      util.showToast('评分成功', 'none', 2000)
+    }).catch(res => {
+      util.showToast(res, 'none', 2000)
+    })
   },
   modalCancel: function(e) {
     console.log('点击了取消')
@@ -137,14 +150,27 @@ Page({
     var that = this;
     var detailId = this.data.data.detailInfo.detailId;
     console.log(detailId);
-    request.like(detailId, function(res) {
-      that.setData({
-        likeNum: res.data.likeNum,
-        hadLike: true
+    if (hadLike) {
+      request.unlike(detailId).then(res => {
+        that.setData({
+          likeNum: res.data.likeNum,
+          hadLike: false
+        })
+        util.showToast('取消收藏', 'none', 2000)
+      }).catch(res => {
+        util.showToast(res, 'none', 2000)
       })
-    }, function(res) {
-      util.showToast(res, 'none', 2000)
-    })
+    } else {
+      request.like(detailId).then(res => {
+        that.setData({
+          likeNum: res.data.likeNum,
+          hadLike: true
+        })
+        util.showToast('已收藏', 'none', 2000)
+      }).catch(res => {
+        util.showToast(res, 'none', 2000)
+      })
+    }
   },
   fenxiang: function(e) {
     this.stopPlay()

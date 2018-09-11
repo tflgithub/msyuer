@@ -2,7 +2,7 @@
 <template name="pageState">
   <view class="page-state-container" wx:if="{{state != 'finish'}}">
     <view class="page-state-empty page-state-center" wx:if="{{state == 'empty'}}">
-      <icon type="info" size="50" />
+      <image src='{{icon}}' class='icon' />
       <view class="message">{{message}}</view>
     </view>
     <view class="page-state-loading page-state-center" wx:if="{{state == 'loading'}}">

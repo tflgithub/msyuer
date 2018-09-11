@@ -6,16 +6,20 @@
     <view class='modal-content'>
       <image src='../../image/ic_close.png' class='modal-close' catchtap='modalCancel' />
       <text style='font-size:34rpx;color:#000;margin-top:40rpx'>打分</text>
-
-      <view>
-        <block wx:for="{{stars}}">
-          <image class="star-image" style="left: {{item*80}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
-            <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
-            <view class="item" style="left:24rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
-          </image>
-        </block>
+      <block wx:for="{{stars}}">
+        <image class="star-image" style="left: {{item*80}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
+          <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
+          <view class="item" style="left:24rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
+        </image>
+      </block>
+      <view class='middle-content'>
+        <text style='font-size:34rpx;color:#000;margin-bottom:20rpx'>其他想说的</text>
+        <view class='labels'>
+          <view  wx:for='{{evaluate}}' class="{{index===selectedIndex?'label_checked':'label_normal'}}" bindtap="evaluateSelection" data-index='{{index}}'>
+            {{item}}
+          </view>
+        </view>
       </view>
-      <view style='font-size:34rpx;color:#000'>其他想说的</view>
     </view>
 
   </custom-modal>
@@ -60,7 +64,7 @@
       <!-- <button bindtap='fenxiang' plain='true' style='border:none;'>
           <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx'></image>
         </button> -->
-      <button disabled="{{hadLike}}" bindtap='dolike' style='border:none;background-color:white' plain='true'>
+      <button  bindtap='dolike' style='border:none;background-color:white' plain='true'>
         <block wx:if="{{hadLike}}">
           <image src="../../image/ic_like_click.png" style='width:40rpx;height:40rpx;' />
         </block>
@@ -105,11 +109,11 @@
   </block>
 
   <view class="bottom-float">
-    <view class='pf__image'>
-      <image src='../../image/ic_pf.png' style='width:46rpx;height:43rpx;margin-bottom: 10rpx;vertical-align:middle' bindtap='rating' />
+    <view class='pf__image' catchtap='rating'>
+      <image src='../../image/ic_pf.png' style='width:46rpx;height:43rpx;margin-bottom: 10rpx;vertical-align:middle'  />
     </view>
-    <view class='zp__image'>
-      <image src='../../image/ic_czp.png' style='width:47rpx;height:42rpx;vertical-align:middle;margin-bottom: 10rpx;' bindtap='uploadWorks' />
+    <view class='zp__image' catchtap='uploadWorks'>
+      <image src='../../image/ic_czp.png' style='width:47rpx;height:42rpx;vertical-align:middle;margin-bottom: 10rpx;'  />
     </view>
 
     <button open-type="share" plain='true' style='border:none;'>

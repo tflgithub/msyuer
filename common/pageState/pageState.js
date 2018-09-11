@@ -20,11 +20,13 @@ const error = (that, message) => {
   }
 }
 
-const empty = (that, message) => {
-  return (message = '空空如也') => {
+const empty = (that, message, icon) => {
+  return (message = '空空如也', icon = icon) => {
+    console.log(icon)
     that.setData({
       pageState: {
         state: 'empty',
+        icon: icon,
         message
       }
     })

@@ -1,8 +1,8 @@
 <!--pages/uploadworks/index.wxml-->
-<view class="page" style='padding:45rpx'>
-  <view class="title">辣椒炒肉</view>
-  <textarea class="textarea" bindinput="bindinput" minlength="{{min}}" maxlength="{{max}}" placeholder="关于这道菜的心得，快快与我们分享吧～" />
-  <view style='margin-top:30rpx;margin-bottom:30rpx;height:450rpx'>
+<view class="page">
+  <view style='38rpx;color:#222;margin-left:40rpx;'>辣椒炒肉</view>
+  <textarea class="textarea" bindinput="bindinput" maxlength="{{max}}" placeholder="关于这道菜的心得，快快与我们分享吧～" />
+  <view style='margin-left:36rpx;height:450rpx'>
     <block wx:for="{{files}}" wx:key="*this">
       <view class='upload-image' id="{{item}}">
         <image src="{{item}}" class='image' mode="aspectFill" />

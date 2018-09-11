@@ -48,7 +48,7 @@ Page({
     var that = this
     request.getUserWorkMsgs(this.data.currentPage, this.data.pageSize).then(res => {
       if (res.data.items.length === 0) {
-        pageState(that).empty()
+        pageState(that).empty('暂时还没有消息哦～','../../../image/ic_empty_message.png')
       } else {
         pageState(that).finish()
         that.setData({

@@ -1,4 +1,4 @@
-<import src="../../common/pageState/pageState.wxml" />
+<import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
 

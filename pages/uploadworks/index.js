@@ -19,8 +19,7 @@ Page({
     files: [],
     detailId: '',
     content: '',
-    max: 10,
-    min: 5,
+    max: 320,
     currentWordNumber: 0,
     images: []
   },
@@ -52,12 +51,16 @@ Page({
     })
   },
   commit: function() {
+    var that = this
     if (this.data.files.length === 0) {
       util.showToast('至少需要上传一张图片', 'none', 2000)
       return
     }
-
-
+    request.getQiniuToken().then(res => {
+      that.uploadMultiImage(that.data.files, res.data.token)
+    }).catch(res => {
+      console.log('获取七牛服务器token失败')
+    })
   },
   deleteImage: function(e) {
     var files = this.data.files;
@@ -89,7 +92,7 @@ Page({
     let that = this
     let url = 'https://v.miskitchen.com'
     const promises = paths.map(function(path) {
-      return upload({
+      return uploadImage({
         url: url,
         path: path,
         name: 'file',
@@ -113,6 +116,15 @@ Page({
       that.setData({
         images: images
       })
+      while (that.files.length === images.length) {
+        request.publishWorks(that.data.detailId, that.data.content, images).then(res => {
+          util.showToast('发布成功', 'none', 2000)
+        }).catch(res => {
+          console.log('发布作品失败：' + res)
+          util.showToast(res, 'none', 2000)
+        })
+        break;
+      }
     }).catch(res => {
       wx.hideLoading()
       util.showToast(res, 'none', 2000)

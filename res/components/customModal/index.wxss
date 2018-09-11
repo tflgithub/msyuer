@@ -24,17 +24,20 @@
 .modal-btn-wrapper{
  display: flex;
  flex-direction: row;
- height: 100rpx;
- line-height: 100rpx;
+ height: 80rpx;
+ line-height:80rpx;
  border-top: 2rpx solid rgba(7,17,27,0.1);
 }
  
 .cancel-btn, .confirm-btn{
  flex: 1;
- height: 100rpx;
- line-height: 100rpx;
+ height: 80rpx;
+ line-height: 80rpx;
  text-align: center;
- font-size: 32rpx;
+ font-size: 34rpx;
+ border-bottom-left-radius: 10rpx;
+ border-bottom-right-radius: 10rpx;
+ background-color: #f9d943
 }
  
 .cancel-btn{

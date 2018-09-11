@@ -1,12 +1,14 @@
 // pages/unlock/help.js
+const request = require('../../api/request.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    avatarUrl: '',
-    nickName: '',
+    avatarUrl: 'https://v.miskitchen.com/ic_hiabao.png',
+    nickName: '夏天的风',
+    uid: '',
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
@@ -18,7 +20,15 @@ Page({
     var params = options.id.split(',')
     this.setData({
       avatarUrl: params[0],
-      nickName: params[1]
+      nickName: params[1],
+      uid: params[2]
+    })
+    request.getUserInfo().then(res => {
+      if (that.data.uid === res.data.uid) {
+        wx.reLaunch({
+          url: 'invite',
+        })
+      }
     })
   },
 
@@ -28,9 +38,33 @@ Page({
   onReady: function() {
 
   },
-  unlock:function(e){
-    wx.reLaunch({
-      url: '../bindaccount/bindaccount',
+  unlock: function(e) {
+    var that = this
+    request.isHelp(this.data.uid).then(res => {
+      if (res.data.isHelp) {
+        wx.showModal({
+          title: '温馨提示',
+          content: '您已经助力过此好友哦～',
+          showCancel: true,
+          cancelText: '知道了',
+          confirmText: '去首页',
+          confirmColor: '#000000',
+          cancelColor: '#808080',
+          success: res => {
+            if (res.confirm) {
+              wx.reLaunch({
+                url: '../home/home',
+              })
+            }
+          }
+        })
+      } else {
+        wx.reLaunch({
+          url: '../bindaccount/bindaccount',
+        })
+      }
+    }).catch(res => {
+
     })
   },
   /**

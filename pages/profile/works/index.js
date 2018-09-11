@@ -13,7 +13,8 @@ Page({
   data: {
     showLoading: false,
     showNoMore: false,
-    items: [{
+    items: [
+      {
         "workCreateTime": "2018-08-09 12:56",
         "detailId": 3234,
         "videoTitle": "视频标题",
@@ -38,7 +39,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function(options) { 
+    pageState(this).finish()  
     this.getData()
   },
   onRetry: function() {
@@ -48,7 +50,7 @@ Page({
     var that = this
     request.getUserLikes(this.data.currentPage, this.data.pageSize).then(res => {
       if (res.data.items.length === 0) {
-        pageState(that).empty()
+        pageState(that).empty('还没有发布作品哦～', '../../../image/ic_empty_zp.png')
       } else {
         pageState(that).finish()
         that.setData({

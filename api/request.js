@@ -1,6 +1,7 @@
 const app = getApp()
 //公共请求方法  仅支持post
 function request(obj) {
+  app.globalData.token = wx.getStorageSync('token')
   if (app.globalData.token === null) {
     login().then(res => {
       doRequest(obj)
@@ -59,7 +60,7 @@ function doRequest(obj) {
   })
 }
 
-function login() {
+export function login() {
   return new Promise(function(resolve, reject) {
     wx.login({
       success: function(res) {
@@ -77,6 +78,7 @@ function login() {
               console.log("登录：" + JSON.stringify(res))
               if (res.data.code === 0) {
                 app.globalData.token = res.data.data.token
+                wx.setStorageSync('token', res.data.data.token)
                 app.globalData.setUserInfo = res.data.data.setUserInfo
                 app.globalData.canSee = res.data.canSee
                 app.globalData.hadMsg = res.data.hadMsg

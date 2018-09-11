@@ -11,7 +11,8 @@ Page({
     nickName: '',
     viewedNum: 0,
     needShareNum: 0,
-    sharedNum: 0
+    sharedNum: 0,
+    uid:''
   },
 
   /**
@@ -22,7 +23,8 @@ Page({
     request.getUserInfo().then(res => {
       that.setData({
         avatarUrl: res.data.avatarUrl,
-        nickName: res.data.nickName
+        nickName: res.data.nickName,
+        uid:res.data.uid
       })
       request.getHelpInfo(res.data.uid).then(res => {
         that.setData({
@@ -83,7 +85,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    var userInfos = [this.avatarUrl, this.nickName]
+    var userInfos = [this.avatarUrl, this.nickName,this.uid]
     return {
       title: '帮忙解锁',
       path: 'pages/unlock/help?id=' + userInfos

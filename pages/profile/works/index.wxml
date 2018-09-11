@@ -1,12 +1,10 @@
 <!--pages/profile/works/index.wxml-->
-<import src="../../common/pageState/pageState.wxml" />
+<import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
   <view class="layout_vertical" wx:for='{{items}}' style='margin:30rpx;'>
+    <image class='item-delete' src="../../../image/ic_delete_2.png" catchtap='deleteWork' data-id='{{item.workId}}' />
 
-    
-      <image class='item-delete' src="../../../image/ic_delete_2.png" catchtap='deleteWork' data-id='{{item.workId}}' />
-  
     <view class='item-content'>
       {{item.workContent}}
     </view>
