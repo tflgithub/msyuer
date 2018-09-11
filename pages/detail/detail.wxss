@@ -43,7 +43,7 @@
 
 video {
   width: 100%;
-  height: 422rpx;
+  height: 750rpx;
 }
 
 .cover {
@@ -55,7 +55,7 @@ video {
   margin-top: 161rpx;
   justify-content: center;
   width: 100%;
-  height: 422rpx;
+  height: 750rpx;
 }
 
 .cover .desc {
