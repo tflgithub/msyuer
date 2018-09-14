@@ -4,7 +4,7 @@
 
   <view class="grids">
     <block wx:for="{{items}}" wx:key="*this">
-      <navigator url="" class="grid">
+      <navigator hover-class='none' url="../../detail/detail?id={{item.detailId}}" class="grid">
         <text class='time'>{{item.duration}}</text>
         <image class="grid-image" src="{{item.phoUrl}}" />
         <view class="grid-label">{{item.title}}</view>

@@ -10,36 +10,34 @@ Page({
    * 页面的初始数据
    */
   data: {
-    avatarUrl: 'https://v.miskitchen.com/ic_hiabao.png',
-    nickName: '夏天的风',
-    uid: '',
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    isBindMobile: false
+    avatarUrl: '',
+    nickName: '',
+    uid: 0,
+    canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log("参数：" + options.id)
-    var params = options.id.split(',')
-    this.setData({
-      avatarUrl: params[0],
-      nickName: params[1],
-      uid: params[2]
-    })
-    request.getUserInfo().then(res => {
-      if (that.data.uid === res.data.uid) {
-        if (res.data.setUserInfo === 1) {
-          that.setData({
-            isBindMobile: true
-          })
-        }
-        wx.reLaunch({
-          url: 'invite',
-        })
-      }
-    })
+    var that = this
+    if (options) {
+      var params = options.id.split(',')
+      this.setData({
+        avatarUrl: params[0],
+        nickName: params[1],
+        uid: params[2]
+      })
+    }
+    // request.getUserInfo().then(res => {
+    //   console.log('分享者ID:' + that.data.uid + '当前登录用户ID:' + res.data.uid)
+    //   if (that.data.uid == res.data.uid) {
+    //     console.log('当前用户是自己')
+    //     wx.reLaunch({
+    //       url: 'invite',
+    //     })
+    //   }
+    // })
   },
 
   /**
@@ -49,14 +47,15 @@ Page({
 
   },
   unlock: function(e) {
-    if (!this.data.isBindMobile) {
-      wx.reLaunch({
-        url: '../bindaccount/bindaccount',
+    if (app.globalData.setUserInfo != 1) {
+      wx.navigateTo({
+        url: '../bindaccount/bindaccount?path=' + util.getCurrentPageUrl(),
       })
       return
     }
     var that = this
-    request.isHelp(this.data.uid).then(res => {
+  
+    request.isHelp(parseInt(this.data.uid)).then(res => {
       if (res.data.isHelp) {
         wx.showModal({
           title: '温馨提示',
@@ -75,7 +74,7 @@ Page({
           }
         })
       } else {
-        request.help(this.data.uid).then(res => {
+        request.help(parseInt(this.data.uid)).then(res => {
           util.showToast('助力成功！', 'none', 2000)
         }).catch(res => {
           util.showToast(res, 'none', 2000)

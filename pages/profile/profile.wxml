@@ -2,10 +2,10 @@
 <template is="pageState" data="{{...pageState}}" />
 <template name="item_list">
   <view class="weui-cell__hd" style="margin:30rpx;">
-    <image src="{{img}}" style="margin-right:10rpx;vertical-align: middle;width:42rpx; height:42rpx;"></image>
+    <image src="{{img}}" style="margin-right:10rpx;width:42rpx; height:42rpx;"></image>
   </view>
   <view class="weui-cell__bd text">{{text}}</view>
-  <image src="../../image/ic_jiantou.png" style="width:32rpx;height:32rpx;margin:30rpx;vertical-align: middle" class="weui-cell__ft" />
+  <image src="../../image/ic_jiantou.png" style="width:32rpx;height:32rpx;margin:30rpx;" class="weui-cell__ft" />
 </template>
 
 <view class="page">

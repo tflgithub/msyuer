@@ -13,34 +13,20 @@ Page({
   data: {
     showLoading: false,
     showNoMore: false,
-    items: [
-      {
-        "workCreateTime": "2018-08-09 12:56",
-        "detailId": 3234,
-        "videoTitle": "视频标题",
-        "workId": 233,
-        "workContent": "测试发表",
-        "workUrls": ["../../../image/share.png", "../../../image/share.png", "../../../image/share.png"]
-      },
-      {
-        "workCreateTime": "2018-08-09 12:56",
-        "detailId": 3234,
-        "videoTitle": "视频标题",
-        "workId": 234,
-        "workContent": "测试发表2",
-        "workUrls": ["../../../image/share.png", "../../../image/share.png", "../../../image/share.png"]
-      }
-    ],
+    items: [],
     pageSize: 10,
     currentPage: 0,
-    haveNext: false
+    haveNext: false,
+    hideModal: true,
+    itemDetail: {},
+    itemIndex: -1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) { 
-    pageState(this).finish()  
+  onLoad: function(options) {
+    pageState(this).finish()
     this.getData()
   },
   onRetry: function() {
@@ -49,7 +35,7 @@ Page({
   getData: function() {
     var that = this
     pageState(that).loading()
-    request.getUserLikes(this.data.currentPage, this.data.pageSize).then(res => {
+    request.getUserWorks(this.data.currentPage, this.data.pageSize).then(res => {
       if (res.data.items.length === 0) {
         pageState(that).empty('还没有发布作品哦～', '../../../image/ic_empty_zp.png')
       } else {
@@ -67,7 +53,9 @@ Page({
   getMoreData: function() {
     var that = this
     request.getUserWorks(this.data.currentPage, this.data.pageSize).then(res => {
-      that.showLoading = false
+      that.setData({
+        showLoading: false
+      })
       var list = that.data.items;
       list = list.concat(res.data.items);
       that.setData({
@@ -76,7 +64,9 @@ Page({
         currentPage: res.data.lastStamp
       })
     }).catch(res => {
-      that.showLoading = false
+      that.setData({
+        showLoading: false
+      })
       util.showToast(res, 'none', 2000)
     })
   },
@@ -87,20 +77,32 @@ Page({
 
   },
   deleteWork: function(e) {
-    var id = e.currentTarget.dataset.id;
+    var id = e.currentTarget.dataset.id
+    var index = e.currentTarget.dataset.index
     console.log("要删除的" + id)
+    this.doDelete(id, index)
+  },
+  doDelete: function(id, index) {
     var that = this
     wx.showModal({
       title: '温馨提示',
       content: '删除后将不能恢复，确定是要删除吗？',
-      contentColor:'#0000000',
+      contentColor: '#0000000',
       confirmColor: '#000000',
       cancelColor: '#808080',
       success: function(sm) {
         if (sm.confirm) {
           // 用户点击了确定 可以调用删除方法了
           request.deleteWork(id).then(res => {
-            that.getData()
+            var items = that.data.items
+            items.splice(index, 1)
+            if (items.length === 0) {
+              pageState(that).empty('还没有发布作品哦～', '../../../image/ic_empty_zp.png')
+            } else {
+              that.setData({
+                items: items
+              })
+            }
           }).catch(res => {
             util.showToast(res, 'none', 2000)
           })
@@ -130,18 +132,35 @@ Page({
   onUnload: function() {
 
   },
-
+  showDetail: function(e) {
+    var that = this
+    var index = e.currentTarget.dataset.index
+    this.setData({
+      hideModal: false,
+      itemDetail: that.data.items[index],
+      itemIndex: index
+    })
+  },
+  modalConfirm: function(e) {
+    this.doDelete(this.data.itemDetail.workId, this.data.itemIndex)
+  },
+  modalCancel: function(e) {
+    console.log('点击了取消')
+    this.setData({
+      hideModal: true
+    })
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    this.data.showNoMore = false
-    wx.showNavigationBarLoading();
-    this.getData()
-    // 隐藏导航栏加载框
-    wx.hideNavigationBarLoading();
-    // 停止下拉动作
-    wx.stopPullDownRefresh();
+    // this.data.showNoMore = false
+    // wx.showNavigationBarLoading();
+    // this.getData()
+    // // 隐藏导航栏加载框
+    // wx.hideNavigationBarLoading();
+    // // 停止下拉动作
+    // wx.stopPullDownRefresh();
   },
 
   /**
@@ -149,7 +168,9 @@ Page({
    */
   onReachBottom: function() {
     if (!this.data.showNoMore && this.data.haveNext) {
-      this.showLoading = true
+      this.setData({
+        showLoading: true
+      })
       this.getMoreData()
     } else {
       this.setData({

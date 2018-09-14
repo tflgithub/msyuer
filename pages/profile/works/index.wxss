@@ -41,12 +41,14 @@
 
 .item-bottom {
   display: flex;
+  justify-content: center
 }
 
 .item-bottom .left {
   flex: 1;
   display: -webkit-box;
   word-break: break-all;
+  justify-content: center;
   text-overflow: ellipsis;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -60,4 +62,19 @@
 .item-bottom .right {
   font-size: 30rpx;
   color: #999;
+}
+
+.modal-content {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 0 30rpx 0 30rpx
+}
+
+.modal-close {
+  position: absolute;
+  width: 34rpx;
+  height: 34rpx;
+  right: 0;
+  padding: 20rpx;
 }

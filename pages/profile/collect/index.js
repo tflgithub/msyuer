@@ -13,46 +13,7 @@ Page({
   data: {
     showLoading: false,
     showNoMore: false,
-    items: [{
-        "duration": "16:23",
-        "phoUrl": "../../../image/share.png",
-        "detailId": "234rrfgfh900",
-        "clickNum": "2366",
-        "title": "abc测试dsadasdasdasdasdas",
-        "likeNum": "1266"
-      },
-      {
-        "duration": "16:23",
-        "phoUrl": "../../../image/share.png",
-        "detailId": "234rrfgfh900",
-        "clickNum": "2366",
-        "title": "abc测试dasdasdasdasd",
-        "likeNum": "1266"
-      },
-      {
-        "duration": "16:23",
-        "phoUrl": "../../../image/share.png",
-        "detailId": "234rrfgfh900",
-        "clickNum": "2366",
-        "title": "abc测试",
-        "likeNum": "1266"
-      }, {
-        "duration": "16:23",
-        "phoUrl": "../../../image/share.png",
-        "detailId": "234rrfgfh900",
-        "clickNum": "2366",
-        "title": "abc测试",
-        "likeNum": "1266"
-      },
-      {
-        "duration": "16.23",
-        "phoUrl": "../../../image/share.png",
-        "detailId": "234rrfgfh900",
-        "clickNum": "2366",
-        "title": "abc测试",
-        "likeNum": "1266"
-      }
-    ],
+    items: [],
     pageSize: 10,
     currentPage: 0,
     haveNext: false
@@ -115,7 +76,9 @@ Page({
   getMoreData: function() {
     var that = this
     request.getUserLikes(this.data.currentPage, this.data.pageSize).then(res => {
-      that.showLoading = false
+      that.setData({
+        showLoading: false
+      })
       var list = that.data.items;
       list = list.concat(res.data.items);
       that.setData({
@@ -124,29 +87,25 @@ Page({
         currentPage: res.data.lastStamp
       })
     }).catch(res => {
-      that.showLoading = false
+      that.setData({
+        showLoading: false
+      })
       util.showToast(res, 'none', 2000)
     })
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
-    this.data.showNoMore = false
-    wx.showNavigationBarLoading();
-    this.getData()
-    // 隐藏导航栏加载框
-    wx.hideNavigationBarLoading();
-    // 停止下拉动作
-    wx.stopPullDownRefresh();
-  },
+  onPullDownRefresh: function() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
     if (!this.data.showNoMore && this.data.haveNext) {
-      this.showLoading = true
+      that.setData({
+        showLoading: true
+      })
       this.getMoreData()
     } else {
       this.setData({

@@ -1,10 +1,14 @@
 const app = getApp()
 //公共请求方法  仅支持post
 function request(obj) {
-  app.globalData.token = wx.getStorageSync('token')
   if (app.globalData.token === null) {
-    login().then(res => {
-      doRequest(obj)
+    wx.getUserInfo({
+      success: function (res) {
+        app.globalData.userInfo = res.userInfo
+        login().then(res => {
+          doRequest(obj)
+        })
+      }
     })
   } else {
     doRequest(obj)
@@ -78,7 +82,6 @@ export function login() {
               console.log("登录：" + JSON.stringify(res))
               if (res.data.code === 0) {
                 app.globalData.token = res.data.data.token
-                wx.setStorageSync('token', res.data.data.token)
                 app.globalData.setUserInfo = res.data.data.setUserInfo
                 app.globalData.canSee = res.data.canSee
                 app.globalData.hadMsg = res.data.hadMsg
@@ -258,12 +261,7 @@ export function getRecommend(id) {
  * 获取视频列表
  */
 export function getVedioList(st, mt, nextPage, pageSize, resolve, reject) {
-  var message = null
-  if (nextPage === 0) {
-    message = "正在加载..."
-  }
-  request({
-    message: message,
+  request({  
     url: `${app.globalData.API_URL}/api/wxa/v1/video/list`,
     data: {
       st: st,
@@ -282,7 +280,6 @@ export function getVedioList(st, mt, nextPage, pageSize, resolve, reject) {
 export function getVedioDetail(id) {
   return new Promise(function(resolve, reject) {
     request({
-      message: "正在加载...",
       url: `${app.globalData.API_URL}/api/wxa/v1/video/detail`,
       data: {
         detailId: id
@@ -299,7 +296,6 @@ export function getVedioDetail(id) {
 export function like(id) {
   return new Promise(function(resolve, reject) {
     request({
-      message: "正在提交...",
       url: `${app.globalData.API_URL}/api/wxa/v1/video/like`,
       data: {
         detailId: id
@@ -316,7 +312,6 @@ export function like(id) {
 export function unlike(id) {
   return new Promise(function(resolve, reject) {
     request({
-      message: "正在提交...",
       url: `${app.globalData.API_URL}/api/wxa/v1/video/unlike`,
       data: {
         detailId: id
@@ -446,7 +441,7 @@ export function help(uid) {
 export function score(id, score, evaluate) {
   return new Promise(function(resolve, reject) {
     request({
-      url: `${app.globalData.API_URL}/api/wxa/v1/user/help`,
+      url: `${app.globalData.API_URL}/api/wxa/v1/video/score`,
       data: {
         detailId: id,
         score: score,

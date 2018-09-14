@@ -1,5 +1,6 @@
 /* pages/infolist/infolist.wxss */
 
+
 .time {
   position: absolute;
   bottom: 40rpx;
@@ -16,6 +17,6 @@
 .cell .item {
   display: flex;
   flex-direction: row;
-  margin-right:40rpx;
+  margin-right: 40rpx;
   align-items: center;
 }

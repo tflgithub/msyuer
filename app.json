@@ -4,7 +4,7 @@
     "pages/detail/detail",
     "pages/profile/profile",
     "pages/unlock/invite",
-    "pages/unlock/help",
+    "pages/unlock/help",    
     "pages/profile/message/index",
     "pages/profile/collect/index",
     "pages/profile/works/index",

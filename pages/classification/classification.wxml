@@ -6,7 +6,7 @@
   </view>
 
   <view class="classification">
-    <navigator wx:for="{{cook}}" wx:for-item="item" class="item" url="../infolist/infolist?typeId={{item.value}}">
+    <navigator wx:for="{{cook}}" wx:for-item="item" wx:key='*this' class="item" url="../infolist/infolist?typeId={{item.value}}">
       <image style='{{item.style}}' src="{{item.imageUrl}}" />
       <text class="text">{{item.text}}</text>
     </navigator>
@@ -17,7 +17,7 @@
   </view>
 
   <view class="classification">
-    <navigator class="item" wx:for="{{foods}}" wx:for-item="item" url="../infolist/infolist?foodId={{item.value}}">
+    <navigator class="item" wx:for="{{foods}}" wx:for-item="item" wx:key='*this' url="../infolist/infolist?foodId={{item.value}}">
       <image style='{{item.style}}' src="{{item.imageUrl}}" />
       <text class="text">{{item.text}}</text>
     </navigator>

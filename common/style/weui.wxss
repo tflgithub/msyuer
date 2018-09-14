@@ -920,7 +920,7 @@ icon {
 }
 
 .weui-media-box {
-  padding: 15px;
+  padding: 15rpx;
   position: relative;
 }
 
@@ -941,7 +941,7 @@ icon {
 
 .weui-media-box__title {
   font-weight: 400;
-  font-size: 17px;
+  font-size: 17rpx;
   width: auto;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -963,7 +963,7 @@ icon {
 }
 
 .weui-media-box__info {
-  margin-top: 15px;
+  margin-top: 15rpx;
   padding-bottom: 5px;
   padding-right: 5rpx;
   font-size: 24rpx;
@@ -984,7 +984,7 @@ icon {
 }
 
 .weui-media-box__title_in-text {
-  margin-bottom: 8px;
+  margin-bottom: 8rpx;
 }
 
 .weui-media-box_appmsg {

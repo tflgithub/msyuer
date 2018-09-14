@@ -11,79 +11,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    data: {
-      "detailInfo": {
-        "summary": "简介222222sssss",
-        "duration": "16.23",
-        "videoUrl": "http://ddsfgrfdsg",
-        "phoUrl": "http://ddsfgrfdsg",
-        "detailId": "22222222",
-        "clickNum": "2366",
-        "title": "abc测试",
-        "likeNum": "1266",
-        "hadLike": true,
-        "score": 4.3,
-        "hadScore": true
-      }
-    },
+    data: {},
     videoContext: null,
     likeNum: '1',
     hadLike: '',
     hadScore: false,
-    isPlaying: false,
+    isPlaying: null,
     showCover: true,
     recommendList: [],
-    worksList: [{
-        "nickName": "测试用户昵称",
-        "avatarUrl": "https://v.miskitchen.com/ic_hiabao.png",
-        "workId": "22222222",
-        "workContent": "作品内容什么雷德蒙德是的撒，的；是，打撒打撒的撒的",
-        "workUrls": ["https://v.miskitchen.com/ic_hiabao.png", "https://v.miskitchen.com/ic_hiabao.png", 'https://v.miskitchen.com/ic_hiabao.png', 'https://v.miskitchen.com/ic_hiabao.png'],
-        "workCreateTime": "2018-09-01 12:32:30",
-        "replyItems": [{
-          "replyNickName": "平台",
-          "replyContent": "平台回复打开圣诞快乐；撒的快乐撒开的；萨里看到了撒开的了；撒开的撒了点看撒",
-          "replyCreateTime": "2018-09-01 12:32:30"
-        }]
-      },
-      {
-        "nickName": "测试用户昵称",
-        "avatarUrl": "https://v.miskitchen.com/ic_hiabao.png",
-        "workId": "22222222",
-        "workContent": "",
-        "workUrls": ["https://v.miskitchen.com/ic_hiabao.png", "https://v.miskitchen.com/ic_hiabao.png", 'https://v.miskitchen.com/ic_hiabao.png', 'https://v.miskitchen.com/ic_hiabao.png'],
-        "workCreateTime": "2018-09-01 12:32:30",
-        "replyItems": [{
-          "replyNickName": "平台",
-          "replyContent": "平台回复打开圣诞快乐；撒的快乐撒开的；萨里看到了撒开的了；撒开的撒了点看撒",
-          "replyCreateTime": "2018-09-01 12:32:30"
-        }]
-      },
-      {
-        "nickName": "测试用户昵称",
-        "avatarUrl": "https://v.miskitchen.com/ic_hiabao.png",
-        "workId": "22222222",
-        "workContent": "作品内容打撒的撒的；啊的，临时，啊；的，撒的，；撒了",
-        "workUrls": ["https://v.miskitchen.com/ic_hiabao.png", "https://v.miskitchen.com/ic_hiabao.png", 'https://v.miskitchen.com/ic_hiabao.png', 'https://v.miskitchen.com/ic_hiabao.png'],
-        "workCreateTime": "2018-09-01 12:32:30",
-        "replyItems": [{
-            "replyNickName": "平台",
-            "replyContent": "都死了；阿迪力撒的撒了；的撒的撒打撒来的；撒的；是辣的",
-            "replyCreateTime": "2018-09-01 12:32:30"
-          },
-          {
-            "replyNickName": "平台",
-            "replyContent": "都死了；阿迪力撒的撒了；的撒的撒打撒来的；撒的；是辣的",
-            "replyCreateTime": "2018-09-01 12:32:30"
-          },
-          {
-            "replyNickName": "平台",
-            "replyContent": "都死了；阿迪力撒的撒了；的撒的撒打撒来的；撒的；是辣的",
-            "replyCreateTime": "2018-09-01 12:32:30"
-          }
-        ]
-      }
-    ],
+    worksList: [],
     dataList: {},
     hideModal: true,
     detailId: null,
@@ -94,28 +30,52 @@ Page({
     halfSrc: '../../image/ic_star_half.png',
     key: 0, //评分
     bgImage: null,
-    evaluate: ['很难做', '步骤不对', '口感不对', '非常完美', '一般吧'],
-    selectedIndex: -1,
+    evaluate: [{
+      id: 1,
+      text: '很难做',
+      checked: false
+    }, {
+      id: 2,
+      text: '步骤不对',
+      checked: false
+    }, {
+      id: 3,
+      text: '口感不对',
+      checked: false
+    }, {
+      id: 4,
+      text: '非常完美',
+      checked: false
+    }, {
+      id: 5,
+      text: '一般吧',
+      checked: false
+    }],
     currentPage: 0,
     pageSize: 10,
     haveNext: false,
-    top: 0,
+    showLoading: false,
+    showNoMore: false,
+    fixedTop: false,
     videoType: 'video'
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log("传入" + options.id)
     this.videoContext = wx.createVideoContext('myVideo')
     this.setData({
       detailId: options.id
     })
     this.loadData()
+    this.loadWorks()
   },
   loadData: function() {
     var that = this;
-    console.log("当前ID：" + this.detailId);
-    Promise.all([request.getVedioDetail(this.detailId), request.getRecommend(this.detailId), request.getAboutWorks(this.detailId, this.currentPage, this.pageSize)]).then(res => {
+    pageState(that).loading()
+    console.log("当前ID：" + this.data.detailId)
+    Promise.all([request.getVedioDetail(this.data.detailId), request.getRecommend(this.data.detailId)]).then(res => {
       pageState(that).finish()
       var article = res[0].data.detailInfo.summary;
       WxParse.wxParse('article', 'html', article, that, 5);
@@ -126,13 +86,42 @@ Page({
         hadScore: res[0].data.detailInfo.hadScore,
         videoType: that.setVideoType(res[0].data.detailInfo.sizeType),
         isBindMobile: res[0].data.setUserInfo,
-        recommendList: res[1].data.recommendList,
-        worksList: res[2].data.items,
-        currentPage: res[2].data.lastStamp,
-        haveNext: res[2].data.haveNext
+        recommendList: res[1].data.recommendList
       })
     }).catch(res => {
       pageState(this).error(res)
+    })
+  },
+  loadWorks: function() {
+    var that = this
+    request.getAboutWorks(this.data.detailId, this.currentPage, this.pageSize).then(res => {
+      that.setData({
+        currentPage: res.data.lastStamp,
+        haveNext: res.data.haveNext,
+        worksList: res.data.items
+      })
+    }).catch(res => {
+
+    })
+  },
+  loadMoreWorks: function() {
+    var that = this
+    request.getAboutWorks(this.data.detailId, this.data.currentPage, this.data.pageSize).then(res => {
+      that.setData({
+        showLoading: false
+      })
+      var list = that.data.worksList;
+      list = list.concat(res.data.items);
+      that.setData({
+        worksList: list,
+        haveNext: res.data.haveNext,
+        currentPage: res.data.lastStamp
+      })
+    }).catch(res => {
+      that.setData({
+        showLoading: false
+      })
+      util.showToast(res, 'none', 2000)
     })
   },
   onRetry: function() {
@@ -145,16 +134,17 @@ Page({
   },
   bindaccount: function() {
     wx.navigateTo({
-      url: '../bindaccount/bindaccount',
+      url: '../bindaccount/bindaccount?path=' + util.getCurrentPageUrl(),
     })
   },
   startPlay: function(e) {
     if (app.globalData.canSee) {
       this.videoContext.play()
       //如果没有播放过，就发送到服务器
-      if (this.isPlaying === null) {
-        request.vedioPlay(this.detailId).then(res => {
-          console.log("发送播放动作到服务成功")
+      console.log(this.data.isPlaying)
+      if (this.data.isPlaying === null) {
+        request.vedioPlay(this.data.detailId).then(res => {
+          app.globalData.canSee = res.data.canPlay
         }).catch(res => {
           console.log("发送播放动作到服务失败：" + res)
         })
@@ -164,7 +154,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '../unlock/help',
+        url: '../unlock/invite',
       })
     }
   },
@@ -175,14 +165,26 @@ Page({
     })
   },
   evaluateSelection(e) {
-    var index = e.currentTarget.dataset.index;
+    var selectedEvaluate = []
+    var index = e.currentTarget.dataset.index
+    for (let i = 0; i < this.data.evaluate.length; i++) {
+      var item = this.data.evaluate[i]
+      if (i === index) {
+        if (item.checked) {
+          item.checked = false
+        } else {
+          item.checked = true
+        }
+      }
+      selectedEvaluate.push(item)
+    }
     this.setData({
-      selectedIndex: index
+      evaluate: selectedEvaluate
     })
   },
   rating: function(e) {
     if (this.data.hadScore) {
-      util.showToast('您已经评过分啦～','none',2000)
+      util.showToast('您已经评过分啦～', 'none', 2000)
       return
     }
     this.setData({
@@ -191,7 +193,14 @@ Page({
   },
   modalConfirm: function(e) {
     console.log("点击了提交" + this.data.key + "分")
-    request.score(this.data.detailId, this.data.key, this.data.evaluate[this.data.selectedIndex]).then(res => {
+    var evaluate = []
+    for (let i = 0; i < this.data.evaluate.length; i++) {
+      var item = this.data.evaluate[i]
+      if (item.checked) {
+        evaluate.push(item.id)
+      }
+    }
+    request.score(this.data.detailId, this.data.key, evaluate).then(res => {
       util.showToast('评分成功', 'none', 2000)
     }).catch(res => {
       util.showToast(res, 'none', 2000)
@@ -225,7 +234,7 @@ Page({
   },
   uploadWorks: function(e) {
     wx.navigateTo({
-      url: '../uploadworks/index',
+      url: '../uploadworks/index?id=' + this.data.detailId + '&title=' + this.data.data.detailInfo.title,
     })
   },
   dolike: function(e) {
@@ -306,9 +315,10 @@ Page({
   },
   //控制回到顶部按钮的显示与消失
   scrollTopFun(e) {
-    var that = this
-    that.setData({
-      top: e.detail.scrollTop
+    var scrollTop = e.detail.scrollTop
+    var fixed = scrollTop > wx.getSystemInfoSync().windowWidth / 750 * 500 ? true : false;
+    this.setData({
+      fixedTop: fixed
     })
   },
   setVideoType: function(sizeType) {
@@ -367,7 +377,16 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    if (!this.data.showNoMore && this.data.haveNext) {
+      this.setData({
+        showLoading: true
+      })
+      this.loadMoreWorks()
+    } else {
+      this.setData({
+        showNoMore: true
+      })
+    }
   },
   /**
    * 用户点击右上角分享

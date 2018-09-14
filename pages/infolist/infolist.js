@@ -42,6 +42,7 @@ Page({
   },
   getData: function() {
     var that = this;
+    pageState(that).loading()
     switch (this.data.where) {
       case "hots":
         wx.setNavigationBarTitle({
@@ -49,7 +50,7 @@ Page({
         })
         request.getHotList(0, this.data.pageSize).then(res => {
           if (res.data.items.length === 0) {
-            pageState(that).empty()
+            pageState(that).empty('暂无数据～', '../../image/ic_empty_zp.png')
           } else {
             pageState(that).finish()
             that.setData({
@@ -68,7 +69,7 @@ Page({
         })
         request.getNewList(0, this.data.pageSize).then(res => {
           if (res.data.items.length === 0) {
-            pageState(that).empty()
+            pageState(that).empty('暂无数据～', '../../image/ic_empty_zp.png')
           } else {
             pageState(that).finish()
             that.setData({
@@ -87,7 +88,7 @@ Page({
         })
         request.getLikeList(0, this.data.pageSize).then(res => {
           if (res.data.items.length === 0) {
-            pageState(that).empty()
+            pageState(that).empty('暂无数据～', '../../image/ic_empty_zp.png')
           } else {
             pageState(that).finish()
             that.setData({
@@ -108,7 +109,7 @@ Page({
             })
           }
           if (res.data.items.length === 0) {
-            pageState(that).empty()
+            pageState(that).empty('暂无数据～', '../../image/ic_empty_zp.png')
           } else {
             pageState(that).finish()
             that.setData({
@@ -215,13 +216,13 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    this.data.showNoMore = false
-    wx.showNavigationBarLoading();
-    this.getData()
-    // 隐藏导航栏加载框
-    wx.hideNavigationBarLoading();
-    // 停止下拉动作
-    wx.stopPullDownRefresh();
+    // this.data.showNoMore = false
+    // wx.showNavigationBarLoading();
+    // this.getData()
+    // // 隐藏导航栏加载框
+    // wx.hideNavigationBarLoading();
+    // // 停止下拉动作
+    // wx.stopPullDownRefresh();
   },
 
   /**
@@ -229,7 +230,9 @@ Page({
    */
   onReachBottom: function() {
     if (!this.data.showNoMore && this.data.data.haveNext) {
-      this.showLoading = true
+      this.setData({
+        showLoading: true
+      })
       this.getMoreData()
     } else {
       this.setData({

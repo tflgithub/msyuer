@@ -59,12 +59,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    app.isAuth().then(res => {
-      this.loadData()
-    }).catch(res => {
-      console.log(res)
-      pageState(this).error(res)
-    })
+    this.onRetry()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -73,7 +68,11 @@ Page({
 
   },
   onRetry: function() {
-    this.loadData()
+    app.isAuth().then(res => {
+      this.loadData()
+    }).catch(res => {
+      pageState(this).error(res)
+    })
   },
 
   loadData: function() {

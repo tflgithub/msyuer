@@ -13,7 +13,7 @@ Page({
     },
     isBindMobile: null,
     mobile: '',
-    hadMsg: true
+    hadMsg: false
   },
 
   /**
@@ -31,7 +31,7 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo,
       isBindMobile: app.globalData.setUserInfo,
-      hadMsg:app.globalData.hadMsg
+      hadMsg: app.globalData.hadMsg
     })
     var that = this
     console.log("是否绑定手机：" + app.globalData.setUserInfo)

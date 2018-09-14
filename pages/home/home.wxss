@@ -97,7 +97,6 @@
 .month-box {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-right: 18rpx;
 }
 
@@ -110,4 +109,5 @@
 .month-box .text {
   font-size: 30rpx;
   color: #333;
+  padding: 20rpx 20rpx 20rpx 0;
 }

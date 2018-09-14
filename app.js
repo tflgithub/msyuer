@@ -34,9 +34,37 @@ App({
             wx.getUserInfo({
               success: function(res) {
                 that.globalData.userInfo = res.userInfo
+                wx.login({
+                  success: function(res) {
+                    if (res.code) {
+                      console.log("获取到微信code：" + res.code);
+                      wx.request({
+                        url: `${that.globalData.API_URL}/api/wxa/v1/login/wxCode`,
+                        method: 'post',
+                        data: {
+                          code: res.code,
+                          nickName: that.globalData.userInfo.nickName,
+                          avatarUrl: that.globalData.userInfo.avatarUrl
+                        },
+                        success: function(res) {
+                          if (res.data.code === 0) {
+                            that.globalData.token = res.data.data.token
+                            that.globalData.setUserInfo = res.data.data.setUserInfo
+                            that.globalData.canSee = res.data.data.canSee
+                            that.globalData.hadMsg = res.data.data.hadMsg
+                            resolve('登录成功')
+                          }
+                        },
+                        fail: function(res) {
+                          console.log("登录服务器失败：" + JSON.stringify(res))
+                          reject('糟糕,服务器开小差了~')
+                        }
+                      })
+                    }
+                  }
+                })
               }
             })
-            resolve('已授权')
           }
         }
       })
@@ -47,9 +75,9 @@ App({
     userInfo: null,
     setUserInfo: null,
     token: null,
-    canSee:null,
-    hadMsg:null,
-    uid:null,
-    API_URL: "http://10.30.31.62:8080"
+    canSee: null,
+    hadMsg: null,
+    uid: null,
+    API_URL: "http://10.30.28.69:8080"
   },
 })

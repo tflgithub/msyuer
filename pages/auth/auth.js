@@ -8,19 +8,14 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   login: function() {
-    var that = this
-    request.login().then(res => {
-      wx.reLaunch({
-        url: '../home/home'
-      })
-    }).catch(res => {
-      util.showToast('登录失败', 'none', 20000)
+    wx.reLaunch({
+      url: '../home/home'
     })
   },
   onShow: function() {
 
   },
   onLoad: function(options) {
-    
+
   }
 })

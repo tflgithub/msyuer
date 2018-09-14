@@ -8,12 +8,12 @@
   <view></view>
   </block>
   <navigator wx:for="{{items}}" wx:for-item="item" url="../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-      <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
+    <view class="weui-media-box__hd_in-appmsg">
+      <image class="weui-media-box__thumb" src="{{item.phoUrl}}"/>
     </view>
-    <view class="weui-media-box__bd_in-appmsg">
+    <view class="weui-media-box__bd_in-appmsg" >
       <view class="weui-media-box__desc">{{item.title}}
-        <text class="time">{{item.duration}}</text>
+        <text class="time" >{{item.duration}}</text>
       </view>
       <view class='cell'>
         <view class='item'>

@@ -1,6 +1,6 @@
 <!--pages/uploadworks/index.wxml-->
 <view class="page">
-  <view style='38rpx;color:#222;margin-left:40rpx;'>辣椒炒肉</view>
+  <view style='38rpx;color:#222;margin-left:40rpx;'>{{title}}</view>
   <textarea class="textarea" bindinput="bindinput" maxlength="{{max}}" placeholder="关于这道菜的心得，快快与我们分享吧～" />
   <view style='margin-left:36rpx;height:450rpx'>
     <block wx:for="{{files}}" wx:key="*this">

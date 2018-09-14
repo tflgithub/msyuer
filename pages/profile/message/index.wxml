@@ -2,17 +2,28 @@
 <import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-  <navigator wx:for='{{items}}'>
+  <navigator wx:for='{{items}}' wx:key='*this' url='../../detail/detail?id={{item.detailId}}'>
     <view class='item'>
       <view class='item-left'>
         <view class='item-content'>
           <span>{{item.msgAuthor}}回复:</span>
           {{item.msgContent}}
         </view>
-        <text class='item-time'>{{item.msgCreateTime}}</text>
+        <view class='item-time'>{{item.msgCreateTime}}</view>
       </view>
-      <image src="{{item.workUrls}}" class="item-image" />
+      <image src="{{item.videoUrl}}" class="item-image" />
     </view>
     <view class='line'/>
   </navigator>
+  <block wx:if="{{showLoading}}">
+    <view class="weui-loadmore">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+  </block>
+  <block wx:if="{{showNoMore}}">
+    <view class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
+    </view>
+  </block>
 </view>

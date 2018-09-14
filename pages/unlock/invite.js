@@ -12,7 +12,7 @@ Page({
     viewedNum: 0,
     needShareNum: 0,
     sharedNum: 0,
-    uid:''
+    uid:0
   },
 
   /**
@@ -85,9 +85,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    var userInfos = [this.avatarUrl, this.nickName,this.uid]
+    var userInfos = [this.data.avatarUrl, this.data.nickName,this.data.uid]
     return {
-      title: '帮忙解锁',
+      title: this.data.nickName+'请您来助力！',
+      imageUrl:'../../image/share.png',
       path: 'pages/unlock/help?id=' + userInfos
     }
   }

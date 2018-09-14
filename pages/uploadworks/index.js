@@ -5,10 +5,7 @@ const app = getApp()
 const {
   util
 } = app
-const uploadFile = require("../../utils/uploadFile.js")
-const promisify = require("../../utils/promisify.js")
-//转为promise对象
-const uploadImage = promisify(uploadFile.upload)
+const qiniuUploader = require("../../lib/qiniuUploader");
 Page({
 
   /**
@@ -18,10 +15,10 @@ Page({
     hiddenAdd: false,
     files: [],
     detailId: '',
+    title: '',
     content: '',
     max: 320,
-    currentWordNumber: 0,
-    images: []
+    imageUrls: []
   },
   chooseImage: function(e) {
     var that = this;
@@ -47,7 +44,8 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      detailId: option.id
+      detailId: options.id,
+      title: options.title
     })
   },
   commit: function() {
@@ -56,10 +54,45 @@ Page({
       util.showToast('至少需要上传一张图片', 'none', 2000)
       return
     }
+    wx.showLoading({
+      title: '正在提交...',
+    })
     request.getQiniuToken().then(res => {
-      that.uploadMultiImage(that.data.files, res.data.token)
+      for (let i = 0; i < that.data.files.length; i++) {
+        qiniuUploader.upload(that.data.files[i], (res) => {
+          console.log(JSON.stringify(res))
+          that.data.imageUrls.push(res.imageURL)
+          if (that.data.files.length === that.data.imageUrls.length) {
+            request.publishWorks(that.data.detailId, that.data.content, that.data.imageUrls).then(res => {
+              wx.hideLoading()
+              util.showToast('发布成功', 'none', 2000)
+              wx.redirectTo({
+                url: '../detail/detail?id=' + that.data.detailId,
+              })
+            }).catch(res => {
+              wx.hideLoading()
+              console.log('发布作品失败：' + res)
+              util.showToast(res, 'none', 2000)
+            })
+          }
+        }, (error) => {
+          console.log('error: ' + error);
+        }, {
+          region: 'SCN', // 华南区
+          domain: 'http://v.miskitchen.com',
+          shouldUseQiniuFileName: false,
+          key: app.globalData.token + '_' + util.formatTime(new Date()) + '_' + i + '.png',
+          uptoken: res.data.token
+        }, (progress) => {
+          console.log('上传进度', progress.progress)
+          console.log('已经上传的数据长度', progress.totalBytesSent)
+          console.log('预期需要上传的数据总长度', progress.totalBytesExpectedToSend)
+        });
+      }
     }).catch(res => {
-      console.log('获取七牛服务器token失败')
+      console.log('提交失败：' + res)
+      wx.hideLoading()
+      util.showToast(res, 'none', 2000)
     })
   },
   deleteImage: function(e) {
@@ -77,58 +110,9 @@ Page({
   },
   bindinput: function(e) {
     var value = e.detail.value;
-    var len = parseInt(value.length);
-    if (len > this.data.min)
-      this.setData({
-        texts: " "
-      })
-    if (len > this.data.max) return;
-    // 当输入框内容的长度大于最大长度限制（max)时，终止setData()的执行
     this.setData({
-      currentWordNumber: len //当前字数  
+      content: value
     });
-  },
-  uploadMultiImage: function(paths, token) {
-    let that = this
-    let url = 'https://v.miskitchen.com'
-    const promises = paths.map(function(path) {
-      return uploadImage({
-        url: url,
-        path: path,
-        name: 'file',
-        extra: {
-          token: token
-        },
-      })
-    })
-    wx.showLoading({
-      title: '正在上传...',
-    })
-    Promise.all(promises).then(datas => {
-      //所有上传完成后
-      wx.hideLoading()
-      // 服务器返回的路径
-      let paths = datas.map(data => {
-        return data.data
-      })
-      // 保存，这里可以选择发送一个请求，保存这几条路径
-      images = images.concat(paths)
-      that.setData({
-        images: images
-      })
-      while (that.files.length === images.length) {
-        request.publishWorks(that.data.detailId, that.data.content, images).then(res => {
-          util.showToast('发布成功', 'none', 2000)
-        }).catch(res => {
-          console.log('发布作品失败：' + res)
-          util.showToast(res, 'none', 2000)
-        })
-        break;
-      }
-    }).catch(res => {
-      wx.hideLoading()
-      util.showToast(res, 'none', 2000)
-    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

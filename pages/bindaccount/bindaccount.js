@@ -9,7 +9,8 @@ Page({
     mobile: '',
     msgCode: '',
     getCodeButtonText: '获取验证码',
-    disableGetMobileCode: false
+    disableGetMobileCode: false,
+    path: '../home/home'
   },
   nextStep: function(event) {
     var that = this;
@@ -33,12 +34,9 @@ Page({
       app.globalData.token = res.data.token
       app.globalData.uid = res.data.uid
       app.globalData.setUserInfo = 1
-      // wx.reLaunch({
-      //   url: '../home/home'
-      // })
-      wx.navigateBack({
-        delta: -1
-      });
+      wx.redirectTo({
+        url: path,
+      })
     }).catch(res => {
       wx.showToast({
         title: res,
@@ -50,7 +48,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    let app = getApp();
+    if (options) {
+      this.setData({
+        path: options.path
+      })
+    }
     new app.ShowAlert();
   },
   bindGetPassCode: function(e) {

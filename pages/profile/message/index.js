@@ -13,23 +13,7 @@ Page({
   data: {
     showLoading: false,
     showNoMore: false,
-    items: [{
-        "msgCreateTime": "2018-08-09 12:56",
-        "msgId": 3234,
-        "msgContent": "消息ddddddddsdadsadsadassd内dsadasdasdsadasdasdas容",
-        "workId": 233,
-        "msgAuthor": "平台",
-        "workUrls": ["../../../image/share.png"]
-      },
-      {
-        "msgCreateTime": "2018-08-09 12:56",
-        "msgId": 3234,
-        "msgContent": "消息ddddddddsdadsadsadassd内dsadasdasdsadasdasdas容",
-        "workId": 233,
-        "msgAuthor": "平台",
-        "workUrls": ["../../../image/share.png"]
-      }
-    ],
+    items: [],
     pageSize: 10,
     currentPage: 0,
     haveNext: false,
@@ -65,7 +49,9 @@ Page({
   getMoreData: function() {
     var that = this
     request.getUserWorkMsgs(this.data.currentPage, this.data.pageSize).then(res => {
-      that.showLoading = false
+      that.setData({
+        showLoading:false
+      }) 
       var list = that.data.items;
       list = list.concat(res.data.items);
       that.setData({
@@ -74,7 +60,9 @@ Page({
         currentPage: res.data.lastStamp
       })
     }).catch(res => {
-      that.showLoading = false
+      that.setData({
+        showLoading: false
+      })
       util.showToast(res, 'none', 2000)
     })
   },
@@ -110,13 +98,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    this.data.showNoMore = false
-    wx.showNavigationBarLoading();
-    this.getData()
-    // 隐藏导航栏加载框
-    wx.hideNavigationBarLoading();
-    // 停止下拉动作
-    wx.stopPullDownRefresh();
   },
 
   /**
@@ -124,7 +105,9 @@ Page({
    */
   onReachBottom: function() {
     if (!this.data.showNoMore && this.data.haveNext) {
-      this.showLoading = true
+      that.setData({
+        showLoading: true
+      })
       this.getMoreData()
     } else {
       this.setData({
