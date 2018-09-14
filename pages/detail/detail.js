@@ -261,6 +261,16 @@ Page({
       util.showToast(res, 'none', 2000)
     })
   },
+  previewImage: function(e) {
+    var current = e.target.dataset.src
+    var index = e.currentTarget.dataset.bindex
+    var imageUrls = this.data.worksList[index].workUrls
+    console.log(index)
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接
+      urls: imageUrls // 需要预览的图片http链接列表
+    })
+  },
   fenxiang: function(e) {
     this.stopPlay()
     this.drawInit('', '')
@@ -377,6 +387,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
+    if (this.data.worksList.length < this.data.pageSize) {
+      return
+    }
     if (!this.data.showNoMore && this.data.haveNext) {
       this.setData({
         showLoading: true
@@ -394,7 +407,7 @@ Page({
   onShareAppMessage: function() {
     return {
       title: this.data.data.detailInfo.title,
-      path: util.getCurrentPageUrl() + '?id=' + this.detailId
+      path: util.getCurrentPageUrl() + '?id=' + this.data.detailId
     }
   }
 })

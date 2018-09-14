@@ -153,7 +153,7 @@
 .star-image {
   position: absolute;
   top: 24rpx;
-  margin-left: 120rpx;
+  margin-left: 95rpx;
   margin-top: 70rpx;
   width: 48rpx;
   height: 48rpx;
@@ -169,9 +169,9 @@
 .middle-content {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   position: absolute;
   top: 204rpx;
-  margin-left: 40rpx;
   align-items: center;
 }
 

@@ -10,7 +10,7 @@ Page({
     msgCode: '',
     getCodeButtonText: '获取验证码',
     disableGetMobileCode: false,
-    path: '../home/home'
+    navigateBack: -1
   },
   nextStep: function(event) {
     var that = this;
@@ -34,8 +34,8 @@ Page({
       app.globalData.token = res.data.token
       app.globalData.uid = res.data.uid
       app.globalData.setUserInfo = 1
-      wx.redirectTo({
-        url: path,
+      wx.navigateBack({
+        delta: that.data.navigateBack
       })
     }).catch(res => {
       wx.showToast({
@@ -50,7 +50,7 @@ Page({
   onLoad: function(options) {
     if (options) {
       this.setData({
-        path: options.path
+        navigateBack: options.navigateBack
       })
     }
     new app.ShowAlert();

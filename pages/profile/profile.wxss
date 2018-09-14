@@ -13,14 +13,15 @@
 
 .userinfo .message{
   position: absolute;
-  left: 660rpx;
   top:0;
+  right: 30rpx;
   width: 44rpx;
-  height: 44rpx;
+  height: 44rpx
 }
 
 .userinfo .left {
   display: flex;
+  flex: 1;
   flex-direction: column;
   margin-left: 40rpx;
   justify-content: flex-start;
@@ -29,8 +30,8 @@
 .userinfo .avatar {
   width: 140rpx;
   height: 140rpx;
+  margin-right: 90rpx;
   border-radius: 50%;
-  margin-right: 66rpx;
 }
 
 .userinfo .nickname {

@@ -21,23 +21,22 @@ Page({
    */
   onLoad: function(options) {
     var that = this
-    if (options) {
-      var params = options.id.split(',')
-      this.setData({
-        avatarUrl: params[0],
-        nickName: params[1],
-        uid: params[2]
-      })
-    }
-    // request.getUserInfo().then(res => {
-    //   console.log('分享者ID:' + that.data.uid + '当前登录用户ID:' + res.data.uid)
-    //   if (that.data.uid == res.data.uid) {
-    //     console.log('当前用户是自己')
-    //     wx.reLaunch({
-    //       url: 'invite',
-    //     })
-    //   }
-    // })
+    var params = options.id.split(',')
+    this.setData({
+      avatarUrl: params[0],
+      nickName: params[1],
+      uid: params[2]
+    })
+
+    request.getUserInfo().then(res => {
+      console.log('分享者ID:' + that.data.uid + '当前登录用户ID:' + res.data.uid)
+      if (that.data.uid == res.data.uid) {
+        console.log('当前用户是自己')
+        wx.reLaunch({
+          url: 'invite',
+        })
+      }
+    })
   },
 
   /**
@@ -49,12 +48,11 @@ Page({
   unlock: function(e) {
     if (app.globalData.setUserInfo != 1) {
       wx.navigateTo({
-        url: '../bindaccount/bindaccount?path=' + util.getCurrentPageUrl(),
+        url: '../bindaccount/bindaccount?navigateBack=1'
       })
       return
     }
     var that = this
-  
     request.isHelp(parseInt(this.data.uid)).then(res => {
       if (res.data.isHelp) {
         wx.showModal({

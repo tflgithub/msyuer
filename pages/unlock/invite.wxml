@@ -12,8 +12,8 @@
     <image src='../../image/ic_xixian.png' class='line' />邀请{{needShareNum}}位新用户解锁菜谱
     <image src='../../image/ic_xixian.png' class='line' />
   </view>
-  <view style='font-size:26rpx;color:#666666;'>已有好友助力
+  <view style='font-size:26rpx;color:#666666;'>已有
     <text style='color:#ff4a53;font-size:54rpx'>{{sharedNum}}</text>
-    <text style='color:#ff4a53'>位</text>
+    <text style='color:#ff4a53'>位</text>好友助力
   </view>
 </view>

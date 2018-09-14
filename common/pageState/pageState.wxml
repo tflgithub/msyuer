@@ -1,7 +1,7 @@
 <!--res/components/pageState/pageSate.wxml-->
 <template name="pageState">
   <view class="page-state-container" wx:if="{{state != 'finish'}}">
-    <view class="page-state-empty page-state-center" wx:if="{{state == 'empty'}}">
+    <view class="page-state-empty" style='align-items: center;width: 100%; display:flex;flex-direction: column;margin-top:260rpx' wx:if="{{state == 'empty'}}">
       <image src='{{icon}}' class='icon' />
       <view class="message">{{message}}</view>
     </view>

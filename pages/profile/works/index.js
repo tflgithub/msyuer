@@ -141,6 +141,14 @@ Page({
       itemIndex: index
     })
   },
+  previewImage: function (e) {
+    var current = e.target.dataset.src
+    var imageUrls = this.data.itemDetail.workUrls
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接
+      urls: imageUrls // 需要预览的图片http链接列表
+    })
+  },
   modalConfirm: function(e) {
     this.doDelete(this.data.itemDetail.workId, this.data.itemIndex)
   },

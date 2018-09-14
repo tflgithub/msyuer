@@ -4,17 +4,17 @@
 <custom-modal hideModal="{{hideModal}}" height='60%' width='80%' left='取消' right='删除' bindcancel="modalCancel" bindconfirm='modalConfirm'>
   <view class='modal-content'>
     <image src='../../../image/ic_close.png' class='modal-close' catchtap='modalCancel' />
-    <text style='font-size:34rpx;color:#000;margin-top:40rpx;text-align:center'>作品详情</text>
+    <text style='font-size:34rpx;color:#000;margin-top:24rpx;text-align:center'>作品详情</text>
     <view style='font-size:30rpx;margin:20rpx 30rpx 15rpx 0; word-wrap:break-word'>{{itemDetail.workContent}}</view>
     <view style='display:flex;flex-direction:row; flex-wrap:wrap;margin-bottom:20rpx' >
       <block wx:for='{{itemDetail.workUrls}}' wx:key='*this'>
-        <image src='{{item}}' style='height:100rpx;width:172rpx;border-radius:8rpx;margin:5rpx;' />
+        <image src='{{item}}' style='height:100rpx;width:172rpx;border-radius:8rpx;margin:5rpx;' bindtap='previewImage' data-src="{{item}}" />
       </block>
     </view>
     <view class="item-bottom">
-      <view class="left">
+      <navigator hover-class='none' class="left" url='../../detail/detail?id={{itemDetail.detailId}}'>
         <image src='../../../image/ic_meishi.png' style='width:34rpx;height:30rpx; margin-right:20rpx' />{{itemDetail.videoTitle}}
-      </view>
+     </navigator>
       <view class='right'>
         {{itemDetail.workCreateTime}}
       </view>
@@ -22,22 +22,22 @@
   </view>
 </custom-modal>
 <view class="page">
-  <view class="layout_vertical" wx:for='{{items}}' wx:key='*this' bindtap='showDetail' data-index='{{index}}'>
+  <view class="layout_vertical" wx:for='{{items}}' wx:key='*this'>
     <view style='margin:30rpx;'>
       <image class='item-delete' src="../../../image/ic_delete_2.png" catchtap='deleteWork' data-id='{{item.workId}}' data-index='{{index}}' />
 
-      <view class='item-content'>
+      <view class='item-content' bindtap='showDetail' data-index='{{index}}'>
         {{item.workContent}}
       </view>
 
       <scroll-view class="image-group" scroll-x="true">
-        <image wx:for='{{item.workUrls}}' wx:for-item='item' wx:key='*this' src="{{item}}"></image>
+        <image bindtap='showDetail' data-index='{{index}}' wx:for='{{item.workUrls}}' wx:for-item='item' wx:key='*this' src="{{item}}"></image>
       </scroll-view>
 
       <view class="item-bottom">
-        <view class="left">
+        <navigator hover-class='none' class="left" url='../../detail/detail?id={{item.detailId}}'>
           <image src='../../../image/ic_meishi.png' style='width:34rpx;height:30rpx; margin-right:20rpx' />{{item.videoTitle}}
-        </view>
+        </navigator>
         <view class='right'>
           {{item.workCreateTime}}
         </view>
