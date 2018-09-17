@@ -134,28 +134,47 @@ Page({
   },
   bindaccount: function() {
     wx.navigateTo({
-      url: '../bindaccount/bindaccount?path=' + util.getCurrentPageUrl(),
+      url: '../bindaccount/bindaccount',
     })
   },
   startPlay: function(e) {
+    var that = this
     if (app.globalData.canSee) {
       this.videoContext.play()
-      //如果没有播放过，就发送到服务器
-      console.log(this.data.isPlaying)
-      if (this.data.isPlaying === null) {
-        request.vedioPlay(this.data.detailId).then(res => {
-          app.globalData.canSee = res.data.canPlay
-        }).catch(res => {
-          console.log("发送播放动作到服务失败：" + res)
-        })
-      }
       this.setData({
         isPlaying: true
       })
     } else {
-      wx.navigateTo({
-        url: '../unlock/invite',
-      })
+      //如果没有播放过，就发送到服务器
+      console.log(this.data.isPlaying)
+      if (this.data.isPlaying === null) {
+        request.vedioPlay(this.data.detailId).then(res => {
+          if (res.data.canPlay) {
+            that.videoContext.play()
+            that.setData({
+              isPlaying: true
+            })
+          } else if (res.data.needShareNum == res.data.sharedNum) {
+            app.globalData.canSee = true
+            that.videoContext.play()
+            that.setData({
+              isPlaying: true
+            })
+          } else {
+            wx.navigateTo({
+              url: '../unlock/invite',
+            })
+          }
+        }).catch(res => {
+          console.log("发送播放动作到服务失败：" + res)
+          util.showToast(res, 'none', 2000)
+        })
+      } else {
+        this.videoContext.play()
+        this.setData({
+          isPlaying: true
+        })
+      }
     }
   },
   stopPlay: function() {
@@ -359,7 +378,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    if (app.globalData.setUserInfo) {
+      this.setData({
+        isBindMobile: app.globalData.setUserInfo
+      })
+    }
   },
 
   /**

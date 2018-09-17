@@ -1,12 +1,17 @@
 <!--pages/unlock/help.wxml-->
-<view class="page" style='text-align:center'>
+<view class="page" style='text-align:center' hidden='{{hiddenPage}}'>
   <view style='width:100%;height:70rpx;background-color:#e8e8e8;align-items:center;display:flex'>
     <image src='../../image/ic_jeisuo.png' style='width:38rpx;height:32rpx;margin-right:14rpx;margin-left:60rpx;' />
-    <text style='font-size:30rpx;color:#000'>助力好友解锁美味菜谱，米勺期待您的加入</text>
+    <text style='font-size:30rpx;color:#000'>{{tip}}</text>
   </view>
   <view class='haibao'>
     <image src='https://v.miskitchen.com/ic_hiabao.png' style='width:536rpx;height:923rpx;margin-top:24rpx' />
-    <button open-type='getUserInfo' wx:if="{{canIUse}}" bindtap='unlock' class='button'>帮助解锁</button>
+    <block wx:if='{{isHelp}}'>
+      <button open-type="share" class='button'>我也要解锁</button>
+    </block>
+    <block wx:else>
+      <button open-type='getUserInfo' wx:if="{{canIUse}}" bindtap='unlock' class='button'>帮助解锁</button>
+    </block>
   </view>
   <view class='info'>
     <image class='avatar' src='{{avatarUrl}}' />
@@ -16,6 +21,4 @@
     <image src='../../image/ic_xixian.png' class='line' />分享一道美食给您，邀请您解锁一起烹饪
     <image src='../../image/ic_xixian.png' class='line' />
   </view>
-
-
 </view>

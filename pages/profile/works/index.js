@@ -87,7 +87,6 @@ Page({
     wx.showModal({
       title: '温馨提示',
       content: '删除后将不能恢复，确定是要删除吗？',
-      contentColor: '#0000000',
       confirmColor: '#000000',
       cancelColor: '#808080',
       success: function(sm) {

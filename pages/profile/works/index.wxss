@@ -22,7 +22,7 @@
   left: 660rpx;
   width: 26rpx;
   height: 26rpx;
-  
+  padding: 15rpx;
 }
 
 .image-group {

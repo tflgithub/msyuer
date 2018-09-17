@@ -2,11 +2,11 @@
 <view class="page" style='text-align:center'>
   <view style='height:70rpx;background-color:#e8e8e8;align-items:center; display:flex'>
     <image src='../../image/ic_tixing.png' style='width:30rpx;height:37rpx;margin-right:14rpx;margin-left:60rpx' />
-    <text style='font-size:30rpx;color:#000'>您已经观看了{{viewedNum}}个菜谱，立即邀请好友助力解锁</text>
+    <text style='font-size:30rpx;color:#000'>{{viewedNum}}</text>
   </view>
   <view class='haibao'>
     <image src='https://v.miskitchen.com/ic_hiabao.png' style='width:536rpx;height:923rpx;margin-top:24rpx' />
-    <button open-type="share" class='button'>邀请微信好友</button>
+    <button open-type="share" class='button'>{{buttonTxt}}</button>
   </view>
   <view style='font-size:32rpx;color:#000;margin-top:24rpx;'>
     <image src='../../image/ic_xixian.png' class='line' />邀请{{needShareNum}}位新用户解锁菜谱

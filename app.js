@@ -51,6 +51,7 @@ App({
                             that.globalData.token = res.data.data.token
                             that.globalData.setUserInfo = res.data.data.setUserInfo
                             that.globalData.canSee = res.data.data.canSee
+                            console.log('是否已解锁：'+res.data.data.canSee)
                             that.globalData.hadMsg = res.data.data.hadMsg
                             resolve('登录成功')
                           }
@@ -78,6 +79,6 @@ App({
     canSee: null,
     hadMsg: null,
     uid: null,
-    API_URL: "http://10.30.28.69:8080"
+    API_URL: "http://test.miskitchen.com"  //http://10.30.28.69:8080"
   },
 })

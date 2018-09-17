@@ -83,8 +83,8 @@ export function login() {
               if (res.data.code === 0) {
                 app.globalData.token = res.data.data.token
                 app.globalData.setUserInfo = res.data.data.setUserInfo
-                app.globalData.canSee = res.data.canSee
-                app.globalData.hadMsg = res.data.hadMsg
+                app.globalData.canSee = res.data.data.canSee
+                app.globalData.hadMsg = res.data.data.hadMsg
                 resolve('登录成功')
               }
             },

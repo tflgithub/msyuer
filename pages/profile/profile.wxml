@@ -1,5 +1,3 @@
-<import src="../../common/pageState/pageState.wxml" />
-<template is="pageState" data="{{...pageState}}" />
 <template name="item_list">
   <view class="weui-cell__hd" style="margin:30rpx;">
     <image src="{{img}}" style="{{style}}"></image>

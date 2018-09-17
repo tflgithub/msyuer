@@ -9,10 +9,11 @@ Page({
   data: {
     avatarUrl: '',
     nickName: '',
-    viewedNum: 0,
+    viewedNum: '',
     needShareNum: 0,
     sharedNum: 0,
-    uid:0
+    uid: 0,
+    buttonTxt: '邀请微信好友'
   },
 
   /**
@@ -24,14 +25,24 @@ Page({
       that.setData({
         avatarUrl: res.data.avatarUrl,
         nickName: res.data.nickName,
-        uid:res.data.uid
+        uid: res.data.uid
       })
       request.getHelpInfo(res.data.uid).then(res => {
         that.setData({
-          viewedNum: res.data.viewedNum,
           needShareNum: res.data.needShareNum,
           sharedNum: res.data.sharedNum
         })
+        if (that.data.needShareNum == that.data.sharedNum) {
+          that.setData({
+            viewedNum: '您已经完成解锁！',
+            buttonTxt: '邀请更多朋友'
+          })
+          app.globalData.canSee = true
+        } else {
+          that.setData({
+            viewedNum: '您已经观看了' + res.data.viewedNum + '个菜谱，立即邀请好友助力解锁'
+          })
+        }
       }).catch(res => {
         console.log('获取用户信息失败:' + res)
       })
@@ -85,10 +96,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    var userInfos = [this.data.avatarUrl, this.data.nickName,this.data.uid]
+    var userInfos = [this.data.avatarUrl, this.data.nickName, this.data.uid]
     return {
-      title: this.data.nickName+'请您来助力！',
-      imageUrl:'../../image/share.png',
+      title: this.data.nickName + '请您来助力！',
+      imageUrl: '../../image/share.png',
       path: 'pages/unlock/help?id=' + userInfos
     }
   }
