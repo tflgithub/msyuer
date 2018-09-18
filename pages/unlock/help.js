@@ -63,7 +63,7 @@ Page({
         request.getHelpInfo(that.data.uid).then(res => {
           if (that.data.needShareNum == that.data.sharedNum) {
             that.setData({
-              tip: '您的朋友已经完成解锁'
+              tip: '您的朋友' + that.data.nickName + '已经解锁成功！'
             })
           }
         }).catch(res => {
