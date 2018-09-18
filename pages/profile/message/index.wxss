@@ -27,7 +27,7 @@
 }
 
 .item-time {
-  margin-top: 60rpx;
+  margin-top: 20rpx;
   font-size: 28rpx;
   color: #a0a0a0;
 }

@@ -14,8 +14,9 @@
 .userinfo .message{
   position: absolute;
   top:0;
-  right: 30rpx;
+  right: 25rpx;
   width: 44rpx;
+  padding: 15rpx;
   height: 44rpx
 }
 

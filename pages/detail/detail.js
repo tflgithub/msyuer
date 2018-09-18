@@ -57,7 +57,9 @@ Page({
     showLoading: false,
     showNoMore: false,
     fixedTop: false,
-    videoType: 'video'
+    videoType: 'video',
+    toView: null,
+    jumpTo: '',
   },
   /**
    * 生命周期函数--监听页面加载
@@ -68,8 +70,12 @@ Page({
     this.setData({
       detailId: options.id
     })
+    if (options.from) {
+      this.setData({
+        jumpTo: options.from
+      })
+    }
     this.loadData()
-    this.loadWorks()
   },
   loadData: function() {
     var that = this;
@@ -94,11 +100,12 @@ Page({
   },
   loadWorks: function() {
     var that = this
-    request.getAboutWorks(this.data.detailId, this.currentPage, this.pageSize).then(res => {
+    request.getAboutWorks(this.data.detailId, this.data.currentPage, this.data.pageSize).then(res => {
       that.setData({
         currentPage: res.data.lastStamp,
         haveNext: res.data.haveNext,
-        worksList: res.data.items
+        worksList: res.data.items,
+        toView: that.data.jumpTo
       })
     }).catch(res => {
 
@@ -128,13 +135,16 @@ Page({
     this.loadData()
   },
   gotoDetail: function(e) {
-    wx.redirectTo({
-      url: `../detail/detail?id=${e.currentTarget.dataset.id}`
+    var id = e.currentTarget.dataset.id
+    this.setData({
+      detailId: id
     })
+    this.loadData()
+    this.loadWorks()
   },
   bindaccount: function() {
     wx.navigateTo({
-      url: '../bindaccount/bindaccount',
+      url: '../bindaccount/bindaccount?navigateBack=1',
     })
   },
   startPlay: function(e) {
@@ -202,6 +212,10 @@ Page({
     })
   },
   rating: function(e) {
+    if (this.data.isBindMobile != 1) {
+      this.bindaccount()
+      return
+    }
     if (this.data.hadScore) {
       util.showToast('您已经评过分啦～', 'none', 2000)
       return
@@ -252,6 +266,10 @@ Page({
     })
   },
   uploadWorks: function(e) {
+    if (this.data.isBindMobile != 1) {
+      this.bindaccount()
+      return
+    }
     wx.navigateTo({
       url: '../uploadworks/index?id=' + this.data.detailId + '&title=' + this.data.data.detailInfo.title,
     })
@@ -292,7 +310,11 @@ Page({
   },
   fenxiang: function(e) {
     this.stopPlay()
-    this.drawInit('', '')
+    if (this.data.isBindMobile != 1) {
+      this.bindaccount()
+      return
+    }
+    //this.drawInit('', '')
   },
   // 绘制数据初始化
   drawInit(bgImageUrl, qrCode) {
@@ -383,6 +405,10 @@ Page({
         isBindMobile: app.globalData.setUserInfo
       })
     }
+    this.setData({
+      currentPage: 0
+    })
+    this.loadWorks();
   },
 
   /**
@@ -410,9 +436,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    if (this.data.worksList.length < this.data.pageSize) {
-      return
-    }
     if (!this.data.showNoMore && this.data.haveNext) {
       this.setData({
         showLoading: true

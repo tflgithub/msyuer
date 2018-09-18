@@ -16,7 +16,6 @@
   opacity: 0.8;
   right: 233rpx;
   font-family:songti;
-  font-weight: bold;
 }
 
 .line {

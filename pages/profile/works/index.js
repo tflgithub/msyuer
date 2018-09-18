@@ -149,6 +149,9 @@ Page({
     })
   },
   modalConfirm: function(e) {
+    this.setData({
+      hideModal: true
+    })
     this.doDelete(this.data.itemDetail.workId, this.data.itemIndex)
   },
   modalCancel: function(e) {
@@ -161,13 +164,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    // this.data.showNoMore = false
-    // wx.showNavigationBarLoading();
-    // this.getData()
-    // // 隐藏导航栏加载框
-    // wx.hideNavigationBarLoading();
-    // // 停止下拉动作
-    // wx.stopPullDownRefresh();
   },
 
   /**

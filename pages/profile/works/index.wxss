@@ -4,6 +4,11 @@
   display: flex;
 }
 
+.noscroll {
+  height: 100%;
+  overflow: hidden;
+}
+
 .item-content {
   flex: 1;
   display: -webkit-box;
@@ -41,7 +46,7 @@
 
 .item-bottom {
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .item-bottom .left {
@@ -68,7 +73,8 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  padding: 0 30rpx 0 30rpx
+  padding: 0 30rpx 0 30rpx;
+  z-index: 9999;
 }
 
 .modal-close {

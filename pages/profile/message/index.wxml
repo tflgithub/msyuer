@@ -2,7 +2,7 @@
 <import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-  <navigator wx:for='{{items}}' wx:key='*this' url='../../detail/detail?id={{item.detailId}}'>
+  <navigator wx:for='{{items}}' wx:key='*this' url='../../detail/detail?id={{item.detailId}}&from=works'>
     <view class='item'>
       <view class='item-left'>
         <view class='item-content'>
@@ -13,7 +13,7 @@
       </view>
       <image src="{{item.videoUrl}}" class="item-image" />
     </view>
-    <view class='line'/>
+    <view class='line' />
   </navigator>
   <block wx:if="{{showLoading}}">
     <view class="weui-loadmore">

@@ -66,8 +66,8 @@ Page({
             request.publishWorks(that.data.detailId, that.data.content, that.data.imageUrls).then(res => {
               wx.hideLoading()
               util.showToast('发布成功', 'none', 2000)
-              wx.redirectTo({
-                url: '../detail/detail?id=' + that.data.detailId,
+              wx.navigateBack({
+                delta: 1
               })
             }).catch(res => {
               wx.hideLoading()
@@ -79,9 +79,9 @@ Page({
           console.log('error: ' + error);
         }, {
           region: 'SCN', // 华南区
-          domain: 'http://v.miskitchen.com',
+          domain: app.globalData.IMAGE_SERVER,
           shouldUseQiniuFileName: false,
-          key: app.globalData.token + '_' + util.formatTime(new Date()) + '_' + i + '.png',
+            key: app.globalData.token + '_' + util.formatTime(new Date()).replace(/ /g,'') + '_' + i + '.png',
           uptoken: res.data.token
         }, (progress) => {
           console.log('上传进度', progress.progress)

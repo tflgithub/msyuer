@@ -19,7 +19,7 @@
   <block wx:if="{{toDayRecommend.items.length>0}}">
     <view class="line " style='margin-top:20rpx' />
     <view class="cell" style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;'>
-      <image src="../../image/ic_recommended.png" style="width:42rpx;height:42rpx;margin-right:10rpx " />
+      <image src="../../image/ic_recommended.png" style="width:40rpx;height:40rpx;margin-right:10rpx " />
       <view class='title'>{{toDayRecommend.title}}</view>
     </view>
   </block>
@@ -41,7 +41,7 @@
     <view class="line" style='margin-top:20rpx' />
 
     <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
-      <image src="../../image/ic_hot.png " style="width:35rpx; height:35rpx;margin-top:10rpx;margin-right:15rpx" />
+      <image src="../../image/ic_hot.png " style="width:40rpx; height:34rpx;margin-top:10rpx;margin-right:15rpx" />
       <view class="weui-cell__bd title">{{hots.title}}</view>
       <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' bindtap='getMore' data-id="hots" />
     </view>
@@ -60,7 +60,7 @@
     <view class="line" style='margin-top:20rpx' />
 
     <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
-      <image src="../../image/ic_new.png " style="width:35rpx; height:35rpx;margin-top:10rpx;margin-right:15rpx" />
+      <image src="../../image/ic_new.png " style="width:33rpx; height:33rpx;margin-top:10rpx;margin-right:15rpx" />
       <view class="weui-cell__bd title">{{news.title}}</view>
       <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' bindtap='getMore' data-id="news" />
     </view>
@@ -79,7 +79,27 @@
   <view class="layout_vertical" wx:for="{{cooks.lists}}" wx:for-item="item" wx:key="index">
     <block wx:if="{{item.items.length>0}}">
       <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
-        <image src="{{item.iconUrl}}" style="width:35rpx; height:35rpx;margin-top:10rpx;margin-right:15rpx" />
+        <block wx:if='{{item.typeId}}==9'>
+          <image src="{{item.iconUrl}}" style="width:42rpx;height:31rpx;margin-top:10rpx;margin-right:15rpx" />
+        </block>
+        <block wx:elif='{{item.typeId}}==10'>
+          <image src="{{item.iconUrl}}" style="width:38rpx;height:34rpx;margin-top:10rpx;margin-right:15rpx" />
+        </block>
+        <block wx:elif='{{item.typeId}}==11'>
+          <image src="{{item.iconUrl}}" style="width:35rpx;height:34rpx;margin-top:10rpx;margin-right:15rpx" />
+        </block>
+        <block wx:elif='{{item.typeId}}==12'>
+          <image src="{{item.iconUrl}}" style="width:41rpx;height:42rpx;margin-top:10rpx;margin-right:15rpx" />
+        </block>
+        <block wx:elif='{{item.typeId}}==13'>
+          <image src="{{item.iconUrl}}" style="width:45rpx;height:36rpx;margin-top:10rpx;margin-right:15rpx" />
+        </block>
+        <block wx:elif='{{item.typeId}}==14'>
+          <image src="{{item.iconUrl}}" style="width:39rpx;height:32rpx;margin-top:10rpx;margin-right:15rpx" />
+        </block>
+        <block wx:elif='{{item.typeId}}==15'>
+          <image src="{{item.iconUrl}}" style="width:29rpx;height:33rpx;margin-top:10rpx;margin-right:15rpx" />
+        </block>
         <view class="weui-cell__bd title">{{item.title}}</view>
         <navigator url="../infolist/infolist?typeId={{item.typeId}}" hover-class="none">
           <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' />
