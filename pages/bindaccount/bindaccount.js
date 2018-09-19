@@ -8,9 +8,11 @@ Page({
   data: {
     mobile: '',
     msgCode: '',
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     getCodeButtonText: '获取验证码',
     disableGetMobileCode: false,
-    navigateBack: -1
+    navigateBack: -1,
+    shareUid: 0
   },
   nextStep: function(event) {
     var that = this;
@@ -30,7 +32,7 @@ Page({
       })
       return
     }
-    request.register(this.data.mobile, this.data.msgCode).then(res => {
+    request.register(this.data.mobile, this.data.msgCode, this.data.shareUid).then(res => {
       app.globalData.token = res.data.token
       app.globalData.uid = res.data.uid
       app.globalData.setUserInfo = 1
@@ -48,9 +50,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (options) {
+    if (options.navigateBack) {
       this.setData({
         navigateBack: options.navigateBack
+      })
+    }
+    if (options.shareUid) {
+      this.setData({
+        shareUid: options.shareUid
       })
     }
     new app.ShowAlert();

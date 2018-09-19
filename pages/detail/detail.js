@@ -59,7 +59,7 @@ Page({
     fixedTop: false,
     videoType: 'video',
     toView: null,
-    jumpTo: '',
+    jumpTo: ''
   },
   /**
    * 生命周期函数--监听页面加载
@@ -107,6 +107,14 @@ Page({
         worksList: res.data.items,
         toView: that.data.jumpTo
       })
+
+      for (var i in res.data.items) {
+        that.data.worksList[i].ellipsis = true; // 添加新属性
+      }
+      that.setData({
+        worksList: that.data.worksList
+      })
+      console.log("转换后：" + JSON.stringify(that.data.worksList))
     }).catch(res => {
 
     })
@@ -123,6 +131,14 @@ Page({
         worksList: list,
         haveNext: res.data.haveNext,
         currentPage: res.data.lastStamp
+      })
+      console.log("内容：" + list)
+      for (var i in list) {
+        console.log(i)
+        that.data.worksList[i].ellipsis = true; // 添加新属性
+      }
+      that.setData({
+        workContents: that.data.worksList
       })
     }).catch(res => {
       that.setData({
@@ -386,6 +402,14 @@ Page({
     }
     console.log(sizeType + ':' + videoType)
     return videoType
+  },
+  ellipsis: function(e) {
+    var idx = e.currentTarget.dataset.idx,
+      key = "worksList[" + idx + "].ellipsis",
+      val = this.data.worksList[idx].ellipsis
+    this.setData({
+      [key]: !val
+    })
   },
   /*
    * 生命周期函数--监听页面初次渲染完成

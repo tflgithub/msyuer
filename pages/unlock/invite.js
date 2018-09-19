@@ -27,15 +27,14 @@ Page({
         nickName: res.data.nickName,
         uid: res.data.uid
       })
-      request.getHelpInfo(res.data.uid).then(res => {
+      request.getHelpInfo().then(res => {
         that.setData({
           needShareNum: res.data.needShareNum,
           sharedNum: res.data.sharedNum
         })
         if (that.data.needShareNum == that.data.sharedNum) {
           that.setData({
-            viewedNum: '您已经完成解锁！',
-            buttonTxt: '邀请更多朋友'
+            viewedNum: '您已经完成解锁！'
           })
           app.globalData.canSee = true
         } else {

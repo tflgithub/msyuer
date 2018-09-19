@@ -58,7 +58,12 @@ Page({
       })
     }
   },
-
+  readMsg: function() {
+    app.globalData.hadMsg = false
+    this.setData({
+      hadMsg: app.globalData.hadMsg
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

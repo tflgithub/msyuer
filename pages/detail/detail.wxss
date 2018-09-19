@@ -58,7 +58,7 @@
 
 .cover {
   position: absolute;
-  top:0;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -70,7 +70,7 @@
 .cover .desc {
   display: flex;
   flex-direction: row;
-  justify-content: center;  
+  justify-content: center;
 }
 
 .cover .desc .first {
@@ -164,6 +164,34 @@
   top: 24rpx;
   width: 48rpx;
   height: 48rpx;
+}
+
+.work-content {
+  font-size: 30rpx;
+  margin: 20rpx 30rpx 15rpx 0;
+  white-space: pre-wrap;
+  /*关键属性（必须有的）  */
+  display: -webkit-box;
+  /*规定子元素的排列方向 */
+  -webkit-box-orient: vertical;
+  /*实现多余的文字隐藏并用省略号来代表被隐藏的文字  */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ellipsis {
+  -webkit-line-clamp:2;
+  opacity: 0.75;
+}
+
+.unellipsis {
+  -webkit-line-clamp: 0;
+  opacity: 1;
+}
+
+.state {
+  font-size:28rpx;
+  padding: 10rpx 10rpx 10rpx 0;
 }
 
 .middle-content {

@@ -26,6 +26,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    if (wx.canIUse('button.open-type.getUserInfo')) {
+      this.setData({
+        hiddenPage: false
+      })
+    }
     var that = this
     var params = options.id.split(',')
     this.setData({
@@ -41,7 +46,7 @@ Page({
         })
       }
     }).catch(res => {
-      console.log('获取助力信息失败', e)
+      console.log('获取助力信息失败', res)
     })
 
     request.getUserInfo().then(res => {
@@ -60,15 +65,6 @@ Page({
         that.setData({
           hiddenPage: false
         })
-        request.getHelpInfo(that.data.uid).then(res => {
-          if (that.data.needShareNum == that.data.sharedNum) {
-            that.setData({
-              tip: '您的朋友' + that.data.nickName + '已经解锁成功！'
-            })
-          }
-        }).catch(res => {
-          console.log('获取用户助力信息失败:' + res)
-        })
       }
     })
   },
@@ -80,16 +76,27 @@ Page({
 
   },
   unlock: function(e) {
-    if (app.globalData.setUserInfo != 1) {
-      wx.navigateTo({
-        url: '../bindaccount/bindaccount?navigateBack=1'
-      })
+    var that = this
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          if (app.globalData.setUserInfo == 1) {
+            that.doHelp()
+          } else {
+            wx.navigateTo({
+              url: '../bindaccount/bindaccount?navigateBack=1&shareUid=' + that.data.uid
+            })
+          }
+        }
+      }
+    })
+  },
+  doHelp: function() {
+    var that = this
+    if (that.data.isHelp) {
       return
     }
-    if (this.data.isHelp) {
-      return
-    }
-    request.help(parseInt(this.data.uid)).then(res => {
+    request.help(parseInt(that.data.uid)).then(res => {
       wx.showModal({
         title: '温馨提示',
         content: '完成助力',
@@ -102,6 +109,25 @@ Page({
           if (res.confirm) {
             wx.reLaunch({
               url: '../home/home',
+            })
+          } else {
+            request.isHelp(parseInt(that.data.uid)).then(res => {
+              if (res.data.isHelp) {
+                that.setData({
+                  isHelp: true,
+                  tip: '您已经助力过此好友！'
+                })
+              }
+            }).catch(res => {
+              console.log('获取助力信息失败', res)
+            })
+            request.getUserInfo().then(res => {
+              console.log('分享者ID:' + that.data.uid + '当前登录用户ID:' + res.data.uid)
+              that.setData({
+                currentUid: res.data.uid,
+                currentavatarUrl: res.data.avatarUrl,
+                currentNickName: res.data.nickName
+              })
             })
           }
         }

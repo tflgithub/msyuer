@@ -152,7 +152,7 @@ export function vailPassCode(mobile, msgCode, resolve, reject) {
 /**
  * 注册
  */
-export function register(mobile, msgCode, uid) {
+export function register(mobile, msgCode,uid) {
   return new Promise(function(resolve, reject) {
     request({
       message: "正在注册...",
@@ -160,7 +160,9 @@ export function register(mobile, msgCode, uid) {
       data: {
         mobile: mobile,
         code: msgCode,
-        shareUid: uid
+        shareUid:uid,
+        nickName: app.globalData.userInfo.nickName,
+        avatarUrl: app.globalData.userInfo.avatarUrl
       },
       success: resolve,
       fail: reject
@@ -407,6 +409,7 @@ export function getHelpInfo() {
 export function isHelp(uid) {
   return new Promise(function(resolve, reject) {
     request({
+      message: "正在提交...",
       url: `${app.globalData.API_URL}/api/wxa/v1/user/isHelp`,
       data: {
         uid: uid
