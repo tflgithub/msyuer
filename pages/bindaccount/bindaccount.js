@@ -8,7 +8,6 @@ Page({
   data: {
     mobile: '',
     msgCode: '',
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     getCodeButtonText: '获取验证码',
     disableGetMobileCode: false,
     navigateBack: -1,
