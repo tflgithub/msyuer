@@ -28,7 +28,7 @@ Page({
     normalSrc: '../../image/ic_star_normal.png',
     selectedSrc: '../../image/ic_star_full.png',
     halfSrc: '../../image/ic_star_half.png',
-    key: 0, //评分
+    key: 5, //评分
     bgImage: null,
     evaluate: [{
       id: 1,
@@ -56,10 +56,11 @@ Page({
     haveNext: false,
     showLoading: false,
     showNoMore: false,
-    fixedTop: false,
+    isTop: true,
     videoType: 'video',
     toView: null,
-    jumpTo: ''
+    jumpTo: '',
+    hiddenBack: true
   },
   /**
    * 生命周期函数--监听页面加载
@@ -71,8 +72,14 @@ Page({
       detailId: options.id
     })
     if (options.from) {
+      console.log(options.from)
       this.setData({
         jumpTo: options.from
+      })
+    }
+    if (options.back) {
+      this.setData({
+        hiddenBack: false
       })
     }
     this.loadData()
@@ -114,7 +121,6 @@ Page({
       that.setData({
         worksList: that.data.worksList
       })
-      console.log("转换后：" + JSON.stringify(that.data.worksList))
     }).catch(res => {
 
     })
@@ -130,7 +136,8 @@ Page({
       that.setData({
         worksList: list,
         haveNext: res.data.haveNext,
-        currentPage: res.data.lastStamp
+        currentPage: res.data.lastStamp,
+        toView: that.data.jumpTo
       })
       console.log("内容：" + list)
       for (var i in list) {
@@ -326,11 +333,7 @@ Page({
   },
   fenxiang: function(e) {
     this.stopPlay()
-    if (this.data.isBindMobile != 1) {
-      this.bindaccount()
-      return
-    }
-    //this.drawInit('', '')
+    this.drawInit('', '')
   },
   // 绘制数据初始化
   drawInit(bgImageUrl, qrCode) {
@@ -378,14 +381,6 @@ Page({
           }
         ]
       }
-    })
-  },
-  //控制回到顶部按钮的显示与消失
-  scrollTopFun(e) {
-    var scrollTop = e.detail.scrollTop
-    var fixed = scrollTop > wx.getSystemInfoSync().windowWidth / 750 * 500 ? true : false;
-    this.setData({
-      fixedTop: fixed
     })
   },
   setVideoType: function(sizeType) {
@@ -455,19 +450,37 @@ Page({
   onPullDownRefresh: function() {
 
   },
-
+  goHome: function() {
+    wx.reLaunch({
+      url: '../home/home'
+    })
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    if (!this.data.showNoMore && this.data.haveNext) {
+    if (this.data.haveNext) {
       this.setData({
         showLoading: true
       })
       this.loadMoreWorks()
     } else {
+      if (!this.data.showNoMore) {
+        this.setData({
+          showNoMore: true
+        })
+      }
+    }
+  },
+  onScroll: function(e) {
+    var top = e.detail.scrollTop
+    if (top > 270 && this.data.isTop) {
       this.setData({
-        showNoMore: true
+        isTop: false
+      })
+    } else if (top < 270 && !this.data.isTop) {
+      this.setData({
+        isTop: true
       })
     }
   },
@@ -475,9 +488,17 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    return {
-      title: this.data.data.detailInfo.title,
-      path: util.getCurrentPageUrl() + '?id=' + this.data.detailId
+    if (this.data.isPlaying) {
+      return {
+        title: this.data.data.detailInfo.title,
+        path: util.getCurrentPageUrl() + '?id=' + this.data.detailId + '&back=' + true
+      }
+    } else {
+      return {
+        title: this.data.data.detailInfo.title,
+        imageUrl: '../../image/share.png',
+        path: util.getCurrentPageUrl() + '?id=' + this.data.detailId + '&back=' + true
+      }
     }
   }
 })

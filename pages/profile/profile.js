@@ -11,7 +11,7 @@ Page({
       nickName: ''
     },
     isBindMobile: null,
-    mobile: '',
+    mobile: null,
     hadMsg: false
   },
 
@@ -21,20 +21,20 @@ Page({
   onLoad: function(options) {
     this.setData({
       userInfo: app.globalData.userInfo,
-      isBindMobile: app.globalData.setUserInfo,
       hadMsg: app.globalData.hadMsg
     })
-    this.onRetry()
   },
   onRetry: function() {
     var that = this
     console.log("是否绑定手机：" + app.globalData.setUserInfo)
     if (app.globalData.setUserInfo === 1) {
-      request.getUserInfo().then(res => {
-        that.setData({
-          mobile: res.data.mobile
-        })
-      }).catch(res => {})
+      if (this.data.mobile == null) {
+        request.getUserInfo().then(res => {
+          that.setData({
+            mobile: res.data.mobile
+          })
+        }).catch(res => {})
+      }
     }
   },
   /**
@@ -52,11 +52,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    if (app.globalData.setUserInfo === 1) {
-      this.setData({
-        isBindMobile: 1
-      })
-    }
+    this.setData({
+      isBindMobile: app.globalData.setUserInfo
+    })
+    this.onRetry()
   },
   readMsg: function() {
     app.globalData.hadMsg = false

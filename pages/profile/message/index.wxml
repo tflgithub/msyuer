@@ -2,7 +2,7 @@
 <import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-  <navigator wx:for='{{items}}' wx:key='*this' url='../../detail/detail?id={{item.detailId}}&from=works'>
+  <navigator wx:for='{{items}}' wx:for-index="index" wx:key='*this' url='../../detail/detail?id={{item.detailId}}&from=msg{{index}}'>
     <view class='item'>
       <view class='item-left'>
         <view class='item-content'>

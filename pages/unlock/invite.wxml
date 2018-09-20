@@ -11,6 +11,7 @@
   <view style='font-size:32rpx;color:#000;margin-top:24rpx;'>
     <image src='../../image/ic_xixian.png' class='line' />邀请{{needShareNum}}位新用户解锁菜谱
     <image src='../../image/ic_xixian.png' class='line' />
+    <image src='../../image/ic_back_home.png' style='width:80rpx;height:80rpx;margin-left:30rpx'  bindtap='goHome'/>
   </view>
   <view style='font-size:26rpx;color:#666666;'>已有
     <text style='color:#ff4a53;font-size:54rpx'>{{sharedNum}}</text>

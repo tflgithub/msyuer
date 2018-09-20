@@ -103,7 +103,7 @@ Page({
    */
   onReachBottom: function() {
     if (!this.data.showNoMore && this.data.haveNext) {
-      that.setData({
+      this.setData({
         showLoading: true
       })
       this.getMoreData()

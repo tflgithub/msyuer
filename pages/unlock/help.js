@@ -14,7 +14,6 @@ Page({
     nickName: '',
     uid: 0,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    hiddenPage: true,
     tip: '助力好友解锁美味菜谱，米勺期待您的加入',
     isHelp: false,
     currentUid: 0,
@@ -26,11 +25,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (wx.canIUse('button.open-type.getUserInfo')) {
-      this.setData({
-        hiddenPage: false
-      })
-    }
     var that = this
     var params = options.id.split(',')
     this.setData({
@@ -87,6 +81,15 @@ Page({
               url: '../bindaccount/bindaccount?navigateBack=1&shareUid=' + that.data.uid
             })
           }
+        } else {
+          wx.authorize({
+            scope: 'scope.userInfo',
+            success: res => {
+              wx.navigateTo({
+                url: '../bindaccount/bindaccount?navigateBack=1&shareUid=' + that.data.uid
+              })
+            }
+          })
         }
       }
     })
@@ -169,6 +172,11 @@ Page({
    */
   onReachBottom: function() {
 
+  },
+  goHome: function() {
+    wx.reLaunch({
+      url: '../home/home',
+    })
   },
 
   /**

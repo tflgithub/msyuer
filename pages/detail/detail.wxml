@@ -21,11 +21,12 @@
     </view>
   </view>
 </custom-modal>
-<scroll-view scroll-into-view="{{toView}}" style="width:100%;height:100%;white-space:nowrap" scroll-y="true" bindscrolltolower="onReachBottom" bindscroll="scrollTopFun" enable-back-to-top='true'>
-  <view class='pages' style='margin-bottom:170rpx'>
+
+<scroll-view scroll-into-view="{{toView}}" style="width:100%;height:100%;white-space:nowrap;display:block" scroll-y="true" bindscrolltolower="onReachBottom" enable-back-to-top='true' scroll-with-animation="true" bindscroll="onScroll">
+  <view class='pages'>
     <!-- <share-image drawDataList="{{dataList}}" hideModal="{{hideModal}}" /> -->
     <view wx:if="{{isPlaying}}">
-      <video class="{{videoType}}" id="myVideo" src='{{data.detailInfo.videoUrl}}' show-center-play-btn='false' show-fullscreen-btn='false' poster="{{data.detailInfo.phoUrl}}" controls custom-cache='{{false}}'>
+      <video class="{{videoType}}" id="myVideo" src='{{data.detailInfo.videoUrl}}' show-center-play-btn='false' show-fullscreen-btn='false' controls custom-cache='{{false}}'>
       </video>
     </view>
     <view wx:else>
@@ -47,7 +48,7 @@
     </view>
 
     <view wx:if="{{data.detailInfo.title}}" style='margin-left:30rpx;font-weight:bold;font-size:38rpx;'>{{data.detailInfo.title}}</view>
-    <view class="{{fixedTop?'topnav':''}}">
+    <view class="{{isTop?'':'topnav'}}">
       <view class="midlle">
         <view class='cell' style='margin-bottom:20rpx'>
           <view class='item'>
@@ -74,16 +75,15 @@
     </view>
     <view class='line'></view>
     <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>简介</view>
-    <view style='margin:20rpx 30rpx 30rpx 30rpx;color:#666666;font-size:30rpx'>
-      <view class="wxParse">
-        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
-      </view>
+    <view class="wxParse" style='padding:20rpx 30rpx 30rpx 30rpx;color:#666666;font-size:30rpx;display:block;white-space:pre-wrap;word-break:break-all'>
+      <template is="wxParse" data="{{wxParseData:article.nodes}}" />
     </view>
+
     <block wx:if="{{recommendList.length>0}}">
       <view class='line'></view>
       <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>推荐</view>
     </block>
-    <block wx:for="{{recommendList}}" wx:for-item="item" wx:key="{{index}}">
+    <block wx:for="{{recommendList}}" wx:for-item="item" wx:key="*this">
       <view bindtap='gotoDetail' data-id="{{item.detailId}}" class="weui-media-box weui-media-box_appmsg">
         <view class="weui-media-box__hd_in-appmsg">
           <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
@@ -109,7 +109,7 @@
 
     <block wx:if="{{worksList.length>0}}">
       <block wx:if="{{recommendList.length===0}}">
-        <view class='line' id='works'></view>
+        <view class='line'></view>
       </block>
       <view style='margin:30rpx;font-weight:bold;font-size:34rpx;'>作品集</view>
     </block>
@@ -135,23 +135,28 @@
             <text style='font-size:32rpx;color:#fe5151;margin-bottom:10rpx'>{{item.replyNickName}}回复：</text>
             <text style='font-size:24rpx;color:#999999;'>{{item.replyCreateTime}}</text>
           </view>
-          <view style='font-size:32rpx;color:30rpx;display:block;white-space:pre-wrap;margin-right:30rpx'>{{item.replyContent}}</view>
+          <view id='msg{{bindex}}' style='font-size:32rpx;color:30rpx;display:block;white-space:pre-wrap;margin-right:30rpx'>{{item.replyContent}}</view>
         </block>
       </view>
     </block>
-    <block wx:if="{{showLoading}}">
-      <view class="weui-loadmore">
-        <view class="weui-loading"></view>
-        <view class="weui-loadmore__tips">正在加载</view>
-      </view>
-    </block>
-    <block wx:if="{{showNoMore}}">
-      <view class="weui-loadmore weui-loadmore_line">
-        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">已经到底线啦~</view>
-      </view>
-    </block>
+
+    <view style='height:180rpx'>
+      <block wx:if="{{showLoading}}">
+        <view class="weui-loadmore">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+      </block>
+      <block wx:if="{{showNoMore}}">
+        <view class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
+    </view>
+      </block>
+    </view>
   </view>
 </scroll-view>
+
+
 <view class="bottom-float">
   <view class='pf__image' catchtap='rating'>
     <image src='../../image/ic_pf.png' style='width:46rpx;height:43rpx;margin-bottom: 10rpx;vertical-align:middle' />
@@ -163,3 +168,5 @@
     <image src='../../image/ic_share.png' style='width:40rpx;height:40rpx;vertical-align:middle;margin-bottom: 10rpx;' />
   </button>
 </view>
+
+<image src='../../image/ic_back_home.png' style='width:80rpx;height:80rpx;position: fixed;bottom: 336rpx;right:53rpx' hidden='{{hiddenBack}}' bindtap='goHome' />

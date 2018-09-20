@@ -1,5 +1,5 @@
 /* pages/detail/detail.wxss */
-
+@import '../../wxParse/wxParse.wxss';
 .midlle {
   display: flex;
   flex-direction: row;

@@ -1,4 +1,6 @@
 {
+  "disableScroll": true,
+  "enablePullDownRefresh": false,
   "navigationBarTitleText": "详情",
   "usingComponents": {
     "share-image": "/res/components/shareImage/shareImage",

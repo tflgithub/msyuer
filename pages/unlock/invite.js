@@ -90,6 +90,11 @@ Page({
   onReachBottom: function() {
 
   },
+  goHome: function () {
+    wx.reLaunch({
+      url: '../home/home',
+    })
+  },
 
   /**
    * 用户点击右上角分享
