@@ -102,7 +102,7 @@ Page({
         recommendList: res[1].data.recommendList
       })
     }).catch(res => {
-      pageState(this).error(res)
+      pageState(this).error(JSON.stringify(res))
     })
   },
   loadWorks: function() {
