@@ -79,7 +79,7 @@ App({
     canSee: null,
     hadMsg: null,
     uid: null,
-    API_URL: "https://api.miskitchen.com",  //http://10.30.28.69:8080"
+    API_URL: "https://api.miskitchen.com",
     IMAGE_SERVER:"https://v.miskitchen.com"
   },
 })

@@ -90,8 +90,12 @@ Page({
     console.log("当前ID：" + this.data.detailId)
     Promise.all([request.getVedioDetail(this.data.detailId), request.getRecommend(this.data.detailId)]).then(res => {
       pageState(that).finish()
-      var article = res[0].data.detailInfo.summary;
-      WxParse.wxParse('article', 'html', article, that, 5);
+      //华为手机有个BUG 必须在 html2json.js 112 行 119 注释console.dir(value),为防止出现意外的坑这里try catch 一下。
+      try {
+        WxParse.wxParse('article', 'html', res[0].data.detailInfo.summary, that, 5)
+      } catch (e) {
+        console.log(e)
+      }
       that.setData({
         data: res[0].data,
         likeNum: res[0].data.detailInfo.likeNum,
@@ -102,7 +106,7 @@ Page({
         recommendList: res[1].data.recommendList
       })
     }).catch(res => {
-      pageState(this).error(JSON.stringify(res))
+      pageState(this).error('出错啦～我们正在修复...')
     })
   },
   loadWorks: function() {
