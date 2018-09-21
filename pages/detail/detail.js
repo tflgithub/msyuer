@@ -38,8 +38,12 @@ Page({
     Promise.all([request.getVedioDetail(this.detailId), request.getRecommend(this.detailId)]).then(res => {
       console.log("dededede" + JSON.stringify(res))
       pageState(that).finish()
-      var article = res[0].data.detailInfo.summary;
-      WxParse.wxParse('article', 'html', article, that, 5);
+      try {
+        var article = res[0].data.detailInfo.summary;
+        WxParse.wxParse('article', 'html', article, that, 5);
+      } catch (e) {
+        console.log(e)
+      }
       that.setData({
         data: res[0].data,
         likeNum: res[0].data.detailInfo.likeNum,
