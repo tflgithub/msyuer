@@ -75,7 +75,7 @@
     </view>
     <view class='line'></view>
     <view style='margin-left:30rpx;margin-top:30rpx;font-weight:bold;font-size:34rpx;'>简介</view>
-    <view class="wxParse" style='padding:20rpx 30rpx 30rpx 30rpx;color:#666666;font-size:30rpx;display:block;white-space:pre-wrap;word-break:break-all'>
+    <view class="wxParse" style='padding:20rpx 30rpx 30rpx 30rpx;color:#666666;font-size:30rpx;display:block;white-space:pre-wrap'>
       <template is="wxParse" data="{{wxParseData:article.nodes}}" />
     </view>
 
