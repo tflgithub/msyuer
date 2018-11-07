@@ -85,7 +85,7 @@
     </block>
     <block wx:for="{{recommendList}}" wx:for-item="item" wx:key="*this">
       <view bindtap='gotoDetail' data-id="{{item.detailId}}" class="weui-media-box weui-media-box_appmsg">
-        <view class="weui-media-box__hd_in-appmsg">
+        <view class="weui-media-box__hd_in-appmsg" style='margin:20rpx'>
           <image class="weui-media-box__thumb" src="{{item.phoUrl}}" />
         </view>
         <view class="weui-media-box__bd_in-appmsg">
@@ -123,8 +123,8 @@
           </view>
           <text style='font-size:24rpx;color:#999999;margin-right:30rpx;'>{{item.workCreateTime}}</text>
         </view>
-        <text class="work-content {{item.ellipsis?'ellipsis':'unellipsis'}}">{{item.workContent}}</text>
-        <text wx:if='{{item.workContent.length>40}}' class='state' bindtap='ellipsis' data-idx="{{bindex}}">{{item.ellipsis?'展开':'收起'}}</text>
+        <text class="work-content {{item.ellipsis?'unellipsis':'ellipsis'}}">{{item.workContent}}</text>
+        <text wx:if='{{item.workContent.length>40}}' class='state' bindtap='ellipsis' data-idx="{{bindex}}">{{item.ellipsis?'收起':'展开'}}</text>
         <view style='display:flex;flex-direction:row; flex-wrap:wrap'>
           <block wx:for='{{item.workUrls}}' wx:key='*this'>
             <image src='{{item}}' data-src="{{item}}" bindtap="previewImage" style='height:150rpx;width:224rpx;border-radius:8rpx;margin:5rpx;' data-bindex='{{bindex}}' />
@@ -140,7 +140,7 @@
       </view>
     </block>
 
-    <view style='height:180rpx'>
+    <view style='height:260rpx'>
       <block wx:if="{{showLoading}}">
         <view class="weui-loadmore">
           <view class="weui-loading"></view>
@@ -149,7 +149,7 @@
       </block>
       <block wx:if="{{showNoMore}}">
         <view class="weui-loadmore weui-loadmore_line">
-      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">到底线啦~</view>
     </view>
       </block>
     </view>

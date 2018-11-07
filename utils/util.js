@@ -89,7 +89,7 @@ function imageUtil(e) {
   var originalScale = originalHeight / originalWidth; //图片高宽比  
   //获取屏幕宽高  
   wx.getSystemInfo({
-    success: function(res) {
+    success: function (res) {
       var windowWidth = 200;
       var windowHeight = 200;
       var windowscale = windowHeight / windowWidth; //屏幕高宽比  
@@ -112,7 +112,7 @@ function imageUtil(e) {
 function getNetWork() {
   var netWorkType = null
   wx.getNetworkType({
-    success: function(res) {
+    success: function (res) {
       netWorkType = res.networkType
     }
   })

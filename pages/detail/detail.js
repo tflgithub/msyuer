@@ -120,7 +120,7 @@ Page({
       })
 
       for (var i in res.data.items) {
-        that.data.worksList[i].ellipsis = true; // 添加新属性
+        that.data.worksList[i].ellipsis = false; // 添加新属性
       }
       that.setData({
         worksList: that.data.worksList
@@ -146,7 +146,7 @@ Page({
       console.log("内容：" + list)
       for (var i in list) {
         console.log(i)
-        that.data.worksList[i].ellipsis = true; // 添加新属性
+        that.data.worksList[i].ellipsis = false; // 添加新属性
       }
       that.setData({
         workContents: that.data.worksList
@@ -463,6 +463,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
+    if (this.data.worksList.length === 0) {
+      return
+    }
     if (this.data.haveNext) {
       this.setData({
         showLoading: true
@@ -478,11 +481,11 @@ Page({
   },
   onScroll: function(e) {
     var top = e.detail.scrollTop
-    if (top > 270 && this.data.isTop) {
+    if (top > 270 && this.data.isTop==true) {
       this.setData({
         isTop: false
       })
-    } else if (top < 270 && !this.data.isTop) {
+    } else if (top < 270 && this.data.isTop==false) {
       this.setData({
         isTop: true
       })
