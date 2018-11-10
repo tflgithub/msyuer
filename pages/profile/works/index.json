@@ -2,6 +2,6 @@
   "enablePullDownRefresh": true,
   "navigationBarTitleText": "我的作品",
   "usingComponents": {
-    "custom-modal": "/res/components/customModal/index"
+    "custom-modal": "../../../common/components/customModal/index"
   }
 }

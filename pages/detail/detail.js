@@ -1,29 +1,43 @@
 // pages/detail/detail.js
-var WxParse = require('../../wxParse/wxParse.js');
-const request = require('../../api/request.js');
-const app = getApp()
-const {
-  util
-} = app
+const WxParse = require('../../wxParse/wxParse.js');
+const request = require('../../utils/wxRequest.js');
+const api = require('../../api/config.js').api;
+const wxapi = require("../../api/base.js").wxapi;
+const util = require('../../utils/util.js');
 import pageState from '../../common/pageState/pageState.js'
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    data: {},
+    courseInfo: {
+      "phoUrl": "../../image/share.png",
+      "title": "16.23",
+      "videoUrl": "http://ddsfgrfdsg",
+      "adUrl": "http://ddsfgrfdsg",
+      "courseId": "22222222",
+      "price": "2366",
+      "oriPrice": "9999",
+      "learnNum": "9999",
+      "likeNum": "1266",
+      "score": "4.3",
+      "hadFee": false,
+      "hadLike": true,
+      "hadScore": true
+    },
+    summaryInfo: {},
+    workInfo: {},
+    teacherInfo: {},
+    pptInfo: {},
     videoContext: null,
     likeNum: '1',
     hadLike: '',
+    hadFee: false,
     hadScore: false,
     isPlaying: null,
     showCover: true,
-    recommendList: [],
     worksList: [],
-    dataList: {},
     hideModal: true,
-    detailId: null,
-    isBindMobile: null,
     stars: [0, 1, 2, 3, 4],
     normalSrc: '../../image/ic_star_normal.png',
     selectedSrc: '../../image/ic_star_full.png',
@@ -51,16 +65,7 @@ Page({
       text: '一般吧',
       checked: false
     }],
-    currentPage: 0,
-    pageSize: 10,
-    haveNext: false,
-    showLoading: false,
-    showNoMore: false,
-    isTop: true,
-    videoType: 'video',
-    toView: null,
-    jumpTo: '',
-    hiddenBack: true
+    currentData: 0
   },
   /**
    * 生命周期函数--监听页面加载
@@ -71,67 +76,126 @@ Page({
     this.setData({
       detailId: options.id
     })
-    if (options.from) {
-      console.log(options.from)
-      this.setData({
-        jumpTo: options.from
+    var systemInfo = wx.getSystemInfoSync()
+    this.setData({
+      windowHeight: systemInfo.windowHeight,
+      currentType: options.id ? options.id : 0
+    })
+    pageState(this).finish()
+    //this.loadData()
+  },
+  //获取当前滑块的index
+  bindchange: function(e) {
+    const that = this;
+    that.setData({
+      currentData: e.detail.current
+    })
+  },
+  buy: function(e) {
+    var that = this
+    wxapi('getSetting').then(res => {
+      if (!res.authSetting['scope.userInfo']) {
+        wx.navigateTo({
+          url: '../auth/auth'
+        })
+      } else {
+        //手机绑定才能支付
+        if (wx.getStorageInfoSync('setUserInfo') == 1) {
+          request.fetch(api.pay, {
+            courseId: that.data.courseInfo.courseId
+          }).then(res => {
+            var postData = {
+              'timeStamp': res.data.timeStamp,
+              'nonceStr': res.data.nonceStr,
+              'package': res.data.packages,
+              'paySign': res.data.paySign,
+              'signType': res.data.signType
+            }
+            console.log("支付参数：" + JSON.stringify(postData))
+            wxapi('requestPayment', postData).then(res => {
+              that.setData({
+                hadFee: true
+              })
+            }).catch(e => {
+              util.showToast('支付失败', 'none', 2000)
+            })
+          }).catch(e => {
+            util.showToast(e, 'none', 2000)
+          })
+        } else {
+          wx.navigateTo({
+            url: '../bindaccount/bindaccount'
+          })
+        }
+      }
+    })
+  },
+  //点击切换，滑块index赋值
+  checkCurrent: function(e) {
+    var that = this;
+    if (that.data.currentData === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentData: e.target.dataset.current
       })
     }
-    if (options.back) {
-      this.setData({
-        hiddenBack: false
-      })
-    }
-    this.loadData()
   },
   loadData: function() {
     var that = this;
-    pageState(that).loading()
+    //pageState(that).loading()
     console.log("当前ID：" + this.data.detailId)
-    Promise.all([request.getVedioDetail(this.data.detailId), request.getRecommend(this.data.detailId)]).then(res => {
-      pageState(that).finish()
-      //华为手机有个BUG 必须在 html2json.js 112 行 119 注释console.dir(value),为防止出现意外的坑这里try catch 一下。
-      try {
-        WxParse.wxParse('article', 'html', res[0].data.detailInfo.summary, that, 5)
-      } catch (e) {
-        console.log(e)
-      }
-      that.setData({
-        data: res[0].data,
-        likeNum: res[0].data.detailInfo.likeNum,
-        hadLike: res[0].data.detailInfo.hadLike,
-        hadScore: res[0].data.detailInfo.hadScore,
-        videoType: that.setVideoType(res[0].data.detailInfo.sizeType),
-        isBindMobile: res[0].data.setUserInfo,
-        recommendList: res[1].data.recommendList
-      })
-    }).catch(res => {
-      pageState(this).error('出错啦～我们正在修复...')
-    })
+    // Promise.all([request.getVedioDetail(this.data.detailId), request.getRecommend(this.data.detailId)]).then(res => {
+    //   pageState(that).finish()
+    //   //华为手机有个BUG 必须在 html2json.js 112 行 119 注释console.dir(value),为防止出现意外的坑这里try catch 一下。
+    //   try {
+    //     WxParse.wxParse('article', 'html', res[0].data.detailInfo.summary, that, 5)
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    //   that.setData({
+    //     data: res[0].data,
+    //     likeNum: res[0].data.detailInfo.likeNum,
+    //     hadLike: res[0].data.detailInfo.hadLike,
+    //     hadScore: res[0].data.detailInfo.hadScore,
+    //     videoType: that.setVideoType(res[0].data.detailInfo.sizeType),
+    //     isBindMobile: res[0].data.setUserInfo,
+    //     recommendList: res[1].data.recommendList
+    //   })
+    // }).catch(res => {
+    //    pageState(this).error('出错啦～我们正在修复...')
+    // })
   },
   loadWorks: function() {
     var that = this
-    request.getAboutWorks(this.data.detailId, this.data.currentPage, this.data.pageSize).then(res => {
+    var postData = {
+      courseId: this.data.courseInfo.courseId,
+      lastStamp: this.data.currentPage,
+      pageSize: this.data.pageSize
+    }
+    request.fetch(api.getWorks,postData).then(res => {
       that.setData({
         currentPage: res.data.lastStamp,
         haveNext: res.data.haveNext,
         worksList: res.data.items,
         toView: that.data.jumpTo
       })
-
       for (var i in res.data.items) {
         that.data.worksList[i].ellipsis = false; // 添加新属性
       }
       that.setData({
         worksList: that.data.worksList
       })
-    }).catch(res => {
-
-    })
+    }).catch(res => {})
   },
   loadMoreWorks: function() {
     var that = this
-    request.getAboutWorks(this.data.detailId, this.data.currentPage, this.data.pageSize).then(res => {
+    var postData = {
+      courseId: this.data.courseInfo.courseId,
+      lastStamp: this.data.currentPage,
+      pageSize: this.data.pageSize
+    }
+    request.fetch(api.getWorks, postData).then(res => {
       that.setData({
         showLoading: false
       })
@@ -140,16 +204,7 @@ Page({
       that.setData({
         worksList: list,
         haveNext: res.data.haveNext,
-        currentPage: res.data.lastStamp,
-        toView: that.data.jumpTo
-      })
-      console.log("内容：" + list)
-      for (var i in list) {
-        console.log(i)
-        that.data.worksList[i].ellipsis = false; // 添加新属性
-      }
-      that.setData({
-        workContents: that.data.worksList
+        currentPage: res.data.lastStamp
       })
     }).catch(res => {
       that.setData({
@@ -161,58 +216,11 @@ Page({
   onRetry: function() {
     this.loadData()
   },
-  gotoDetail: function(e) {
-    var id = e.currentTarget.dataset.id
-    this.setData({
-      detailId: id
-    })
-    this.loadData()
-    this.loadWorks()
-  },
-  bindaccount: function() {
-    wx.navigateTo({
-      url: '../bindaccount/bindaccount?navigateBack=1',
-    })
-  },
   startPlay: function(e) {
-    var that = this
-    if (app.globalData.canSee) {
-      this.videoContext.play()
-      this.setData({
-        isPlaying: true
-      })
-    } else {
-      //如果没有播放过，就发送到服务器
-      console.log(this.data.isPlaying)
-      if (this.data.isPlaying === null) {
-        request.vedioPlay(this.data.detailId).then(res => {
-          if (res.data.canPlay) {
-            that.videoContext.play()
-            that.setData({
-              isPlaying: true
-            })
-          } else if (res.data.needShareNum == res.data.sharedNum) {
-            app.globalData.canSee = true
-            that.videoContext.play()
-            that.setData({
-              isPlaying: true
-            })
-          } else {
-            wx.navigateTo({
-              url: '../unlock/invite',
-            })
-          }
-        }).catch(res => {
-          console.log("发送播放动作到服务失败：" + res)
-          util.showToast(res, 'none', 2000)
-        })
-      } else {
-        this.videoContext.play()
-        this.setData({
-          isPlaying: true
-        })
-      }
-    }
+    this.videoContext.play()
+    this.setData({
+      isPlaying: true
+    })
   },
   stopPlay: function() {
     this.videoContext.stop()
@@ -260,7 +268,12 @@ Page({
         evaluate.push(item.id)
       }
     }
-    request.score(this.data.detailId, this.data.key, evaluate).then(res => {
+    var postData = {
+      courseId: this.data.courseInfo.courseId,
+      score: this.data.key,
+      evaluate: evaluate
+    }
+    request.fetch(api.score, postData).then(res => {
       util.showToast('评分成功', 'none', 2000)
     }).catch(res => {
       util.showToast(res, 'none', 2000)
@@ -293,17 +306,15 @@ Page({
     })
   },
   uploadWorks: function(e) {
-    if (this.data.isBindMobile != 1) {
-      this.bindaccount()
-      return
-    }
     wx.navigateTo({
-      url: '../uploadworks/index?id=' + this.data.detailId + '&title=' + this.data.data.detailInfo.title,
+      url: '../uploadworks/index?id=' + this.data.courseInfo.courseId + '&title=' + this.data.courseInfo.title,
     })
   },
   dolike: function(e) {
     var that = this;
-    request.like(this.data.detailId).then(res => {
+    request.fetch(api.like, {
+      courseId: this.data.courseInfo.courseId
+    }).then(res => {
       that.setData({
         likeNum: res.data.likeNum,
         hadLike: true
@@ -315,7 +326,9 @@ Page({
   },
   unlike: function(e) {
     var that = this;
-    request.unlike(this.data.detailId).then(res => {
+    request.unlike(api.unlike, {
+      courseId: this.data.courseInfo.courseId
+    }).then(res => {
       that.setData({
         likeNum: res.data.likeNum,
         hadLike: false
@@ -335,130 +348,6 @@ Page({
       urls: imageUrls // 需要预览的图片http链接列表
     })
   },
-  fenxiang: function(e) {
-    this.stopPlay()
-    this.drawInit('', '')
-  },
-  // 绘制数据初始化
-  drawInit(bgImageUrl, qrCode) {
-    this.setData({
-      dataList: {
-        canvasData: {
-          type: 'image',
-          url: 'https://avatars0.githubusercontent.com/u/28439412?s=460&v=4',
-          width: 1300,
-          height: 1500,
-          comment: '背景图',
-          btnText: '保存至相册'
-        },
-        content: [{
-            type: 'image',
-            url: 'https://avatars0.githubusercontent.com/u/28439412?s=460&v=4',
-            top: 20,
-            left: 20,
-            shape: 'circle',
-            width: 50,
-            height: 50,
-            comment: '头像'
-          },
-          {
-            type: 'text',
-            content: '来自的分享',
-            top: 55,
-            left: 90,
-            fontSize: 18,
-            lineHeight: 40,
-            color: '#000000',
-            textAlign: 'left',
-            weight: 'bold'
-          },
-          {
-            type: 'text',
-            content: '长按上面二维码识别小程序',
-            top: 400,
-            left: 50,
-            fontSize: 20,
-            lineHeight: 40,
-            color: '#f00',
-            textAlign: 'left',
-            weight: 'bold'
-          }
-        ]
-      }
-    })
-  },
-  setVideoType: function(sizeType) {
-    var videoType = ''
-    switch (sizeType) {
-      case 1:
-        videoType = 'video'
-        break;
-      case 2:
-        videoType = 'video_horizontal'
-        break
-      case 3:
-        videoType = 'video_vertical'
-    }
-    console.log(sizeType + ':' + videoType)
-    return videoType
-  },
-  ellipsis: function(e) {
-    var idx = e.currentTarget.dataset.idx,
-      key = "worksList[" + idx + "].ellipsis",
-      val = this.data.worksList[idx].ellipsis
-    this.setData({
-      [key]: !val
-    })
-  },
-  /*
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-    let base64 = wx.arrayBufferToBase64('../../image/ic_xuanfukuang.png');
-    this.data.bgImage = 'data:image/jpg;base64,' + base64;
-    console.log(this.data.bgImage)
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    if (app.globalData.setUserInfo) {
-      this.setData({
-        isBindMobile: app.globalData.setUserInfo
-      })
-    }
-    this.setData({
-      currentPage: 0
-    })
-    this.loadWorks();
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-  goHome: function() {
-    wx.reLaunch({
-      url: '../home/home'
-    })
-  },
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -476,35 +365,6 @@ Page({
         this.setData({
           showNoMore: true
         })
-      }
-    }
-  },
-  onScroll: function(e) {
-    var top = e.detail.scrollTop
-    if (top > 270 && this.data.isTop==true) {
-      this.setData({
-        isTop: false
-      })
-    } else if (top < 270 && this.data.isTop==false) {
-      this.setData({
-        isTop: true
-      })
-    }
-  },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-    if (this.data.isPlaying) {
-      return {
-        title: this.data.data.detailInfo.title,
-        path: util.getCurrentPageUrl() + '?id=' + this.data.detailId + '&back=' + true
-      }
-    } else {
-      return {
-        title: this.data.data.detailInfo.title,
-        imageUrl: '../../image/share.png',
-        path: util.getCurrentPageUrl() + '?id=' + this.data.detailId + '&back=' + true
       }
     }
   }

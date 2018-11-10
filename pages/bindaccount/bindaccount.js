@@ -1,6 +1,7 @@
 // pages/bindaccount/bindaccount.js
-const request = require('../../api/request.js')
-const app = getApp()
+const request = require('../../utils/wxRequest.js')
+const api = require('../../api/config.js').api
+const util=require('../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
@@ -10,84 +11,51 @@ Page({
     msgCode: '',
     getCodeButtonText: '获取验证码',
     disableGetMobileCode: false,
-    navigateBack: -1,
-    shareUid: 0
   },
   nextStep: function(event) {
     var that = this;
     if (this.data.mobile === '') {
-      this.show({
-        imageToast: '',
-        iconToast: 'icon-warning', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: '请输入手机号码'
-      })
+      util.showToast('请输入手机号码','none',2000)
       return
     }
     if (this.data.msgCode === '') {
-      this.show({
-        imageToast: '',
-        iconToast: 'icon-warning', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: '请输入验证码'
-      })
+      util.showToast('请输入验证码', 'none', 2000)
       return
     }
-    request.register(this.data.mobile, this.data.msgCode, this.data.shareUid).then(res => {
-      app.globalData.token = res.data.token
-      app.globalData.uid = res.data.uid
-      app.globalData.setUserInfo = 1
+    var data = {
+      mobile: this.data.mobile,
+      code: this.data.msgCode
+    }
+    request.fetch(api.register, data).then(res => {
+      wx.setStorageSync('setUserInfo', 1)
       wx.navigateBack({
-        delta: that.data.navigateBack
+        delta:1
       })
     }).catch(res => {
-      wx.showToast({
-        title: res,
-        icon: 'none'
-      })
+      util.showToast(res, 'none', 2000)
     })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-    if (options.navigateBack) {
-      this.setData({
-        navigateBack: options.navigateBack
-      })
-    }
-    if (options.shareUid) {
-      this.setData({
-        shareUid: options.shareUid
-      })
-    }
-    new app.ShowAlert();
   },
   bindGetPassCode: function(e) {
     var that = this
     if (!this.bindCheckMobile(this.data.mobile)) {
       return
     }
-    that.setData({
+    this.setData({
       disableGetMobileCode: true
     })
-    request.getPassCode(this.data.mobile, function(res) {
+    request.fetch(api.getSmsCode, {
+      data: this.data.mobile
+    }).then(data => {
       that.setData({
         disableGetMobileCode: false
       })
-      that.show({
-        imageToast: '',
-        iconToast: 'icon-dui', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: '验证码已发送'
-      })
+      util.showToast('验证码已发送', 'none', 2000)
       that.countDownPassCode();
-    }, function(msg) {
+    }).catch(e => {
       that.setData({
         disableGetMobileCode: false
       })
-      that.show({
-        imageToast: '',
-        iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: `${msg}`
-      })
+      util.showToast(e,'none', 2000)
     })
   },
   bindInputMobile: function(e) {
@@ -103,24 +71,15 @@ Page({
   },
   bindCheckMobile: function(mobile) {
     if (mobile === '') {
-      this.show({
-        imageToast: '',
-        iconToast: 'icon-warning', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: '请输入手机号'
-      })
+      util.showToast('请输入手机号码', 'none', 2000)
       return false
     }
     if (!mobile.match(/^1[3-9][0-9]\d{8}$/)) {
-      this.show({
-        imageToast: '',
-        iconToast: 'icon-cuo', // 对：icon-dui, 错：icon-cuo,警告：icon-warning
-        textToast: '手机号码格式错误'
-      })
+      util.showToast('手机号码格式错误', 'none', 2000)
       return false
     }
     return true
   },
-
   countDownPassCode: function() {
     var pages = getCurrentPages()
     var i = 60
@@ -139,54 +98,5 @@ Page({
         })
       }
     }, 1000);
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
   }
 })

@@ -1,152 +1,145 @@
 // pages/classification/classification.js
+const api = require('../../api/config.js').api
+const request = require('../../utils/wxRequest.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    cook: [{
-        imageUrl: '../../image/ic_fry.png',
-        style:'width:86rpx;height:56rpx',
-        text: '炒',
-        value: '8'
+    categoryType: [{
+        name: "蛋糕",
+        page: 0
       },
       {
-        imageUrl: '../../image/ic_steamed.png',
-        text: '蒸',
-        style: 'width:65rpx;height:59rpx',
-        value: '9'
+        name: "甜点",
+        page: 0
       },
       {
-        imageUrl: '../../image/ic_boil.png',
-        style: 'width:75rpx;height:66rpx',
-        text: '煮',
-        value: '10'
+        name: "面包",
+        page: 0
       },
       {
-        imageUrl: '../../image/ic_ban.png',
-        text: '拌', 
-        style: 'width:65rpx;height:63rpx',
-        value: '11'
-      },
-      {
-        imageUrl: '../../image/ic_gril.png',
-        text: '煎/炸',
-        style: 'width:78rpx;height:61rpx',
-        value: '12'
-      }, {
-        imageUrl: '../../image/ic_dun.png',
-        style: 'width:75rpx;height:59rpx',
-        text: '焖/炖',
-        value: '13'
-      }, {
-        imageUrl: '../../image/ic_bake.png',
-        text: '烘焙',
-        style: 'width:65rpx;height:54rpx',
-        value: '14'
-      },
-      {
-        imageUrl: '../../image/ic_other.png',
-        style: 'width:55rpx;height:62rpx',
-        text: '其他',
-        value: '15'
+        name: "西餐",
+        page: 0
       }
     ],
-    foods: [{
-        imageUrl: '../../image/ic_meat.png',
-        style: 'width:73rpx;height:53rpx',
-        text: '肉类',
-        value: '5'
-      },
-      {
-        imageUrl: '../../image/ic_egg.png',
-        style: 'width:54rpx;height:62rpx',
-        text: '蛋/奶',
-        value: '6'
-      },
-      {
-        imageUrl: '../../image/ic_bean.png',
-        style: 'width:64rpx;height:66rpx',
-        text: '豆制品',
-        value: '7'
-      },
-      {
-        imageUrl: '../../image/ic_fish.png',
-        text: '鱼虾水产',
-        style: 'width:76rpx;height:57rpx',
-        value: '8'
-      },
-      {
-        imageUrl: '../../image/ic_corn.png',
-        style: 'width:74rpx;height:55rpx',
-        text: '五谷杂粮',
-        value: '9'
-      }, {
-        imageUrl: '../../image/ic_vegetable.png',
-        style: 'width:61rpx;height:58rpx',
-        text: '蔬菜',
-        value: '10'
-      },
-      {
-        imageUrl: '../../image/ic_friut.png',
-        style: 'width:56rpx;height:61rpx',
-        text: '水果',
-        value: '11'
-      },
-      {
-        imageUrl: '../../image/ic_yanxun.png',
-        text: '烟熏类',
-        style: 'width:72rpx;height:48rpx',
-        value: '12'
-      }
-    ]
-  }, 
+    currentType: 0,
+    list: [
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    windowHeight: '',
+    currentPage: [{}, {}, {}, {}, {}],
+    haveNext: [false, false, false, false],
+    pageSize: 10
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    this.getList();
+    var systemInfo = wx.getSystemInfoSync()
+    this.setData({
+      windowHeight: systemInfo.windowHeight,
+      currentType: options.id ? options.id : 0
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
+  bindChange: function(e) {
+    this.setData({
+      currentType: e.detail.current
+    })
+    if (!this.data.list[e.detail.current].length)
+      this.getList();
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
+  getList() {
+    //wx.showLoading();
+    var that = this;
+    var postData = {
+      st: [that.data.currentType],
+      lastStamp: that.data.currentPage[that.data.currentType],
+      pageSize: that.data.pageSize
+    };
+    var _page = that.data.categoryType[that.data.currentType].page + 1;
+    var param = {},
+      str1 = "list[" + that.data.currentType + "]",
+      str2 = 'categoryType[' + that.data.currentType + '].page',
+      str3 = "currentPage[" + that.data.currentType + "]",
+      str4 = "haveNext[" + that.data.currentType + "]";
+    param[str1] = [{
+      "course": {
+        "title": "课程名称多少啊打撒的撒多少啊多少啊多少啊",
+        "phoUrl": "../../image/share.png",
+        "courseId": "34235",
+        "price": "126.6",
+        "learnNum": "2356",
+        "score": "4.8",
+      },
+      "teacher": {
+        "id": "123",
+        "avatarUrl": "老师头像",
+        "name": "老师名称",
+        "summary": "讲师"
+      }
+    },
+      {
+        "course": {
+          "title": "课程名称多少的撒打算的",
+          "phoUrl": "../../image/share.png",
+          "courseId": "34235",
+          "price": "126.6",
+          "learnNum": "2356",
+          "score": "4.8",
+        },
+        "teacher": {
+          "id": "123",
+          "avatarUrl": "老师头像",
+          "name": "老师名称",
+          "summary": "讲师"
+        }
+      }]
+    that.setData(param);
+    // request.fetch(api.getCoursesCategory, postData).then(data => {
+    //   wx.hideLoading();
+    //   param[str1] = data.data.items;
+    //   param[str2] = _page;
+    //   param[str3] = data.data.lastStamp
+    //   param[str4] = data.data.haveNext
+    //   that.setData(param);
+    // }).catch(e => {
+    //   wx.hideLoading();
+    //   param[str1] = [];
+    //   that.setData(param);
+    // })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
+  // 点击tab切换 
+  swichNav: function(res) {
+    if (this.data.currentType == res.detail.currentNum) return;
+    this.setData({
+      currentType: res.detail.currentNum
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
+  bindChange: function(e) {
+    this.setData({
+      currentType: e.detail.current
+    })
+    if (!this.data.list[e.detail.current].length)
+      this.getList();
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
+  scrolltolower:function(e){
+    if (this.data.haveNext[this.data.currentType]) {
+      return
+    }
+    this.getList()
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    
   },
 
   /**

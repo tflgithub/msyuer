@@ -1,18 +1,7 @@
 const app = getApp()
 //公共请求方法  仅支持post
 function request(obj) {
-  if (app.globalData.token === null) {
-    wx.getUserInfo({
-      success: function (res) {
-        app.globalData.userInfo = res.userInfo
-        login().then(res => {
-          doRequest(obj)
-        })
-      }
-    })
-  } else {
-    doRequest(obj)
-  }
+  doRequest(obj)
 }
 
 //发起服务器请求

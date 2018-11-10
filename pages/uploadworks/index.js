@@ -1,13 +1,13 @@
 // pages/uploadworks/index.js
 var count = 6
-const request = require('../../api/request.js');
+const request = require('../../utils/wxRequest.js');
+const api=require('../../api/config.js').api
 const app = getApp()
 const {
   util
 } = app
 const qiniuUploader = require("../../lib/qiniuUploader");
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -17,6 +17,9 @@ Page({
     detailId: '',
     title: '',
     content: '',
+    tscore:'',
+    difficult:'',
+    taste:'',
     max: 320,
     imageUrls: []
   },
@@ -57,13 +60,21 @@ Page({
     wx.showLoading({
       title: '正在提交...',
     })
-    request.getQiniuToken().then(res => {
+    request.fetch(api.getQiuniuToken).then(res => {
       for (let i = 0; i < that.data.files.length; i++) {
         qiniuUploader.upload(that.data.files[i], (res) => {
           console.log(JSON.stringify(res))
           that.data.imageUrls.push(res.imageURL)
           if (that.data.files.length === that.data.imageUrls.length) {
-            request.publishWorks(that.data.detailId, that.data.content, that.data.imageUrls).then(res => {
+            var postData={
+              courseId:that.data.detailId,
+              content: that.data.content,
+              urls: that.data.imageUrls,
+              tscore: that.data.tscore,
+              difficult: that.data.difficult,
+              taste: that.data.taste
+            }
+            request.fetch(api.publicWork,postData).then(res => {
               wx.hideLoading()
               util.showToast('发布成功', 'none', 2000)
               wx.navigateBack({
@@ -113,54 +124,5 @@ Page({
     this.setData({
       content: value
     });
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
   }
 })

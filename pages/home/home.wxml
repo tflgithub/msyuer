@@ -1,121 +1,26 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-  <view class="wrap">
-    <swiper style="height:350rpx;margin-left:24rpx;margin-right:24rpx" bindchange="swiperChange" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{barItems}}" wx:for-item="item" wx:key="id">
-        <swiper-item>
-          <image src="{{item.url}}" style='width:100%;height:100%;border-radius:18rpx' bindtap='gotoDetail' data-id="{{item}}" />
-        </swiper-item>
-      </block>
-    </swiper>
-    <!--重置小圆点的样式  -->
-    <view class="dots">
-      <block wx:for="{{barItems}}" wx:for-item="item" wx:key="{{item.id}}">
-        <view class="dot{{index == current ? ' active' : ''}}"></view>
-      </block>
-    </view>
-  </view>
-  <block wx:if="{{toDayRecommend.items.length>0}}">
-    <view class="line " style='margin-top:20rpx' />
-    <view class="cell" style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;'>
-      <image src="../../image/ic_recommended.png" style="width:40rpx;height:40rpx;margin-right:10rpx " />
-      <view class='title'>{{toDayRecommend.title}}</view>
-    </view>
-  </block>
-
-  <view class="cell" style='margin-left:24rpx;margin-top:18rpx;'>
-    <view class="card" wx:for="{{toDayRecommend.items}}" wx:for-item="item" wx:key="id">
-      <view bindtap="goPlay" data-id="{{item.detailId}}">
-        <image class="image" src="{{item.phoUrl}}" />
-        <view class="title">
-          <view class="text">
-            {{item.title}}
-          </view>
+  <text>{{bestCourses.name}}</text>
+  <scroll-view scroll-x="true" style="white-space:nowrap; display:flex">
+    <view wx:for="{{bestCourses.list}}" class='cell' bindtap="goTeacherDetail" data-id="{{item.teacher.id}}">
+      <image src='{{item.course.phoUrl}}' />
+      <view class="title">
+        <view class="text">
+          {{item.course.title}}
         </view>
       </view>
     </view>
-  </view>
-
-  <block wx:if="{{hots.items.length>0}}">
-    <view class="line" style='margin-top:20rpx' />
-
-    <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
-      <image src="../../image/ic_hot.png " style="width:40rpx; height:34rpx;margin-top:10rpx;margin-right:15rpx" />
-      <view class="weui-cell__bd title">{{hots.title}}</view>
-      <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' bindtap='getMore' data-id="hots" />
-    </view>
-
-    <view class="cell" style="margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;">
-      <view class="cell" wx:for="{{hots.items}}" wx:for-item="item" wx:key="detailId">
-        <view class="month-box" bindtap="goPlay" data-id="{{item.detailId}}">
-          <image class="img" src="{{item.phoUrl}}" />
-          <text class="text ">{{item.title}}</text>
+  </scroll-view>
+  <text>{{newCourses.name}}</text>
+    <scroll-view scroll-x="true" style="white-space:wrap;display:flex">
+    <view wx:for="{{bestCourses.list}}" bindtap="goCoursesDetail" data-id="{{item.teacher.id}}">
+      <image src='{{item.course.phoUrl}}' />
+      <view class="title">
+        <view class="text">
+          {{item.course.title}}
         </view>
       </view>
     </view>
-  </block>
-
-  <block wx:if="{{news.items.length>0}}">
-    <view class="line" style='margin-top:20rpx' />
-
-    <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
-      <image src="../../image/ic_new.png " style="width:33rpx; height:33rpx;margin-top:10rpx;margin-right:15rpx" />
-      <view class="weui-cell__bd title">{{news.title}}</view>
-      <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' bindtap='getMore' data-id="news" />
-    </view>
-
-    <view class="cell" style="margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;">
-      <view class="cell" wx:for="{{news.items}}" wx:for-item="item" wx:key="detailId">
-        <view class="month-box" bindtap="goPlay" data-id="{{item.detailId}}">
-          <image class="img" src="{{item.phoUrl}}" />
-          <text class="text ">{{item.title}}</text>
-        </view>
-      </view>
-    </view>
-
-    <view class="line" style='margin-top:20rpx' />
-  </block>
-  <view class="layout_vertical" wx:for="{{cooks.lists}}" wx:for-item="item" wx:key="index">
-    <block wx:if="{{item.items.length>0}}">
-      <view style='margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;' class="cell">
-        <block wx:if='{{item.typeId}}==9'>
-          <image src="{{item.iconUrl}}" style="width:42rpx;height:31rpx;margin-top:10rpx;margin-right:15rpx" />
-        </block>
-        <block wx:elif='{{item.typeId}}==10'>
-          <image src="{{item.iconUrl}}" style="width:38rpx;height:34rpx;margin-top:10rpx;margin-right:15rpx" />
-        </block>
-        <block wx:elif='{{item.typeId}}==11'>
-          <image src="{{item.iconUrl}}" style="width:35rpx;height:34rpx;margin-top:10rpx;margin-right:15rpx" />
-        </block>
-        <block wx:elif='{{item.typeId}}==12'>
-          <image src="{{item.iconUrl}}" style="width:41rpx;height:42rpx;margin-top:10rpx;margin-right:15rpx" />
-        </block>
-        <block wx:elif='{{item.typeId}}==13'>
-          <image src="{{item.iconUrl}}" style="width:45rpx;height:36rpx;margin-top:10rpx;margin-right:15rpx" />
-        </block>
-        <block wx:elif='{{item.typeId}}==14'>
-          <image src="{{item.iconUrl}}" style="width:39rpx;height:32rpx;margin-top:10rpx;margin-right:15rpx" />
-        </block>
-        <block wx:elif='{{item.typeId}}==15'>
-          <image src="{{item.iconUrl}}" style="width:29rpx;height:33rpx;margin-top:10rpx;margin-right:15rpx" />
-        </block>
-        <view class="weui-cell__bd title">{{item.title}}</view>
-        <navigator url="../infolist/infolist?typeId={{item.typeId}}" hover-class="none">
-          <image style="width:35rpx;height:35rpx;padding-right:34rpx;padding-top:10rpx;padding-left:24rpx" src='../../image/ic_more.png' />
-        </navigator>
-      </view>
-
-      <view class="cell" style="margin-left:24rpx;margin-top:18rpx;margin-bottom:24rpx;">
-        <view class="cell" wx:for="{{item.items}}" wx:for-item="item" wx:key="detailId">
-          <view class="month-box" bindtap="goPlay" data-id="{{item.detailId}}">
-            <image class="img" src="{{item.phoUrl}}" />
-            <text class="text ">{{item.title}}</text>
-          </view>
-        </view>
-      </view>
-    </block>
-  </view>
-
+  </scroll-view>
 </view>
-<official-account></official-account>

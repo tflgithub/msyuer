@@ -1,34 +1,56 @@
 /* pages/classification/classification.wxss */
-.title{
+
+.no-courses {
   width: 100%;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   text-align: center;
-}
-.img {
-  width: 272rpx;
-  height: 60rpx;
-  display: inline-block;
+  padding-top: 203rpx;
+  background-color: #f2f2f2;
 }
 
-.classification{
+.no-courses-img {
+  width: 81rpx;
+  height: 96rpx;
+  margin-bottom: 31rpx;
+}
+
+.no-courses .text {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+}
+
+.cell {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
-.classification .item{
+.cell .item {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  margin-right: 40rpx;
   align-items: center;
-  padding-top: 15rpx;
-  padding-bottom: 15rpx;
-  width:25%;
 }
 
-.classification .item .text {
-  margin-top: 24rpx;
-  font-size: 30rpx;
-  color: #555;
+.teacher{
+  padding: 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.teacher .text{
+  font-size: 28rpx;
+  color: #999;
   text-align: center;
+}
+
+.teacher .avatar {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
 }

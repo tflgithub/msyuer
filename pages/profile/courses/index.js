@@ -1,13 +1,12 @@
-// pages/profile/collect/index.js
+// pages/profile/courses/index.js
 const request = require('../../../utils/wxRequest.js')
-const api=require('../../../api/config.js').api
 import pageState from '../../../common/pageState/pageState.js'
+const api=require('../../../api/config.js').api
 const app = getApp()
 const {
   util
 } = app
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -19,26 +18,16 @@ Page({
     currentPage: 0,
     haveNext: false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-    this.getData()
-  },
-  onRetry: function() {
-    this.getData()
-  },
-  getData: function() {
+  getData: function () {
     var that = this
     pageState(that).loading()
     var postData={
-      lastStamp:this.data.currentPage,
-      pageSize:this.data.pageSize
+      pageSize:this.data.pageSize,
+      lastStamp: this.data.lastStamp
     }
-    request.fetch(api.getUserLikes,postData).then(res => {
+    request.fetch(api.getUserBuyCourses,postData).then(res => {
       if (res.data.items.length === 0) {
-        pageState(that).empty('还没有收藏喜爱的视频哦～', '../../../image/ic_empty_sc.png')
+        pageState(that).empty('还没有购买课程哦～', '../../../image/ic_empty_sc.png')
       } else {
         pageState(that).finish()
         that.setData({
@@ -51,13 +40,13 @@ Page({
       pageState(that).error(res)
     })
   },
-  getMoreData: function() {
+  getMoreData: function () {
     var that = this
     var postData = {
-      lastStamp: this.data.currentPage,
-      pageSize: this.data.pageSize
+      pageSize: this.data.pageSize,
+      lastStamp: this.data.lastStamp
     }
-    request.fetch(api.getUserLikes, postData).then(res => {
+    request.fetch(api.getUserBuyCourses, postData).then(res => {
       that.setData({
         showLoading: false
       })
@@ -75,10 +64,19 @@ Page({
       util.showToast(res, 'none', 2000)
     })
   },
+  onRetry: function () {
+    this.getData()
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.onRetry()
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     if (!this.data.showNoMore && this.data.haveNext) {
       this.setData({
         showLoading: true

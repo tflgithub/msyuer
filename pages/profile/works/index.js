@@ -1,5 +1,6 @@
 // pages/profile/works/index.js
-const request = require('../../../api/request.js')
+const request = require('../../../utils/wxRequest.js')
+const api=require('../../../api/config.js').api
 import pageState from '../../../common/pageState/pageState.js'
 const app = getApp()
 const {
@@ -35,7 +36,11 @@ Page({
   getData: function() {
     var that = this
     pageState(that).loading()
-    request.getUserWorks(this.data.currentPage, this.data.pageSize).then(res => {
+    var postData={
+      lastStamp:this.data.currentPage,
+      pageSize:this.data.pageSize
+    }
+    request.fetch(api.getWorks,postData).then(res => {
       if (res.data.items.length === 0) {
         pageState(that).empty('还没有发布作品哦～', '../../../image/ic_empty_zp.png')
       } else {
@@ -52,7 +57,11 @@ Page({
   },
   getMoreData: function() {
     var that = this
-    request.getUserWorks(this.data.currentPage, this.data.pageSize).then(res => {
+    var postData = {
+      lastStamp: this.data.currentPage,
+      pageSize: this.data.pageSize
+    }
+    request.fetch(api.getWorks, postData).then(res => {
       that.setData({
         showLoading: false
       })

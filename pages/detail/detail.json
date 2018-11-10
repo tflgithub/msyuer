@@ -3,7 +3,6 @@
   "enablePullDownRefresh": false,
   "navigationBarTitleText": "详情",
   "usingComponents": {
-    "share-image": "/res/components/shareImage/shareImage",
-    "custom-modal": "/res/components/customModal/index"
+    "custom-modal": "../../common/components/customModal/index"
   }
 }

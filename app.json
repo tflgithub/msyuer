@@ -3,8 +3,6 @@
     "pages/home/home",
     "pages/detail/detail",
     "pages/profile/profile",
-    "pages/unlock/invite",    
-    "pages/unlock/help",    
     "pages/profile/message/index",
     "pages/profile/collect/index",
     "pages/profile/works/index",
@@ -13,7 +11,7 @@
     "pages/infolist/infolist",
     "pages/classification/classification",
     "pages/auth/auth",
-    "pages/aboutus/aboutus"
+    "pages/profile/courses/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,0 +1,38 @@
+<!--pages/profile/courses/index.wxml-->
+<import src="../../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" />
+<view class="page">
+  <view wx:for="{{item}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+    <view class="weui-media-box__hd_in-appmsg">
+      <image class="weui-media-box__thumb" src="{{item.course.phoUrl}}" />
+    </view>
+    <view class="weui-media-box__bd_in-appmsg">
+      <view class="weui-media-box__desc">{{item.course.title}}</view>
+      <view class="teacher">
+        <image src="../../image/ic_logo.png" class="avatar" />
+        <view class="text">{{item.teacher.name}}</view>
+      </view>
+      <view class='cell'>
+        <view class='item'>
+          <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+          <view class="weui-media-box__info">{{item.course.price}}</view>
+        </view>
+        <view class="item">
+          <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
+          <view class="weui-media-box__info">{{item.course.learnNum}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <block wx:if="{{showLoading}}">
+    <view class="weui-loadmore">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+  </block>
+  <block wx:if="{{showNoMore}}">
+    <view class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
+    </view>
+  </block>
+</view>
