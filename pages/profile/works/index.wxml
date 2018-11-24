@@ -1,65 +1,35 @@
 <!--pages/profile/works/index.wxml-->
 <import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
-<custom-modal hideModal="{{hideModal}}" height='60%' width='80%' left='取消' right='删除' bindcancel="modalCancel" bindconfirm='modalConfirm'>
-  <view class='modal-content'>
-    <image src='../../../image/ic_close.png' class='modal-close' catchtap='modalCancel' />
-    <text style='font-size:34rpx;color:#000;margin-top:24rpx;text-align:center'>作品详情</text>
-    <block wx:if='{{itemDetail.workContent.length>72}}'>
-      <scroll-view style='height:185rpx;font-size:30rpx;margin:20rpx 0 15rpx 0; word-wrap:break-word' scroll-y="true">
-        {{itemDetail.workContent}}
-      </scroll-view>
-    </block>
-    <block wx:else>
-      <text style='font-size:30rpx;margin:20rpx 0 15rpx 0; word-wrap:break-word'>{{itemDetail.workContent}}</text>
-    </block>
-    <view style='display:flex;flex-direction:row; flex-wrap:wrap;margin-bottom:20rpx'>
-      <block wx:for='{{itemDetail.workUrls}}' wx:key='*this'>
-        <image src='{{item}}' style='height:100rpx;width:172rpx;border-radius:8rpx;margin:5rpx;' bindtap='previewImage' data-src="{{item}}" />
-      </block>
+<view class='page'>
+  <view wx:for='{{items}}' class='item'>
+    <view class='head'>
+      <text class='content'>{{item.content}}</text>
+      <image class='delete' src="../../../image/ic_delete_2.png" catchtap='deleteWork' data-id='{{item.workId}}' data-index='{{index}}' />
+      <view class='mask'/>
     </view>
-    <view class="item-bottom">
-      <navigator hover-class='none' class="left" url='../../detail/detail?id={{itemDetail.detailId}}'>
-        <image src='../../../image/ic_meishi.png' style='width:34rpx;height:30rpx; margin-right:20rpx' />{{itemDetail.videoTitle}}
-      </navigator>
+    <image class='image' src="{{item.phoUrl}}" />
+    <view class='bottom'>
+      <view class='left'>
+        <image src='../../../image/ic_wodelianjie.png' />
+        <text>{{item.createTime}}</text>
+      </view>
       <view class='right'>
-        {{itemDetail.workCreateTime}}
+        <image src='../../../image/ic_work_like_default.png'/>
+        <text>{{item.likeNum}}</text>
       </view>
     </view>
   </view>
-</custom-modal>
-<view class="{{hideModal?'':'noscroll'}}">
-  <view class="layout_vertical" wx:for='{{items}}' wx:key='*this'>
-    <view style='margin:30rpx;'>
-      <image class='item-delete' src="../../../image/ic_delete_2.png" catchtap='deleteWork' data-id='{{item.workId}}' data-index='{{index}}' />
-      <view class="layout_vertical" bindtap='showDetail' data-index='{{index}}'>
-        <view class='item-content'>
-          {{item.workContent}}
-        </view>
-        <scroll-view class="image-group" scroll-x="true">
-          <image wx:for='{{item.workUrls}}' wx:for-item='item' wx:key='*this' src="{{item}}"></image>
-        </scroll-view>
-      </view>
-      <view class="item-bottom">
-        <navigator hover-class='none' class="left" url='../../detail/detail?id={{item.detailId}}'>
-          <image src='../../../image/ic_meishi.png' style='width:34rpx;height:30rpx; margin-right:20rpx' />{{item.videoTitle}}
-        </navigator>
-        <view class='right'>
-          {{item.workCreateTime}}
-        </view>
-      </view>
-    </view>
-    <view class='line' />
-  </view>
-  <block wx:if="{{showLoading}}">
-    <view class="weui-loadmore">
-      <view class="weui-loading"></view>
-      <view class="weui-loadmore__tips">正在加载</view>
-    </view>
-  </block>
-  <block wx:if="{{showNoMore}}">
-    <view class="weui-loadmore weui-loadmore_line">
-      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
-    </view>
-  </block>
 </view>
+
+<block wx:if="{{showLoading}}">
+  <view class="weui-loadmore">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</block>
+<block wx:if="{{showNoMore}}">
+  <view class="weui-loadmore weui-loadmore_line">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
+  </view>
+</block>

@@ -5,32 +5,30 @@
       <block>
         <swiper-item wx:for="{{list}}" wx:key="*this">
           <view class="no-courses" hidden="{{item.length ? true : false}}">
-            <image src="../../image/ic_empty_sc.png" class="no-courses-img"></image>
+            <image src="../../image/ic_kongbai.png" class="no-courses-img"></image>
             <view class="text">暂无课程</view>
           </view>
           <scroll-view scroll-y="true" class="order-list" scroll-with-animation="true" lower-threshold="1" bindscrolltolower="scrolltolower" style="height: {{windowHeight-35}}px;" hidden="{{item ? flase : true}}">
-            <view wx:for="{{item}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <navigator wx:for="{{item}}" wx:key='*this' class="weui-media-box weui-media-box_appmsg" hover-class="none" url='../detail/detail?id={{item.course.courseId}}' style='margin-left:20rpx;margin-top:20rpx'>
               <view class="weui-media-box__hd_in-appmsg">
                 <image class="weui-media-box__thumb" src="{{item.course.phoUrl}}" />
               </view>
               <view class="weui-media-box__bd_in-appmsg">
-                <view class="weui-media-box__desc">{{item.course.title}}</view>
                 <view class="teacher">
-                    <image src="../../image/ic_logo.png" class="avatar" />
-                    <view class="text">{{item.teacher.name}}</view>
+                  <image src="../../image/ic_logo.png" class="avatar" />
+                  <view class="text">{{item.teacher.name}}</view>
                 </view>
+                <view class="weui-media-box__desc">{{item.course.title}}</view>
                 <view class='cell'>
                   <view class='item'>
-                    <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-                    <view class="weui-media-box__info">{{item.course.price}}</view>
+                    <text style='font-size:24rpx;color:#AC6601'>¥{{item.course.price}}</text>
                   </view>
                   <view class="item">
-                    <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-                    <view class="weui-media-box__info">{{item.course.learnNum}}</view>
+                    <text style='font-size:22rpx;color:#AEAEAE'>{{item.course.learnNum}}学过</text>
                   </view>
                 </view>
               </view>
-            </view>
+            </navigator>
           </scroll-view>
         </swiper-item>
       </block>

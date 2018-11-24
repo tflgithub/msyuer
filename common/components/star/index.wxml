@@ -1,0 +1,9 @@
+<!--common/components/star/index.wxml-->
+<view class='container'>
+    <block wx:for="{{list}}" wx:key='*this'>
+      <image class="star-image" style="left: {{item*60}}rpx" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
+        <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
+        <view class="item" style="left:24rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
+      </image>
+    </block>
+</view>

@@ -1,73 +1,68 @@
 /* pages/profile/profile.wxss */
 
 .userinfo {
-  position: relative;
   display: flex;
-  flex-direction: row;
-  padding: 15rpx;
-  justify-content: space-between;
+   width: 100%;
+   justify-content: center;
+}
+
+.userinfo .bg {
+  width: 100%;
   align-items: center;
-  height: 234rpx;
-  background-color: #ffe037;
-}
-
-.userinfo .message{
+  height: 256rpx;
+  background-color: #fff;
+  border-radius: 40rpx;
   position: absolute;
-  top:0;
-  right: 25rpx;
-  width: 44rpx;
-  padding: 15rpx;
-  height: 44rpx
-}
-
-.userinfo .left {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  margin-left: 40rpx;
-  justify-content: flex-start;
+  top: 298rpx;
 }
 
 .userinfo .avatar {
-  width: 140rpx;
-  height: 140rpx;
+  width: 126rpx;
+  height: 126rpx;
   margin-right: 90rpx;
+  align-items: center;
   border-radius: 50%;
+  position: absolute;
+  top: 243rpx;
 }
 
 .userinfo .nickname {
   color: #2e2e2e;
-  font-size: 38rpx;
-  font-weight: bold;
+  font-size: 45rpx;
+  position: absolute;
+  top: 387rpx;
 }
 
 .userinfo .mobile {
-  color: #666;
-  font-size: 30rpx;
+  color: #986800;
+  font-size: 27rpx;
+  position: absolute;
+  top: 480rpx;
 }
 
-.badyinfo {
+.item_list {
+  width: 100%;
+  position: absolute;
+  top: 610rpx;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
 }
 
-.babyinfo .img {
-  width: 32rpx;
-  height: 32rpx;
-  margin-left: 30rpx;
-  margin-right: 10rpx;
-  margin-top: 30rpx;
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20rpx;
+  justify-content: center;
+  width: 450rpx;
+  height: 90rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
 }
 
-.text {
-  color: #444;
-  font-size: 32rpx;
-}
-
-.line{
-  height: 1rpx;
-  color: #E3E3E3;
-  margin-top: 20rpx;
-  margin-bottom: 30rpx;
+.item .text {
+  font-size: 35rpx;
+  color: #000;
+  margin-left: 20rpx;
 }

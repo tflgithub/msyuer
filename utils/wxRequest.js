@@ -1,10 +1,12 @@
 var wxapi = require("../api/base.js").wxapi;
 var api = require("../api/config.js").api;
+const app=getApp()
 const method = {
   post: "POST",
   get: "GET"
 }
 function fetch(url, data = '', method = 'POST') {
+  console.log("请求:" + api.base_url+url+"参数:"+JSON.stringify(data))
   return new Promise((resole, reject) => {
     wxapi("getNetworkType")
       .then(res => {
@@ -31,17 +33,14 @@ function fetch(url, data = '', method = 'POST') {
                 })
                 wxapi("removeStorage", { key: "token", key:"setUserInfo"})
                   .then(() => wxapi("login"))
-                  .then(res => fetch({
-                    url: api.login,
-                    data: {
-                      code: res.code
-                    },
-                  })
+                  .then(res => fetch(api.login, { code: res.code, nickName: app.globalData.userInfo.nickName, avatarUrl: app.globalData.userInfo.avatarUrl}
+                  )
                   )
                   .then(res => {
                     if (res.data.code == 0) {
                       //登录成功，重新请求一次
-                      wx.setStorageSync('token', res.data.token)
+                      wx.setStorageSync('token', res.data.data.token)
+                      console.log('重新登录获取token:' + wx.getStorageSync('token'))
                       wx.setStorageSync('setUserInfo', res.data.setUserInfo)
                       wxapi("request", {
                         url: api.base_url + url,
@@ -55,6 +54,7 @@ function fetch(url, data = '', method = 'POST') {
                         .then(res => {
                           if (res.data.code == 0) {
                             resole(res.data)
+                            console.log(JSON.stringify(res.data))
                           } else {
                             reject(res.data)
                           }
@@ -64,10 +64,13 @@ function fetch(url, data = '', method = 'POST') {
               } else if (res.data.code == 0) {
                 //成功
                 resole(res.data)
+                console.log(JSON.stringify(res.data))
               } else {
+                console.log(JSON.stringify(res))
                 reject('服务器开小差啦～')
               }
             }).catch(res => {
+              console.log(JSON.stringify(res))
               reject('服务器开小差啦～')
             })
         }

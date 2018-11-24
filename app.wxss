@@ -3,27 +3,34 @@
 @import 'res/components/showToast/showToast.wxss';
 @import 'common/pageState/pageState.wxss';
 
-page{
-    background-color: #FFF;
-    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+page {
+  background-color: #fff;
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }
+
 /**横向布局
 */
-.layout_horizontal{
+
+.layout_horizontal {
   display: flex;
   flex-direction: row;
 }
 
 /*纵向布局  */
-.layout_vertical{
+
+.layout_vertical {
   display: flex;
   flex-direction: column;
 }
 
 /*划线  */
+
 .line {
-   background-color: #E3E3E3;
-   height: 1px;
-   width: 100%; 
+  background-color: #e3e3e3;
+  height: 1px;
+  width: 100%;
 }
-button::after{ border: none; }
+
+button::after {
+  border: none;
+}

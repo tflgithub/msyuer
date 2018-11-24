@@ -1,22 +1,23 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/detail/detail",
     "pages/profile/profile",
-    "pages/profile/message/index",
-    "pages/profile/collect/index",
-    "pages/profile/works/index",
-    "pages/uploadworks/index",
-    "pages/bindaccount/bindaccount",
+    "pages/infolist/details",
     "pages/infolist/infolist",
+    "pages/profile/works/index",
+    "pages/detail/detail",
     "pages/classification/classification",
+    "pages/uploadworks/index",
+    "pages/profile/courses/index",
+    "pages/bindaccount/bindaccount",
+    "pages/profile/collect/index",
     "pages/auth/auth",
-    "pages/profile/courses/index"
+    "pages/detail/works"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "米勺美食",
+    "navigationBarTitleText": "米勺课堂",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -24,21 +25,21 @@
     "list": [
       {
         "pagePath": "pages/home/home",
-        "text": "首页",
-        "iconPath": "image/ic_home_default.png",
-        "selectedIconPath": "image/ic_home_click.png"
+        "text": "发现",
+        "iconPath": "image/icon_search_default.png",
+        "selectedIconPath": "image/icon_search_click.png"
       },
       {
         "pagePath": "pages/classification/classification",
         "text": "分类",
-        "iconPath": "image/ic_fenlei_default.png",
-        "selectedIconPath": "image/ic_fenlei_click.png"
+        "iconPath": "image/icon_classify_default.png",
+        "selectedIconPath": "image/icon_classify_click.png"
       },
       {
         "pagePath": "pages/profile/profile",
         "text": "我的",
-        "iconPath": "image/ic_me_default.png",
-        "selectedIconPath": "image/ic_me_click.png"
+        "iconPath": "image/icon_me_default.png",
+        "selectedIconPath": "image/icon_me_click.png"
       }
     ]
   },

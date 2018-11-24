@@ -17,8 +17,8 @@
 }
 
 .icon {
-  width: 86rpx;
-  height: 95rpx;
+  width: 109rpx;
+  height: 82rpx;
 }
 
 .page-state-container~view {

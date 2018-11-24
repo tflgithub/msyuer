@@ -1,11 +1,8 @@
 // pages/uploadworks/index.js
 var count = 6
 const request = require('../../utils/wxRequest.js');
-const api=require('../../api/config.js').api
-const app = getApp()
-const {
-  util
-} = app
+const api = require('../../api/config.js').api
+const util = require('../../utils/util.js')
 const qiniuUploader = require("../../lib/qiniuUploader");
 Page({
   /**
@@ -14,14 +11,17 @@ Page({
   data: {
     hiddenAdd: false,
     files: [],
-    detailId: '',
-    title: '',
+    courseId: '',
+    title:null,
     content: '',
-    tscore:'',
-    difficult:'',
-    taste:'',
+    tscore: '5',
+    difficult: '5',
+    taste: '5',
     max: 320,
-    imageUrls: []
+    imageUrls: [],
+    normalSrc: '../../image/ic_star_normal.png',
+    selectedSrc: '../../image/ic_star_full.png',
+    halfSrc: '../../image/ic_star_half.png'
   },
   chooseImage: function(e) {
     var that = this;
@@ -42,12 +42,48 @@ Page({
       }
     })
   },
+  onteacher: function(e) {
+    console.log("老师讲解得分"+e.detail.key)
+    this.setData({
+      tscore: e.detail.key
+    })
+  },
+  unteacher: function(e) {
+    console.log("老师讲解得分" + e.detail.key)
+    this.setData({
+      tscore: e.detail.key
+    })
+  },
+  oncourse: function(e) {
+    console.log("课程难度得分" + e.detail.key)
+    this.setData({
+      difficult: e.detail.key
+    })
+  },
+  uncourse: function(e) {
+    console.log("课程难度得分" + e.detail.key)
+    this.setData({
+      difficult: e.detail.key
+    })
+  },
+  ontaste: function(e) {
+    console.log("成品口感得分" + e.detail.key)
+    this.setData({
+      taste: e.detail.key
+    })
+  },
+  untaste: function(e) {
+    console.log("成品口感得分" + e.detail.key)
+    this.setData({
+      taste: e.detail.key
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     this.setData({
-      detailId: options.id,
+      courseId: options.id,
       title: options.title
     })
   },
@@ -66,15 +102,15 @@ Page({
           console.log(JSON.stringify(res))
           that.data.imageUrls.push(res.imageURL)
           if (that.data.files.length === that.data.imageUrls.length) {
-            var postData={
-              courseId:that.data.detailId,
+            var postData = {
+              courseId: that.data.courseId,
               content: that.data.content,
               urls: that.data.imageUrls,
               tscore: that.data.tscore,
               difficult: that.data.difficult,
               taste: that.data.taste
             }
-            request.fetch(api.publicWork,postData).then(res => {
+            request.fetch(api.publicWork, postData).then(res => {
               wx.hideLoading()
               util.showToast('发布成功', 'none', 2000)
               wx.navigateBack({
@@ -90,9 +126,9 @@ Page({
           console.log('error: ' + error);
         }, {
           region: 'SCN', // 华南区
-          domain: app.globalData.IMAGE_SERVER,
+          domain: api.image_url,
           shouldUseQiniuFileName: false,
-            key: app.globalData.token + '_' + util.formatTime(new Date()).replace(/ /g,'') + '_' + i + '.png',
+          key: wx.getStorageSync('token') + '_' + util.formatTime(new Date()).replace(/ /g, '') + '_' + i + '.png',
           uptoken: res.data.token
         }, (progress) => {
           console.log('上传进度', progress.progress)

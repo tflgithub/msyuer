@@ -1,9 +1,32 @@
 /* pages/bindaccount/bindaccount.wxss */
 
+.head{
+  display: flex;
+  flex-direction: row;
+  margin-left: 56rpx;
+  margin-right: 56rpx;
+  justify-content: space-between;
+}
+
+.left{
+  display: flex;
+  flex-direction:column;
+  align-content: center;
+}
+
+.head .left .title{
+  font-size: 48rpx;
+}
+
+.head .left .tip{
+   font-size: 32rpx;
+   color: #A6A6A6
+}
+
 .btn {
-  font-size: 34rpx;
+  font-size: 24rpx;
   margin-bottom: 14rpx;
-  background-color: #f9d943;
+  background-color: #FFBE00;
 }
 
 .input {
@@ -19,9 +42,9 @@
 }
 
 .btn2 {
-  font-size: 44rpx;
+  font-size: 32rpx;
   margin-top: 70rpx;
   margin-left: 56rpx;
   margin-right: 56rpx;
-  background-color: #f9d943;
+  background-color: #FCD973;
 }

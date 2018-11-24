@@ -1,25 +1,67 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
+<template name="item_list">
+  <view class='item'>
+    <image src="{{img}}" style="{{style}}"></image>
+    <view style='font-size:29rpx;color:#000000'>{{text}}</view>
+  </view>
+</template>
+
 <view class="page">
-  <text>{{bestCourses.name}}</text>
-  <scroll-view scroll-x="true" style="white-space:nowrap; display:flex">
-    <view wx:for="{{bestCourses.list}}" class='cell' bindtap="goTeacherDetail" data-id="{{item.teacher.id}}">
-      <image src='{{item.course.phoUrl}}' />
-      <view class="title">
+  <view style='display: inline-block;margin-left:33rpx;'>
+  <text style='font-size:48rx;color:#141414;margin-right:20rpx'>{{bestCourses.name}}</text>
+  <image src='../../image/ic_zuiia.png' style='width:36rpx;height:27rpx'/>
+  </view>
+  <scroll-view scroll-x="true" style="white-space:nowrap; display:flex;margin-top:20rpx;margin-left:23rpx">
+    <view wx:for="{{bestCourses.list}}" wx:key='*this' class='x-card' bindtap="goCoursesDetail" data-id="{{item.course.courseId}}">
+      <image class='image' src='{{item.course.phoUrl}}' />
+      <view class='mask'/>
+      <view class='desc'>
         <view class="text">
           {{item.course.title}}
+        </view>
+        <view class='teacher'>
+          <image src='{{item.teacher.avatarUrl}}' class='image' />
+          <view class='info'>
+            <text class='nickname'>{{item.teacher.name}}</text>
+            <text class='title'>{{item.teacher.title}}</text>
+          </view>
         </view>
       </view>
     </view>
   </scroll-view>
-  <text>{{newCourses.name}}</text>
-    <scroll-view scroll-x="true" style="white-space:wrap;display:flex">
-    <view wx:for="{{bestCourses.list}}" bindtap="goCoursesDetail" data-id="{{item.teacher.id}}">
-      <image src='{{item.course.phoUrl}}' />
-      <view class="title">
+  <view class='navigator'>
+    <navigator style='width:25%' url="../infolist/infolist" hover-class='none'>
+      <template is="item_list" data="{{text:'烘焙大师',img:'../../image/ic_bake.png',style:'width:53rpx;height:53rpx'}}" />
+    </navigator>
+    <navigator style='width:25%' url="courses/index" hover-class='none'>
+      <template is="item_list" data="{{text:'精品课程',img:'../../image/ic_kecheng.png',style:'width:57rpx;height:53rpx'}}" />
+    </navigator>
+    <navigator style='width:25%' url="courses/index" hover-class='none'>
+      <template is="item_list" data="{{text:'在线交流',img:'../../image/ic_jiaoliu.png',style:'width:54rpx;height:54rpx'}}" />
+    </navigator>
+    <navigator style='width:25%' url="courses/index" hover-class='none'>
+      <template is="item_list" data="{{text:'课程折扣',img:'../../image/ic_zhekou.png',style:'width:57rpx;height:51rpx'}}" />
+    </navigator>
+  </view>
+  <view style='display: inline-block;margin-left:33rpx;margin-top:40rpx'>
+  <text style='font-size:48rx;color:#141414;margin-right:20rpx'>{{newCourses.name}}</text>
+  <image src='../../image/ic_zuixinkecheng.png' style='width:36rpx;height:27rpx'/>
+  </view>
+  <scroll-view scroll-y="true"  style="white-space:wrap;display:flex">
+    <view wx:for="{{newCourses.list}}"  wx:key='*this' bindtap="goCoursesDetail" data-id="{{item.course.courseId}}" class='y-card'>
+      <image src='{{item.course.phoUrl}}' class='image'/>
+       <view class='mask'/>
+      <view class="desc">
+         <image src='../../image/ic_kuang.png' class='image'/>
         <view class="text">
-          {{item.course.title}}
+          <text style='font-size:35rpx;color:#FEFEFE'>{{item.course.title}}</text>
+          <text style='font-size:27rpx;background:#FEFEFE;color:#161A22;padding:1rpx' decode="{{true}}">{{item.teacher.name}}&nbsp;&nbsp;{{item.teacher.title}}</text>
         </view>
+        <view class='bottom'>
+      <text style='font-size:21rpx;color:#FEFEFE;margin-left:32rpx'>{{item.course.learnNum}}学过/评分{{item.course.score}}</text>
+      <text style='font-size:24rpx;color:#FFBD2D'>¥{{item.course.price}}</text>
+      </view>
       </view>
     </view>
   </scroll-view>

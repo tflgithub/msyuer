@@ -1,30 +1,13 @@
 <import src="../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
-<view class="page" wx:if="{{data}}">
-  <block wx:if="{{data.barUrl}}">
-    <image src="{{data.barUrl}}" style="width:100%;height:190rpx"/>
-  </block>
-  <block wx:else>
-  <view></view>
-  </block>
-  <navigator wx:for="{{items}}" wx:for-item="item" url="../detail/detail?id={{item.detailId}}" wx:key="detailId" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-    <view class="weui-media-box__hd_in-appmsg">
-      <image class="weui-media-box__thumb" src="{{item.phoUrl}}"/>
-    </view>
-    <view class="weui-media-box__bd_in-appmsg" >
-      <view class="weui-media-box__desc">{{item.title}}
-        <text class="time" >{{item.duration}}</text>
-      </view>
-      <view class='cell'>
-        <view class='item'>
-          <image src="../../image/ic_readname.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-          <view class="weui-media-box__info">{{item.clickNum}}</view>
-        </view>
-        <view class="item">
-          <image src="../../image/ic_like.png" style="width:34rpx;height:34rpx" class="weui-media-box__info" />
-          <view class="weui-media-box__info">{{item.likeNum}}</view>
-        </view>
-      </view>
+<view class="page">
+  <navigator wx:for="{{items}}" url="details?coverUrl={{item.coverUrl}}&avatarUrl={{item.avatarUrl}}&name={{item.name}}&title={{item.title}}&teacherId={{item.teacherId}}" wx:key="*this" class='item' hover-class='none'>
+    <image class='bg_image' src='{{item.coverUrl}}' />
+    <view class='mask'/>
+    <view class='info'>
+      <image class='douhao' src='../../image/ic_douhao.png' />
+      <image class='avatar_image' src='{{item.avatarUrl}}' />
+      <text class='title' decode='{{true}}'>{{item.name}}&nbsp;&nbsp;/&nbsp;&nbsp;{{item.title}}</text>
     </view>
   </navigator>
   <block wx:if="{{showLoading}}">

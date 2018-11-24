@@ -44,7 +44,7 @@ Page({
       disableGetMobileCode: true
     })
     request.fetch(api.getSmsCode, {
-      data: this.data.mobile
+      mobile: this.data.mobile
     }).then(data => {
       that.setData({
         disableGetMobileCode: false

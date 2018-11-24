@@ -17,6 +17,8 @@ const api = {
   score:'/apikt/wxa/v1/course/score',
   publicWork:'/apikt/wxa/v1/course/work',
   getWorks:'/apikt/wxa/v1/course/workList',
+  workLike:'/apikt/wxa/v1/work/like',
+  workUnlike:'/apikt/wxa/v1/work/unlike',
   getTeachers:'/apikt/wxa/v1/teacher/list',
   getTeacherCourses:'/apikt/wxa/v1/teacher/courseList',
   getQiuniuToken:'/apikt/wxa/v1/tools/qiniuToken',

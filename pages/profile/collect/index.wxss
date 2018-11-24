@@ -1,38 +1,33 @@
 /* pages/profile/collect/index.wxss */
-.grids {
-  overflow: hidden;
-  padding-left: 24rpx;
+.teacher{
+  display: flex;
+  padding-bottom: 10rpx;
+  flex-direction: row;
+  align-items: center;
 }
 
-.grid {
-  position: relative;
-  float: left;
-  margin-bottom: 20rpx;
-  width: 50%;
-}
-
-.time{
-  position: absolute;
-  bottom: 70rpx;
-  right: 30rpx;
+.teacher .text{
   font-size: 24rpx;
-  color: #fff
+  color: #666666;
+  text-align: center;
 }
 
-.grid-image {
-  display: block;
-  width: 341rpx;
-  height: 210rpx;
-  border-radius: 8rpx;
+.teacher .avatar {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
 }
 
-.grid-label {
-  width: 80%;
-  margin-top: 20rpx;
-  display: block;
-  color: #000;
-  font-size: 32rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+.cell {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell .item {
+  display: flex;
+  flex-direction: row;
+  margin-right: 40rpx;
+  padding-top: 10rpx;
+  align-items: center;
 }

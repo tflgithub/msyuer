@@ -2,10 +2,7 @@
 const request = require('../../../utils/wxRequest.js')
 import pageState from '../../../common/pageState/pageState.js'
 const api=require('../../../api/config.js').api
-const app = getApp()
-const {
-  util
-} = app
+const util = require('../../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
@@ -23,11 +20,11 @@ Page({
     pageState(that).loading()
     var postData={
       pageSize:this.data.pageSize,
-      lastStamp: this.data.lastStamp
+      lastStamp: this.data.currentPage
     }
     request.fetch(api.getUserBuyCourses,postData).then(res => {
       if (res.data.items.length === 0) {
-        pageState(that).empty('还没有购买课程哦～', '../../../image/ic_empty_sc.png')
+        pageState(that).empty('还没有购买课程哦～', '../../../image/ic_kongbai.png')
       } else {
         pageState(that).finish()
         that.setData({
@@ -44,7 +41,7 @@ Page({
     var that = this
     var postData = {
       pageSize: this.data.pageSize,
-      lastStamp: this.data.lastStamp
+      lastStamp: this.data.currentPage
     }
     request.fetch(api.getUserBuyCourses, postData).then(res => {
       that.setData({
@@ -72,6 +69,13 @@ Page({
    */
   onLoad: function (options) {
     this.onRetry()
+  },
+
+  doWork:function(e)
+  {
+     wx.navigateTo({
+       url: '../../uploadworks/index',
+     })
   },
   /**
    * 页面上拉触底事件的处理函数

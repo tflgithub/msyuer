@@ -1005,8 +1005,8 @@ icon {
 
 .weui-media-box__hd_in-appmsg {
   margin-right: 0.8em;
-  width: 276rpx;
-  height: 158rpx;
+  width: 315rpx;
+  height: 189rpx;
   line-height: 60px;
   text-align: center;
 }

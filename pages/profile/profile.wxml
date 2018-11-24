@@ -1,36 +1,23 @@
 <template name="item_list">
-  <view class="weui-cell__hd" style="margin:30rpx;">
-    <image src="{{img}}" style="{{style}}"></image>
-  </view>
-  <view class="weui-cell__bd text">{{text}}</view>
-  <image src="../../image/ic_jiantou.png" style="width:32rpx;height:32rpx;margin:30rpx;" class="weui-cell__ft" />
+  <navigator class='item' url='{{url}}'>
+    <image src='{{icon}}' style='{{style}}' />
+    <text class='text'>{{text}}</text>
+  </navigator>
 </template>
 
-<view class="page">
+<view style='background-color:#F1F1F1;width:100%;height:100%' wx:if='{{mobile}}'>
   <view class="userinfo">
-    <view class="left">
-      <text class="nickname">{{userInfo.nickName}}</text>
-    </view>
-    <image bindtap="bindViewTap" class="avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
-    <navigator url="message/index" hover-class="weui-cell_active">
-      <block wx:if='{{hadMsg}}'>
-        <image class='message' src='../../image/ic_had_message.png' />
-      </block>
-      <block else>
-        <image class='message' src='../../image/ic_no_message.png' bindtap='readMsg' />
-      </block>
-    </navigator>
+    <image src='../../image/ic_mine_bg.png' style='width:100%'/>
+    <view class="bg"/>
+    <image class="avatar" src="{{avatarUrl}}" mode="cover" />
+    <text class="nickname">{{nickName}}</text>
+    <text class="mobile">{{mobile}}</text>
   </view>
+  <view class='item_list'>
+    <template is='item_list' data="{{url:'courses/index',icon:'../../image/ic_mine_course.png',style:'width:44rpx;height:39rpx',text:'我的课程'}}" />
 
-  <navigator style='height:120rpx;' url="works/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <template is="item_list" data="{{text:'我的作品',img:'../../image/ic_wodezuopin.png',style:'width:41rpx;height:37rpx'}}" />
-  </navigator>
-  <navigator style='height:120rpx;' url="collect/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <template is="item_list" data="{{text:'我的收藏',img:'../../image/ic_wodeshouc.png',style:'width:42rpx;height:37rpx'}}" />
-  </navigator>
+    <template is='item_list' data="{{url:'collect/index',icon:'../../image/ic_mine_sc.png',style:'width:48rpx;height:41rpx',text:'我的收藏'}}" />
 
-  <navigator style='height:120rpx;' url="courses/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <template is="item_list" data="{{text:'我的课程',img:'../../image/ic_aboutus.png',style:'width:40rpx;height:40rpx'}}"/>
-   </navigator>
- 
+    <template is='item_list' data="{{url:'works/index',icon:'../../image/ic_wozuoping.png',style:'width:43rpx;height:41rpx',text:'我的作品'}}" />
+  </view>
 </view>

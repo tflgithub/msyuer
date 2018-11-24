@@ -10,32 +10,38 @@ Page({
    * 页面的初始数据
    */
   data: {
-    courseInfo: {
-      "phoUrl": "../../image/share.png",
-      "title": "16.23",
-      "videoUrl": "http://ddsfgrfdsg",
-      "adUrl": "http://ddsfgrfdsg",
-      "courseId": "22222222",
-      "price": "2366",
-      "oriPrice": "9999",
-      "learnNum": "9999",
-      "likeNum": "1266",
-      "score": "4.3",
-      "hadFee": false,
-      "hadLike": true,
-      "hadScore": true
-    },
+    videoUrl: null,
+    radioValues: [{
+        'value': '老师讲的不清楚',
+        'selected': false
+      },
+      {
+        'value': '步骤不对',
+        'selected': false
+      },
+      {
+        'value': '口感不对',
+        'selected': false
+      },
+      {
+        'value': '非常完美',
+        'selected': true
+      },
+      {
+        'value': '配方不对',
+        'selected': false
+      }
+    ],
+    courseInfo: {},
     summaryInfo: {},
     workInfo: {},
-    teacherInfo: {},
     pptInfo: {},
     videoContext: null,
-    likeNum: '1',
+    likeNum: '12',
     hadLike: '',
-    hadFee: false,
+    hadFee: true,
     hadScore: false,
-    isPlaying: null,
-    showCover: true,
+    isPlaying: false,
     worksList: [],
     hideModal: true,
     stars: [0, 1, 2, 3, 4],
@@ -44,45 +50,41 @@ Page({
     halfSrc: '../../image/ic_star_half.png',
     key: 5, //评分
     bgImage: null,
-    evaluate: [{
-      id: 1,
-      text: '很难做',
-      checked: false
-    }, {
-      id: 2,
-      text: '步骤不对',
-      checked: false
-    }, {
-      id: 3,
-      text: '口感不对',
-      checked: false
-    }, {
-      id: 4,
-      text: '非常完美',
-      checked: false
-    }, {
-      id: 5,
-      text: '一般吧',
-      checked: false
-    }],
-    currentData: 0
+    currentData: 0,
+    courseId: null
+  },
+  radioChange: function(e) {
+    var index = e.currentTarget.dataset.index;
+    var arr = this.data.radioValues;
+    for (var v in arr) {
+      if (v == index) {
+        arr[v].selected = true;
+      } else {
+        arr[v].selected = false;
+      }
+    }
+    this.setData({
+      radioValues: arr
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var that = this
     console.log("传入" + options.id)
     this.videoContext = wx.createVideoContext('myVideo')
     this.setData({
-      detailId: options.id
+      courseId: options.id
     })
-    var systemInfo = wx.getSystemInfoSync()
-    this.setData({
-      windowHeight: systemInfo.windowHeight,
-      currentType: options.id ? options.id : 0
+    this.loadData()
+    wx.getNetworkType({
+      success: function(res) {
+        if ('wifi' == res.networkType) {
+          that.startPlay();
+        }
+      }
     })
-    pageState(this).finish()
-    //this.loadData()
   },
   //获取当前滑块的index
   bindchange: function(e) {
@@ -143,74 +145,31 @@ Page({
   },
   loadData: function() {
     var that = this;
-    //pageState(that).loading()
-    console.log("当前ID：" + this.data.detailId)
-    // Promise.all([request.getVedioDetail(this.data.detailId), request.getRecommend(this.data.detailId)]).then(res => {
-    //   pageState(that).finish()
-    //   //华为手机有个BUG 必须在 html2json.js 112 行 119 注释console.dir(value),为防止出现意外的坑这里try catch 一下。
-    //   try {
-    //     WxParse.wxParse('article', 'html', res[0].data.detailInfo.summary, that, 5)
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    //   that.setData({
-    //     data: res[0].data,
-    //     likeNum: res[0].data.detailInfo.likeNum,
-    //     hadLike: res[0].data.detailInfo.hadLike,
-    //     hadScore: res[0].data.detailInfo.hadScore,
-    //     videoType: that.setVideoType(res[0].data.detailInfo.sizeType),
-    //     isBindMobile: res[0].data.setUserInfo,
-    //     recommendList: res[1].data.recommendList
-    //   })
-    // }).catch(res => {
-    //    pageState(this).error('出错啦～我们正在修复...')
-    // })
-  },
-  loadWorks: function() {
-    var that = this
-    var postData = {
-      courseId: this.data.courseInfo.courseId,
-      lastStamp: this.data.currentPage,
-      pageSize: this.data.pageSize
-    }
-    request.fetch(api.getWorks,postData).then(res => {
-      that.setData({
-        currentPage: res.data.lastStamp,
-        haveNext: res.data.haveNext,
-        worksList: res.data.items,
-        toView: that.data.jumpTo
-      })
-      for (var i in res.data.items) {
-        that.data.worksList[i].ellipsis = false; // 添加新属性
+    pageState(this).loading()
+    request.fetch(api.getCourseDetail, {
+      courseId: this.data.courseId
+    }).then(data => {
+      pageState(that).finish()
+      WxParse.wxParse('article', 'html', data.data.summaryInfo, that, 200)
+      WxParse.wxParse('teacher_article', 'html', data.data.teacherInfo.summary, that, 200)
+      WxParse.wxParse('ppt_article', 'html', data.data.pptInfo, that)
+      var url = data.data.courseInfo.adUrl;
+      if (data.data.courseInfo.hadFee) {
+        url = data.data.courseInfo.videoUrl;
       }
       that.setData({
-        worksList: that.data.worksList
+        videoUrl: url,
+        courseInfo: data.data.courseInfo,
+        likeNum: data.data.courseInfo.likeNum,
+        hadFee: data.data.courseInfo.hadFee,
+        hadLike: data.data.courseInfo.hadLike,
+        hadScore: data.data.courseInfo.hadScore,
+        summaryInfo: data.data.summaryInfo,
+        workInfo: data.data.workInfo,
+        teacherInfo: data.data.teacherInfo
       })
-    }).catch(res => {})
-  },
-  loadMoreWorks: function() {
-    var that = this
-    var postData = {
-      courseId: this.data.courseInfo.courseId,
-      lastStamp: this.data.currentPage,
-      pageSize: this.data.pageSize
-    }
-    request.fetch(api.getWorks, postData).then(res => {
-      that.setData({
-        showLoading: false
-      })
-      var list = that.data.worksList;
-      list = list.concat(res.data.items);
-      that.setData({
-        worksList: list,
-        haveNext: res.data.haveNext,
-        currentPage: res.data.lastStamp
-      })
-    }).catch(res => {
-      that.setData({
-        showLoading: false
-      })
-      util.showToast(res, 'none', 2000)
+    }).catch(e => {
+      pageState(this).error(e)
     })
   },
   onRetry: function() {
@@ -224,33 +183,8 @@ Page({
   },
   stopPlay: function() {
     this.videoContext.stop()
-    this.setData({
-      isPlaying: false
-    })
-  },
-  evaluateSelection(e) {
-    var selectedEvaluate = []
-    var index = e.currentTarget.dataset.index
-    for (let i = 0; i < this.data.evaluate.length; i++) {
-      var item = this.data.evaluate[i]
-      if (i === index) {
-        if (item.checked) {
-          item.checked = false
-        } else {
-          item.checked = true
-        }
-      }
-      selectedEvaluate.push(item)
-    }
-    this.setData({
-      evaluate: selectedEvaluate
-    })
   },
   rating: function(e) {
-    if (this.data.isBindMobile != 1) {
-      this.bindaccount()
-      return
-    }
     if (this.data.hadScore) {
       util.showToast('您已经评过分啦～', 'none', 2000)
       return
@@ -262,19 +196,24 @@ Page({
   modalConfirm: function(e) {
     console.log("点击了提交" + this.data.key + "分")
     var evaluate = []
-    for (let i = 0; i < this.data.evaluate.length; i++) {
-      var item = this.data.evaluate[i]
-      if (item.checked) {
-        evaluate.push(item.id)
+    for (let i = 0; i < this.data.radioValues.length; i++) {
+      var item = this.data.radioValues[i]
+      if (item.selected) {
+        evaluate.push(item.value)
+        break;
       }
     }
     var postData = {
       courseId: this.data.courseInfo.courseId,
-      score: this.data.key,
+      score: this.data.key.toString(),
       evaluate: evaluate
     }
+    var that = this
     request.fetch(api.score, postData).then(res => {
       util.showToast('评分成功', 'none', 2000)
+      that.setData({
+        hadScore: true
+      })
     }).catch(res => {
       util.showToast(res, 'none', 2000)
     })
@@ -312,30 +251,51 @@ Page({
   },
   dolike: function(e) {
     var that = this;
-    request.fetch(api.like, {
-      courseId: this.data.courseInfo.courseId
-    }).then(res => {
-      that.setData({
-        likeNum: res.data.likeNum,
-        hadLike: true
-      })
-      util.showToast('已收藏', 'none', 2000)
-    }).catch(res => {
-      util.showToast(res, 'none', 2000)
+    wxapi('getSetting').then(res => {
+      if (!res.authSetting['scope.userInfo']) {
+        wx.reLaunch({
+          url: '../auth/auth',
+        })
+      } else {
+        request.fetch(api.like, {
+          courseId: this.data.courseInfo.courseId
+        }).then(res => {
+          that.setData({
+            likeNum: res.data.likeNum,
+            hadLike: true
+          })
+          util.showToast('已收藏', 'none', 2000)
+        }).catch(res => {
+          util.showToast(res, 'none', 2000)
+        })
+      }
     })
   },
   unlike: function(e) {
     var that = this;
-    request.unlike(api.unlike, {
-      courseId: this.data.courseInfo.courseId
-    }).then(res => {
-      that.setData({
-        likeNum: res.data.likeNum,
-        hadLike: false
-      })
-      util.showToast('取消收藏', 'none', 2000)
-    }).catch(res => {
-      util.showToast(res, 'none', 2000)
+    wxapi('getSetting').then(res => {
+      if (!res.authSetting['scope.userInfo']) {
+        wx.reLaunch({
+          url: '../auth/auth',
+        })
+      } else {
+        request.fetch(api.unLike, {
+          courseId: this.data.courseInfo.courseId
+        }).then(res => {
+          that.setData({
+            likeNum: res.data.likeNum,
+            hadLike: false
+          })
+          util.showToast('取消收藏', 'none', 2000)
+        }).catch(res => {
+          util.showToast(res, 'none', 2000)
+        })
+      }
+    })
+  },
+  moreWorks: function(e) {
+    wx.navigateTo({
+      url: 'works?id=' + this.data.courseInfo.courseId,
     })
   },
   previewImage: function(e) {

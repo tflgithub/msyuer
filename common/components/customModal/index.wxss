@@ -18,28 +18,24 @@
 .modal-content {
   display: flex;
   flex-direction: column;
-  /* width: 90%; *//* height: 80%; */
   background-color: #fff;
   border-radius: 10rpx;
 }
 
 .modal-btn-wrapper {
-  display: flex;
-  flex-direction: row;
-  height: 80rpx;
-  line-height: 80rpx;
-  border-top: 2rpx solid rgba(7, 17, 27, 0.1);
+  display: inline-flex;
+  height: 100rpx;
+  line-height: 100rpx;
 }
 
 .cancel-btn, .confirm-btn {
-  flex: 1;
-  height: 80rpx;
-  line-height: 80rpx;
+  width: 187rpx;
+  height: 66rpx;
+  line-height: 66rpx;
   text-align: center;
-  font-size: 34rpx;
-  border-bottom-left-radius: 10rpx;
-  border-bottom-right-radius: 10rpx;
-  background-color: #f9d943;
+  border-radius:6rpx;
+  font-size: 29rpx;
+  background-color: #FFBD2D;
 }
 
 .cancel-btn {

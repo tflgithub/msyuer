@@ -1,55 +1,79 @@
 /* pages/profile/works/index.wxss */
 
-.item-top {
+.page {
+  background-color: #f3f3f3;
+}
+
+.item {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 10rpx;
+  align-items: center;
+  position: relative;
 }
 
-.noscroll {
-  height: 100%;
-  overflow: hidden;
+.item .head {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.item-content {
-  flex: 1;
+.item .head .content {
   display: -webkit-box;
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  margin-right: 40rpx;
-  font-size: 30rpx;
-  color: #000;
+  font-size: 28rpx;
+  padding: 15rpx 15rpx 15rpx 30rpx;
+  color: #010101;
 }
 
-.item-delete {
-  position: relative;
-  left: 660rpx;
+.item  .head .delete {
   width: 26rpx;
   height: 26rpx;
-  padding: 15rpx;
+  padding: 25rpx;
 }
 
-.image-group {
-  display: flex;
-  white-space: nowrap;
-  margin-top: 30rpx;
+.item .image {
+  width: 690rpx;
+  height: 414rpx;
+  margin-bottom: 20rpx;
 }
 
-.image-group image {
-  display: inline-block;
-  width: 222rpx;
-  height: 150rpx;
-  border-radius: 8rpx;
-  margin-right: 10rpx;
+.item .mask{
+  top:75rpx;
+  left:28rpx;
+  position: absolute;
+  background: linear-gradient(#FFFFFF, #000000);
+  opacity: 0.4;
+  width: 690rpx;
+  height: 414rpx;
 }
 
-.item-bottom {
-  display: flex;
-  justify-content: center;
+.item .bottom {
+  position: absolute;
+  width: 690rpx;
+  bottom: 20rpx;
+  justify-content: space-between;
+  display: inline-flex;
 }
 
-.item-bottom .left {
+.item .bottom .left{
+  display: inline-flex;
+  padding: 18rpx;
+  align-items: center;
+}
+
+.item .bottom .left image{
+  width: 32rpx;
+  height: 23rpx;
+}
+
+.item .bottom .left text{
   flex: 1;
   display: -webkit-box;
   word-break: break-all;
@@ -58,29 +82,32 @@
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
-  margin-right: 40rpx;
-  font-size: 30rpx;
-  color: #2a67b1;
-  font-weight: bold;
+  margin-left: 10rpx;
+  font-size: 27rpx;
+  color: #FFBD2D;
 }
 
-.item-bottom .right {
-  font-size: 30rpx;
-  color: #999;
+.item .bottom .right {
+  display: inline-flex;
+  padding: 18rpx;
+  align-items: center;
 }
 
-.modal-content {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  padding: 0 30rpx 0 30rpx;
-  z-index: 9999;
+.item .bottom .right image{
+  width: 33rpx;
+  height: 30rpx;
 }
 
-.modal-close {
-  position: absolute;
-  width: 34rpx;
-  height: 34rpx;
-  right: 0;
-  padding: 20rpx;
+.item .bottom .right text{
+  flex: 1;
+  display: -webkit-box;
+  word-break: break-all;
+  justify-content: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  margin-left: 10rpx;
+  font-size: 27rpx;
+  color: #FEFEFE;
 }

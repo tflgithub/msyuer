@@ -1,70 +1,142 @@
 /* pages/home.wxss */
-.cell {
-  width: 500rpx;
-  height: 800rpx; 
-  margin-right:120rpx;
-  display: inline-block;
+
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
 }
 
-.cell .title {
-  font-size: 34rpx;
-  font-weight: bold;
-  color: #303030;
-}
-
-.card {
+.x-card {
   position: relative;
+  display: inline-block;
   margin-left: 16rpx;
   margin-right: 14rpx;
   margin-bottom: 20rpx;
+  width: 416rpx;
+  height: 619rpx;
 }
 
-.card .image {
-  width: 321rpx;
-  height: 440rpx;
-  border-top-left-radius: 8rpx;
-  border-top-right-radius: 8rpx;
-}
-
-.card .nickname {
-  top: 250rpx;
-  left: 20rpx;
-  color: #5c5c5c;
-  background: #fff;
-  padding: 10rpx;
-  border-radius: 8rpx;
-  position: absolute;
-  font-size: 24rpx;
-}
-
-.card .title {
-  background-color: rgba(0, 0, 0, 0.6);
-  position: absolute;
+.x-card .image {
   width: 100%;
-  bottom: 15rpx;
+  height: 100%;
+  border-radius: 8rpx;
+}
+
+.x-card .mask{
+  position: absolute;
+  top: 0;
+  background: linear-gradient(#FFFFFF, #000000);
+  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+  border-radius: 8rpx;
+}
+
+.x-card .desc {
+  position: absolute;
+  bottom: 20rpx;
+  left: 20rpx;
+  width: 100%;
+}
+
+.x-card .desc .teacher {
+  display: inline-flex;
+  align-items: center;
+}
+
+.x-card .desc .teacher .image {
+  height: 50rpx;
+  width: 50rpx;
+  border-radius: 50%;
+}
+
+.x-card .desc .teacher .info {
+  display: flex;
+  margin-left: 20rpx;
+  flex-direction: column;
+}
+
+.x-card .desc .teacher .info .nickname {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21rpx;
+  color: white;
+}
+
+.x-card .desc .teacher .info .title {
+  font-size: 21rpx;
+  color: white;
+}
+
+
+
+.x-card .desc .text {
+  color: #ffbd2d;
+  font-size: 28rpx;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.navigator {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+.y-card {
+  position: relative;
+  margin-left: 33rpx;
+  margin-right: 33rpx;
+  margin-top: 20rpx;
+}
+
+.y-card .image {
+  width: 690rpx;
+  height: 416rpx;
+  border-radius: 8rpx;
+}
+
+.y-card .mask{
+  top:0;
+  position: absolute;
+  background: linear-gradient(#FFFFFF, #000000);
+  opacity: 0.4;
+  width: 690rpx;
+  height: 416rpx;
+  border-radius: 8rpx;
+}
+
+.y-card .desc {
+  position: absolute;
+  bottom: 68rpx;
   overflow-wrap: break-word;
 }
 
-.card .title .text {
-  padding: 10rpx;
-  color: #fff;
-  font-size: 30rpx;
+.y-card .desc .image {
+  width: 634rpx;
+  height: 137rpx;
+  margin-left: 20rpx;
 }
 
-.month-box {
+.y-card .desc .text {
   display: flex;
+  bottom: 35rpx;
+  left: 50rpx;
+  position: absolute;
   flex-direction: column;
-  margin-right: 18rpx;
 }
 
-.month-box .img {
-  width: 342rpx;
-  height: 210rpx;
-  border-radius: 8rpx;
-}
-
-.month-box .text {
-  font-size: 30rpx;
-  color: #333;
-  padding: 20rpx 20rpx 20rpx 0;
+.y-card .desc .bottom {
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+  position: absolute;
+  flex-direction: row;
+  bottom: -40rpx;
 }

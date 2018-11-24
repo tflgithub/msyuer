@@ -1,6 +1,4 @@
 {
-  "disableScroll": true,
-  "enablePullDownRefresh": false,
   "navigationBarTitleText": "详情",
   "usingComponents": {
     "custom-modal": "../../common/components/customModal/index"

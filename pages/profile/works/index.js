@@ -2,10 +2,7 @@
 const request = require('../../../utils/wxRequest.js')
 const api=require('../../../api/config.js').api
 import pageState from '../../../common/pageState/pageState.js'
-const app = getApp()
-const {
-  util
-} = app
+const util = require('../../../utils/util.js')
 Page({
 
   /**
@@ -27,7 +24,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    pageState(this).finish()
     this.getData()
   },
   onRetry: function() {
@@ -40,9 +36,9 @@ Page({
       lastStamp:this.data.currentPage,
       pageSize:this.data.pageSize
     }
-    request.fetch(api.getWorks,postData).then(res => {
+    request.fetch(api.getUserWorks,postData).then(res => {
       if (res.data.items.length === 0) {
-        pageState(that).empty('还没有发布作品哦～', '../../../image/ic_empty_zp.png')
+        pageState(that).empty('还没有发布作品哦～', '../../../image/ic_kongbai.png')
       } else {
         pageState(that).finish()
         that.setData({
@@ -79,12 +75,6 @@ Page({
       util.showToast(res, 'none', 2000)
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
   deleteWork: function(e) {
     var id = e.currentTarget.dataset.id
     var index = e.currentTarget.dataset.index
@@ -101,7 +91,7 @@ Page({
       success: function(sm) {
         if (sm.confirm) {
           // 用户点击了确定 可以调用删除方法了
-          request.deleteWork(id).then(res => {
+          request.fetch(api.deleteWorks, { workId:id}).then(res => {
             var items = that.data.items
             items.splice(index, 1)
             if (items.length === 0) {
@@ -119,26 +109,6 @@ Page({
         }
       }
     })
-  },
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
   },
   showDetail: function(e) {
     var that = this
@@ -170,12 +140,6 @@ Page({
     })
   },
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
@@ -189,12 +153,5 @@ Page({
         showNoMore: true
       })
     }
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
   }
 })

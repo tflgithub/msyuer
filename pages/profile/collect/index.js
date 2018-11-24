@@ -2,12 +2,8 @@
 const request = require('../../../utils/wxRequest.js')
 const api=require('../../../api/config.js').api
 import pageState from '../../../common/pageState/pageState.js'
-const app = getApp()
-const {
-  util
-} = app
+const util = require('../../../utils/util.js')
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -31,6 +27,7 @@ Page({
   },
   getData: function() {
     var that = this
+    pageState(that).finish()
     pageState(that).loading()
     var postData={
       lastStamp:this.data.currentPage,
@@ -38,7 +35,7 @@ Page({
     }
     request.fetch(api.getUserLikes,postData).then(res => {
       if (res.data.items.length === 0) {
-        pageState(that).empty('还没有收藏喜爱的视频哦～', '../../../image/ic_empty_sc.png')
+        pageState(that).empty('还没有收藏哦～', '../../../image/ic_kongbai.png')
       } else {
         pageState(that).finish()
         that.setData({

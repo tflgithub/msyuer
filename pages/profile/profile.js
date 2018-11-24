@@ -7,44 +7,37 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {
-      avatarUrl: '../../image/ic_logo.png',
-      nickName: 'TFL',
-      mobile: '13418463415'
-    }
+    avatarUrl: null,
+    nickName: null,
+    mobile: null
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that=this
-    wxapi('getSetting').then(res => {
-      if (res.authSetting['scope.userInfo']) {
-        this.onRetry()
-      }
-    })
+    var that = this;
+    if (wx.getStorageSync('setUserInfo') == 1) {
+      request.fetch(api.getUserInfo).then(data => {
+        that.setData({
+          avatarUrl: data.data.avatarUrl,
+          nickName: data.data.nickName,
+          mobile: data.data.mobile
+        })
+      })
+    }
   },
-  onShow:function(){
+  onShow: function() {
     wxapi('getSetting').then(res => {
-      if (!res.authSetting['scope.userInfo'])
+      if (!res.authSetting['scope.userInfo']) {
         wx.reLaunch({
           url: '../auth/auth',
         })
-    })
-  },
-  onRetry: function() {
-    var that = this
-    request.fetch(api.getUserInfo).then(data => {
-      var param = {
-        avatarUrl: data.data.avatarUrl,
-        nickName: data.data.nickName,
-        mobile: data.data.mobile
       }
-      that.setData(param)
-    }).catch(e => {
-      wx.reLaunch({
+    })
+    if (wx.getStorageSync('setUserInfo') == 2) {
+      wx.navigateTo({
         url: '../bindaccount/bindaccount'
       })
-    })
+    }
   }
 })

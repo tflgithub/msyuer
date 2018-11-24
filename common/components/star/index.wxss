@@ -1,0 +1,18 @@
+/* common/components/star/index.wxss */
+
+.container {
+  position: relative;
+}
+.star-image {
+  position: absolute;
+  top:0;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.star-image .item {
+  position: absolute;
+  top:0;
+  width: 40rpx;
+  height: 40rpx;
+}

@@ -1,20 +1,28 @@
 <import src="../../res/components/showToast/showToast.wxml" />
 <template is="toast" data="{{..._toast_}}" />
 <view class="page">
-  <view style='text-align:center'>
-    <image style="width:168rpx;height:168rpx;margin-top:78rpx;" src="../../image/ic_logo.png" />
+  <view class="head">
+    <view class='left'>
+      <view class='title'>
+        米勺课堂
+      </view>
+      <view class='tip'>
+        Hi,请绑定您的手机号码
+      </view>
+    </view>
+    <image style="width:122rpx;height:122rpx" src="../../image/ic_logo.png" />
   </view>
-  <view style="margin-top:128rpx;margin-left:56rpx;margin-right:56rpx;" class="weui-cell">
-    <input class="input" bindinput='bindInputMobile' placeholder="请填写手机号码" maxlength='11' value='{{mobile}}' />
+  <view style="margin-top:68rpx;margin-left:56rpx;margin-right:56rpx;" class="weui-cell">
+    <input class="input" bindinput='bindInputMobile' placeholder="请输入手机号码" maxlength='11' value='{{mobile}}' />
   </view>
   <view style="margin-top:70rpx;margin-left:56rpx;margin-right:56rpx;" class="weui-cell weui-cell_input weui-cell_vcode">
     <view class="weui-cell__bd">
-      <input bindinput='bindInputMsgCode' class="input" placeholder="请填写验证码" value='{{msgCode}}'/>
+      <input bindinput='bindInputMsgCode' class="input" placeholder="请输入验证码" value='{{msgCode}}' />
     </view>
     <view class="weui-cell__ft">
       <button class="btn" disabled='{{disableGetMobileCode}}' bindtap='bindGetPassCode'>{{getCodeButtonText}}</button>
     </view>
 
   </view>
-  <button  class="btn2" bindtap='nextStep'>完成</button>
+  <button class="btn2" bindtap='nextStep'>绑定</button>
 </view>
