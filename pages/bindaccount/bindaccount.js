@@ -28,8 +28,17 @@ Page({
     }
     request.fetch(api.register, data).then(res => {
       wx.setStorageSync('setUserInfo', 1)
+      var beforePage = pages[pages.length - 2]; // 前一个页面
+      console.log("前一个页面" + JSON.stringify(beforePage.route))
       wx.navigateBack({
-        delta:1
+        delta: 1,
+        success: function () {
+          if (beforePage.route == 'pages/profile/profile') {
+            beforePage.onLoad(); // 执行前一个页面的onLoad方法
+          } else if (beforePage.route == 'pages/detail/detail') {
+            beforePage.loadData()
+          }
+        }
       })
     }).catch(res => {
       util.showToast(res, 'none', 2000)

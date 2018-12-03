@@ -11,6 +11,7 @@ Page({
    */
   data: {
     videoUrl: null,
+    top: 0,
     radioValues: [{
         'value': '老师讲的不清楚',
         'selected': false
@@ -51,7 +52,10 @@ Page({
     key: 5, //评分
     bgImage: null,
     currentData: 0,
-    courseId: null
+    courseId: null,
+    disabledBuy: false,
+    workImages: [],
+    isShowCoverView:true
   },
   radioChange: function(e) {
     var index = e.currentTarget.dataset.index;
@@ -78,13 +82,24 @@ Page({
       courseId: options.id
     })
     this.loadData()
-    wx.getNetworkType({
-      success: function(res) {
-        if ('wifi' == res.networkType) {
-          that.startPlay();
-        }
+    // wxapi('getNetworkType').then(res => {
+    //   if ('wifi' == res.networkType) {
+    //     that.startPlay();
+    //   }
+    // })
+    wxapi('getSystemInfo').then(res => {
+      if (res.platform == 'ios' || res.platform == "devtools") {
+        that.setData({
+          disabledBuy: true
+        })
       }
     })
+  },
+  reload: function(e) {
+    this.setData({
+      courseId: e.currentTarget.dataset.id
+    })
+    this.loadData()
   },
   //获取当前滑块的index
   bindchange: function(e) {
@@ -94,6 +109,7 @@ Page({
     })
   },
   buy: function(e) {
+    console.log(JSON.stringify(wx.getStorageSync('token')))
     var that = this
     wxapi('getSetting').then(res => {
       if (!res.authSetting['scope.userInfo']) {
@@ -102,22 +118,21 @@ Page({
         })
       } else {
         //手机绑定才能支付
-        if (wx.getStorageInfoSync('setUserInfo') == 1) {
+        console.log(JSON.stringify(wx.getStorageSync('setUserInfo')))
+        if (wx.getStorageSync('setUserInfo') == 1) {
           request.fetch(api.pay, {
             courseId: that.data.courseInfo.courseId
           }).then(res => {
             var postData = {
               'timeStamp': res.data.timeStamp,
               'nonceStr': res.data.nonceStr,
-              'package': res.data.packages,
-              'paySign': res.data.paySign,
+              'package': res.data.package,
+              'paySign': res.data.sign,
               'signType': res.data.signType
             }
             console.log("支付参数：" + JSON.stringify(postData))
             wxapi('requestPayment', postData).then(res => {
-              that.setData({
-                hadFee: true
-              })
+              that.loadData()
             }).catch(e => {
               util.showToast('支付失败', 'none', 2000)
             })
@@ -150,14 +165,27 @@ Page({
       courseId: this.data.courseId
     }).then(data => {
       pageState(that).finish()
-      WxParse.wxParse('article', 'html', data.data.summaryInfo, that, 200)
-      WxParse.wxParse('teacher_article', 'html', data.data.teacherInfo.summary, that, 200)
-      WxParse.wxParse('ppt_article', 'html', data.data.pptInfo, that)
+      try {
+        WxParse.wxParse('article', 'html', data.data.summaryInfo.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
+        WxParse.wxParse('teacher_article', 'html', data.data.teacherInfo.summary.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
+        if (data.data.pptInfo.content) {
+          WxParse.wxParse('ppt_article', 'html', data.data.pptInfo.content.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
+        }
+      } catch (e) {
+        console.log('富文本解析出错')
+      }
+      var images = []
+      if (data.data.workInfo.items.length > 3) {
+        for (var i = 0; i < 3; i++) {
+          images.push(data.data.workInfo.items[i].phoUrl[0])
+        }
+      }
       var url = data.data.courseInfo.adUrl;
       if (data.data.courseInfo.hadFee) {
         url = data.data.courseInfo.videoUrl;
       }
       that.setData({
+        workImages: images,
         videoUrl: url,
         courseInfo: data.data.courseInfo,
         likeNum: data.data.courseInfo.likeNum,
@@ -170,6 +198,7 @@ Page({
       })
     }).catch(e => {
       pageState(this).error(e)
+      console.log(JSON.stringify(e))
     })
   },
   onRetry: function() {
@@ -177,8 +206,9 @@ Page({
   },
   startPlay: function(e) {
     this.videoContext.play()
+    this.videoContext.requestFullScreen({ direction: 90 })
     this.setData({
-      isPlaying: true
+      isShowCoverView: false
     })
   },
   stopPlay: function() {
@@ -253,8 +283,8 @@ Page({
     var that = this;
     wxapi('getSetting').then(res => {
       if (!res.authSetting['scope.userInfo']) {
-        wx.reLaunch({
-          url: '../auth/auth',
+        wx.navigateTo({
+          url: '../auth/auth'
         })
       } else {
         request.fetch(api.like, {
@@ -275,8 +305,8 @@ Page({
     var that = this;
     wxapi('getSetting').then(res => {
       if (!res.authSetting['scope.userInfo']) {
-        wx.reLaunch({
-          url: '../auth/auth',
+        wx.navigateTo({
+          url: '../auth/auth'
         })
       } else {
         request.fetch(api.unLike, {
@@ -299,33 +329,66 @@ Page({
     })
   },
   previewImage: function(e) {
-    var current = e.target.dataset.src
-    var index = e.currentTarget.dataset.bindex
-    var imageUrls = this.data.worksList[index].workUrls
-    console.log(index)
+    var index = e.currentTarget.dataset.index;
     wx.previewImage({
-      current: current, // 当前显示图片的http链接
-      urls: imageUrls // 需要预览的图片http链接列表
+      current: this.data.workImages[index],
+      urls: this.data.workImages
     })
   },
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-    if (this.data.worksList.length === 0) {
-      return
-    }
-    if (this.data.haveNext) {
-      this.setData({
-        showLoading: true
-      })
-      this.loadMoreWorks()
-    } else {
-      if (!this.data.showNoMore) {
-        this.setData({
-          showNoMore: true
+  workLike: function(e) {
+    var id = e.currentTarget.dataset.id
+    var index = e.currentTarget.dataset.index
+    console.log('workId:' + id + 'index:' + index)
+    var that = this;
+    wxapi('getSetting').then(res => {
+      if (!res.authSetting['scope.userInfo']) {
+        wx.navigateTo({
+          url: '../auth/auth'
+        })
+      } else {
+        var isLike = 'workInfo.items[' + index + '].isLike';
+        var likeNum = 'workInfo.items[' + index + '].likeNum';
+        request.fetch(api.workLike, {
+          workId: id
+        }).then(res => {
+          that.setData({
+            [isLike]: true,
+            [likeNum]: res.data.likeNum
+          })
+        }).catch(res => {
+          util.showToast(res, 'none', 2000)
         })
       }
-    }
+    })
+  },
+  unWorkLike: function(e) {
+    var id = e.currentTarget.dataset.id
+    var index = e.currentTarget.dataset.index
+    var that = this;
+    wxapi('getSetting').then(res => {
+      if (!res.authSetting['scope.userInfo']) {
+        wx.navigateTo({
+          url: '../auth/auth'
+        })
+      } else {
+        var isLike = 'workInfo.items[' + index + '].isLike';
+        var likeNum = 'workInfo.items[' + index + '].likeNum';
+        request.fetch(api.workUnlike, {
+          workId: id
+        }).then(res => {
+          that.setData({
+            [isLike]: false,
+            [likeNum]: res.data.likeNum
+          })
+        }).catch(res => {
+          util.showToast(res, 'none', 2000)
+        })
+      }
+    })
+  },
+  onscroll: function(e) {
+    this.setData({
+      top: e.detail.scrollTop
+    })
   }
 })

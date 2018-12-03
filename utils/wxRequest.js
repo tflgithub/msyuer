@@ -16,11 +16,14 @@ function fetch(url, data = '', method = 'POST') {
             icon: "none"
           })
         } else {
+          var systemInfo=wx.getSystemInfoSync()
+          console.log('当前系统：' + systemInfo.platform)
           wxapi("request", {
             url: api.base_url + url,
             header: {
               'ms-token':wx.getStorageSync('token'),
-              'content-type': 'application/json' // 默认值
+              'content-type': 'application/json', // 默认值
+              'os-type': systemInfo.platform
             },
             data: data,
             method: method,

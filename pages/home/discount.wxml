@@ -1,0 +1,7 @@
+<!--pages/home/discount.wxml-->
+<view class='page'>
+    <image class='background-image' src='../../image/ic_lianxiwomen.png'></image>
+    <view class='background-content'>
+        敬请期待...
+    </view>
+</view>

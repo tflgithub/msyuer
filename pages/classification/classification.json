@@ -1,4 +1,5 @@
 {
+  "disableScroll":true,
   "navigationBarTitleText": "全部分类",
   "usingComponents": {
    "slideTab": "../../common/components/navigator/index"

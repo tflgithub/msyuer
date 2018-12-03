@@ -17,27 +17,28 @@ Page({
   onLoad: function(options) {
     var that = this;
     if (wx.getStorageSync('setUserInfo') == 1) {
-      request.fetch(api.getUserInfo).then(data => {
-        that.setData({
-          avatarUrl: data.data.avatarUrl,
-          nickName: data.data.nickName,
-          mobile: data.data.mobile
+      if (wx.getStorageSync('setUserInfo') == 1) {
+        request.fetch(api.getUserInfo).then(data => {
+          that.setData({
+            avatarUrl: data.data.avatarUrl,
+            nickName: data.data.nickName,
+            mobile: data.data.mobile
+          })
         })
+      }
+    } else if (wx.getStorageSync('setUserInfo') == 2) {
+      wx.navigateTo({
+        url: '../bindaccount/bindaccount'
       })
     }
   },
   onShow: function() {
     wxapi('getSetting').then(res => {
       if (!res.authSetting['scope.userInfo']) {
-        wx.reLaunch({
-          url: '../auth/auth',
+        wx.navigateTo({
+          url: '../auth/auth'
         })
       }
     })
-    if (wx.getStorageSync('setUserInfo') == 2) {
-      wx.navigateTo({
-        url: '../bindaccount/bindaccount'
-      })
-    }
   }
 })

@@ -27,7 +27,6 @@ Page({
   },
   getData: function() {
     var that = this
-    pageState(that).finish()
     pageState(that).loading()
     var postData={
       lastStamp:this.data.currentPage,

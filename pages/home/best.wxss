@@ -1,4 +1,5 @@
 /* pages/classification/classification.wxss */
+
 .no-courses {
   width: 100%;
   position: absolute;

@@ -1,6 +1,28 @@
 /* pages/detail/detail.wxss */
 @import '../../wxParse/wxParse.wxss';
 
+.play-ad {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 10000;
+  border: solid 1rpx #FFFFFF;
+  border-radius: 8rpx;
+  margin:-30rpx 0 0 -80rpx;
+  display: flex;
+  align-items: center;
+}
+
+.play-video {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 10000;
+  margin:-66rpx 0 0 -66rpx;
+  width: 120rpx;
+  height: 120rpx;
+}
+
 .tab {
   float: left;
   width: 25%;
@@ -29,9 +51,16 @@
 
 .swiper_con {
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  height: 1100rpx;
+}
+
+.topnav {
+  zoom: 1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 999;
 }
 
 .case-page {
@@ -138,7 +167,20 @@
   bottom: 0;
   width: 750rpx;
   height: 96rpx;
-  background-color: #FEFEFE;
+  background-color: #fefefe;
+}
+
+.bottom-disabledBuy {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  width: 750rpx;
+  height: 96rpx;
+  background-color: #ffbd2d;
+  color: #444;
+  font-size: 26rpx;
 }
 
 .modal-content {
@@ -186,4 +228,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.rich-img {
+  width: 670rpx;
+  height: auto;
 }

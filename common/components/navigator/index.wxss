@@ -6,30 +6,30 @@
   position: fixed;
   z-index: 10;
   top: 0;
+  left:25rpx;
 }
 
 .scroll-view-x .scroll-view-item {
   display: inline-block;
   line-height: 70rpx;
-   margin: 0 30rpx;
+  margin: 0 10rpx;
   cursor: pointer;
 }
 
 .scroll-view-x .scroll-view-item .text {
   text-align: center;
   font-size: 27rpx;
-  width: 127rpx;
+  width: 156rpx;
   height: 70rpx;
   background-size: 100% 100%;
   color: #fefefe;
 }
 
 .on{
-  color: #fefefe;
+  color: #AC6601;
   text-align: center;
   font-size: 27rpx;
-  width: 127rpx;
+  width: 156rpx;
   height: 70rpx;
   background-size: 100% 100%;
-  text-decoration:underline;
 }

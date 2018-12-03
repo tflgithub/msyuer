@@ -1,5 +1,5 @@
 // pages/uploadworks/index.js
-var count = 6
+var count = 1
 const request = require('../../utils/wxRequest.js');
 const api = require('../../api/config.js').api
 const util = require('../../utils/util.js')
@@ -12,7 +12,7 @@ Page({
     hiddenAdd: false,
     files: [],
     courseId: '',
-    title:null,
+    title: null,
     content: '',
     tscore: '5',
     difficult: '5',
@@ -34,7 +34,7 @@ Page({
         that.setData({
           files: that.data.files.concat(res.tempFilePaths)
         })
-        if (that.data.files.length === 6) {
+        if (that.data.files.length === count) {
           that.setData({
             hiddenAdd: true
           })
@@ -43,7 +43,7 @@ Page({
     })
   },
   onteacher: function(e) {
-    console.log("老师讲解得分"+e.detail.key)
+    console.log("老师讲解得分" + e.detail.key)
     this.setData({
       tscore: e.detail.key
     })
@@ -112,13 +112,13 @@ Page({
             }
             request.fetch(api.publicWork, postData).then(res => {
               wx.hideLoading()
-              util.showToast('发布成功', 'none', 2000)
+              util.showToast('作业提交成功', 'none', 2000)
               wx.navigateBack({
                 delta: 1
               })
             }).catch(res => {
               wx.hideLoading()
-              console.log('发布作品失败：' + res)
+              console.log('作业提交失败：' + res)
               util.showToast(res, 'none', 2000)
             })
           }
@@ -128,7 +128,7 @@ Page({
           region: 'SCN', // 华南区
           domain: api.image_url,
           shouldUseQiniuFileName: false,
-          key: wx.getStorageSync('token') + '_' + util.formatTime(new Date()).replace(/ /g, '') + '_' + i + '.png',
+          key: 'upload/' + util.formatTime(new Date()) + '/' + Math.random().toString(36) + '.png',
           uptoken: res.data.token
         }, (progress) => {
           console.log('上传进度', progress.progress)

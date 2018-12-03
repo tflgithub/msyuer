@@ -1,7 +1,6 @@
 <import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
 <view class="page">
-
   <navigator wx:for="{{items}}" class="weui-media-box weui-media-box_appmsg" hover-class="none" url='../../detail/detail?id={{item.course.courseId}}' style='margin-left:20rpx;margin-top:20rpx'>
     <view class="weui-media-box__hd_in-appmsg">
       <image class="weui-media-box__thumb" src="{{item.course.phoUrl}}" />

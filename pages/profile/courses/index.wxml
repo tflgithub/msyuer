@@ -1,20 +1,22 @@
 <!--pages/profile/courses/index.wxml-->
 <import src="../../../common/pageState/pageState.wxml" />
 <template is="pageState" data="{{...pageState}}" />
-<navigator wx:for='{{items}}' wx:key='*this' hover-class='none' url="" class="item">
-  <image class='image' src="{{item.course.phoUrl}}" />
-  <view class='teacher'>
-    <image src="../../../image/ic_logo.png" class='avatar' />
-    <text class='name'>{{item.teacher.name}}</text>
+<view class='page'>
+  <view wx:for='{{items}}' wx:key='*this' style='display: inline-flex;margin-left:30rpx;margin-bottom:30rpx'>
+    <view class="item">
+      <image class='image' src="{{item.course.phoUrl}}" />
+      <view class='teacher'>
+        <image src="{{item.teacher.avatarUrl}}" class='avatar' />
+        <text class='name'>{{item.teacher.name}}</text>
+      </view>
+      <view class='text'>{{item.course.title}}</view>
+       <view class='buttons'>
+      <view class='left-button' data-id="{{item.course.courseId}}" bindtap='study'>学习</view>
+      <view class='right-button' bindtap='doWork' data-id="{{item.course}}">交作业</view>
+    </view>
+    </view>
   </view>
-  <view class='text'>{{item.course.title}}</view>
-  <view class='buttons'>
-    <button  plain="true" class='left-button'>学习</button>
-    <button class='right-button'  bindtap='doWork'>交作业</button>
-  </view>
-</navigator>
-
-<block wx:if="{{showLoading}}">
+  <block wx:if="{{showLoading}}">
   <view class="weui-loadmore">
     <view class="weui-loading"></view>
     <view class="weui-loadmore__tips">正在加载</view>
@@ -25,3 +27,5 @@
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦~</view>
   </view>
 </block>
+</view>
+

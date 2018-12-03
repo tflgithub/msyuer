@@ -120,11 +120,15 @@ Page({
     })
   },
   previewImage: function (e) {
-    var current = e.target.dataset.src
-    var imageUrls = this.data.itemDetail.workUrls
+    var index = e.currentTarget.dataset.index;
+    var images = []
+    for (var i = 0; i < this.data.items.length; i++) {
+      images.push(this.data.items[i].phoUrl[0])
+    }
+    console.log(JSON.stringify(images))
     wx.previewImage({
-      current: current, // 当前显示图片的http链接
-      urls: imageUrls // 需要预览的图片http链接列表
+      current: images[index], // 当前显示图片的http链接
+      urls: images // 需要预览的图片http链接列表
     })
   },
   modalConfirm: function(e) {

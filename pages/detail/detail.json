@@ -1,4 +1,5 @@
 {
+  "disableScroll": true,
   "navigationBarTitleText": "详情",
   "usingComponents": {
     "custom-modal": "../../common/components/customModal/index"

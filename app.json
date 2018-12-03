@@ -12,7 +12,10 @@
     "pages/bindaccount/bindaccount",
     "pages/profile/collect/index",
     "pages/auth/auth",
-    "pages/detail/works"
+    "pages/detail/works",
+    "pages/home/contact",
+    "pages/home/best",
+    "pages/home/discount"
   ],
   "window": {
     "backgroundTextStyle": "light",

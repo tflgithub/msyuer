@@ -2,10 +2,7 @@ const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-  return [year, month, day].map(formatNumber).join(' ') + [hour, minute, second].map(formatNumber).join(' ')
+  return [year, month, day].map(formatNumber).join('-')
 }
 
 const formatNumber = n => {
@@ -109,16 +106,6 @@ function imageUtil(e) {
   return imageSize;
 }
 
-function getNetWork() {
-  var netWorkType = null
-  wx.getNetworkType({
-    success: function (res) {
-      netWorkType = res.networkType
-    }
-  })
-  return netWorkType
-}
-
 module.exports = {
   formatTime: formatTime,
   getCurrentPageUrl: getCurrentPageUrl,
@@ -126,6 +113,5 @@ module.exports = {
   showToast,
   hideToast,
   showModal,
-  imageUtil: imageUtil,
-  getNetWork
+  imageUtil: imageUtil
 }

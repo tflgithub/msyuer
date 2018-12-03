@@ -1,17 +1,11 @@
 /* pages/home.wxss */
 
-::-webkit-scrollbar{
-width: 0;
-height: 0;
-color: transparent;
-}
 
 .x-card {
   position: relative;
   display: inline-block;
-  margin-left: 16rpx;
-  margin-right: 14rpx;
   margin-bottom: 20rpx;
+  margin-right: 30rpx;
   width: 416rpx;
   height: 619rpx;
 }
@@ -94,6 +88,9 @@ color: transparent;
   margin-left: 33rpx;
   margin-right: 33rpx;
   margin-top: 20rpx;
+  margin-bottom: 40rpx;
+  display: flex;
+  flex-direction: column;
 }
 
 .y-card .image {

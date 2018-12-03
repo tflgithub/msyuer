@@ -1,13 +1,12 @@
 /* pages/profile/courses/index.wxss */
 
 .item {
-  position: relative;
-  float: left;
-  margin-left: 42rpx;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
 .item .image {
-  width: 315rpx;
+  width: 325rpx;
   height: 189rpx;
   border-radius: 8rpx;
 }
@@ -15,6 +14,7 @@
 .item .teacher {
   display: flex;
   flex-direction: row;
+  margin-top: 20rpx;
 }
 
 .item .teacher .avatar {
@@ -30,36 +30,43 @@
   justify-content: center;
   font-size: 24rpx;
   margin-left: 10rpx;
-  color: #666666;
+  color: #666;
 }
 
 .item .text {
   font-size: 26rpx;
-  color: #000000;
-  padding-top:10rpx;
+  color: #000;
+  padding-top: 10rpx;
   padding-bottom: 10rpx;
 }
 
 .item .buttons {
-  display:inline-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .item  .buttons .left-button {
   width: 138rpx;
   font-size: 21rpx;
-  border-color: #FFBD2D;
-  color:  #FFBD2D;
+  border:solid  1rpx #ffbd2d;
+  color: #ffbd2d;
   height: 52rpx;
-  border-radius: 8rpx;
-  vertical-align: middle;
+  border-radius: 6rpx;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .item .buttons .right-button {
   width: 138rpx;
   height: 52rpx;
   font-size: 21rpx;
-  margin-left:30rpx;
-  vertical-align:middle;
-  border-radius: 8rpx;
-  background-color: #FFBD2D;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 6rpx;
+  border:solid  1rpx #ffbd2d;
+  background-color: #ffbd2d;
 }

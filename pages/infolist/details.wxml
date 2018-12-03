@@ -1,13 +1,15 @@
 <!--pages/infolist/details.wxml-->
 <import src="../../common/pageState/pageState.wxml" />
-<template is="pageState" data="{{...pageState}}" />
 <view class='page'>
   <image src='{{item.coverUrl}}' style='width:100%' />
   <view class='bg'>
     <image src='{{item.avatarUrl}}' class='avatar' />
     <view class='info'>
       <text class='name'>{{item.name}}</text>
-      <text class='title'>米勺认证:{{item.title}}</text>
+      <view class='title'>
+        <text class='text'>米勺认证:{{item.title}}</text>
+        <image src='../../image/ic_renzheng.png' style='width:30rpx;height:24rpx;margin-left:5rpx' />
+      </view>
     </view>
   </view>
 
@@ -15,7 +17,7 @@
     <text style='font-size:26rpx;color:#000000;' decode="{{true}}">课程合集&nbsp;&nbsp;</text>
     <image src='../../image/ic_kechengheji.png' style='width:29rpx;height:30rpx;vertical-align:middle' />
   </view>
-
+<template is="pageState" data="{{...pageState}}" />
   <view style='display:inline-flex;flex-wrap:wrap;margin:12rpx 0 0 48rpx'>
     <navigator hover-class="none" url='../detail/detail?id={{item.courseId}}' wx:for='{{items}}' wx:key='*this' style='margin-bottom:10rpx;'>
       <image style='width:315rpx;height:186rpx;border-radius:10rpx;margin:0 6rpx;' src="{{item.phoUrl}}" />

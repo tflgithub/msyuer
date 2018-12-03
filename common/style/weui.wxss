@@ -931,8 +931,6 @@ icon {
   right: 0;
   bottom: 0;
   height: 1px;
-  border-bottom: 1rpx solid #e5e5e5;
-  color: #e5e5e5;
 }
 
 .weui-media-box:first-child:before {

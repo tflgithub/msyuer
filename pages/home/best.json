@@ -1,0 +1,7 @@
+{
+  "disableScroll": true,
+  "navigationBarTitleText": "精品课程",
+  "usingComponents": {
+    "slideTab": "../../common/components/navigator/index"
+  }
+}
