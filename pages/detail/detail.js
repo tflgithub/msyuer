@@ -12,6 +12,7 @@ Page({
   data: {
     videoUrl: null,
     top: 0,
+    toView: '',
     radioValues: [{
         'value': '老师讲的不清楚',
         'selected': false
@@ -40,7 +41,7 @@ Page({
     videoContext: null,
     likeNum: '12',
     hadLike: '',
-    hadFee: true,
+    hadFee: false,
     hadScore: false,
     isPlaying: false,
     worksList: [],
@@ -55,7 +56,7 @@ Page({
     courseId: null,
     disabledBuy: false,
     workImages: [],
-    isShowCoverView:true
+    isShowCoverView: true
   },
   radioChange: function(e) {
     var index = e.currentTarget.dataset.index;
@@ -206,7 +207,9 @@ Page({
   },
   startPlay: function(e) {
     this.videoContext.play()
-    this.videoContext.requestFullScreen({ direction: 90 })
+    this.videoContext.requestFullScreen({
+      direction: 90
+    })
     this.setData({
       isShowCoverView: false
     })
@@ -219,8 +222,13 @@ Page({
       util.showToast('您已经评过分啦～', 'none', 2000)
       return
     }
+    var view = ''
+    if (!this.data.isShowCoverView) {
+      view = 'bottom_view'
+    }
     this.setData({
-      hideModal: false
+      hideModal: false,
+      toView: view
     })
   },
   modalConfirm: function(e) {
@@ -242,7 +250,8 @@ Page({
     request.fetch(api.score, postData).then(res => {
       util.showToast('评分成功', 'none', 2000)
       that.setData({
-        hadScore: true
+        hadScore: true,
+        toView: 'myVideo'
       })
     }).catch(res => {
       util.showToast(res, 'none', 2000)
@@ -251,7 +260,8 @@ Page({
   modalCancel: function(e) {
     console.log('点击了取消')
     this.setData({
-      hideModal: true
+      hideModal: true,
+      toView: 'myVideo'
     })
   },
   //点击左边,半颗星

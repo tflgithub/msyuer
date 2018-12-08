@@ -7,7 +7,7 @@
     </view>
     <view class="weui-media-box__bd_in-appmsg">
       <view class="teacher">
-        <image src="{{item.teacher.avatarUrl}}" class="avatar" />
+        <image src="{{item.teacher.avatarUrl}}" mode='aspectFill' class="avatar" />
         <view class="text">{{item.teacher.name}}</view>
       </view>
       <view class="weui-media-box__desc">{{item.course.title}}</view>

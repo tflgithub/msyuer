@@ -1,25 +1,25 @@
 <template name="item_list">
   <view class='item'>
     <image src="{{img}}" style="{{style}}"></image>
-    <view style='font-size:29rpx;color:#000000'>{{text}}</view>
+    <view style='font-size:29rpx;color:#444444;margin-top:20rpx'>{{text}}</view>
   </view>
 </template>
 
 <scroll-view scroll-y="true" style='width:100%;height:100%;' bindscrolltolower='scrolltolower'>
   <view style='display: inline-block;margin-left:33rpx;'>
-    <text style='font-size:48rx;color:#141414;margin-right:20rpx'>{{bestCourses.name}}</text>
+    <text style='font-size:36rpx;color:#141414;margin-right:20rpx'>{{bestCourses.name}}</text>
     <image src='../../image/ic_zuiia.png' style='width:36rpx;height:27rpx' />
   </view>
-  <scroll-view scroll-x="true" style="white-space:nowrap; display:flex;margin-top:20rpx;width:720rpx;margin-left:30rpx">
+  <scroll-view scroll-x="true" style="white-space:nowrap; display:flex;margin:20rpx 30rpx 40rpx 30rpx;width:720rpx;">
     <view wx:for="{{bestCourses.list}}" wx:key='*this' class='x-card' bindtap="goCoursesDetail" data-id="{{item.course.courseId}}">
-      <image class='image' src='{{item.course.phoUrl}}' />
+      <image class='image'  mode='aspectFill' src='{{item.course.phoUrl}}' />
       <view class='mask' />
       <view class='desc'>
         <view class="text">
           {{item.course.title}}
         </view>
         <view class='teacher'>
-          <image src='{{item.teacher.avatarUrl}}' class='image' />
+          <image src='{{item.teacher.avatarUrl}}' mode='aspectFill' class='image' />
           <view class='info'>
             <text class='nickname'>{{item.teacher.name}}</text>
             <text class='title'>{{item.teacher.title}}</text>
@@ -43,7 +43,7 @@
     </navigator>
   </view>
   <view style='display: inline-block;margin-left:33rpx;margin-top:40rpx'>
-    <text style='font-size:48rx;color:#141414;margin-right:20rpx'>{{newCourses.name}}</text>
+    <text style='font-size:36rpx;color:#141414;margin-right:20rpx'>{{newCourses.name}}</text>
     <image src='../../image/ic_zuixinkecheng.png' style='width:36rpx;height:27rpx' />
   </view>
   
@@ -51,10 +51,10 @@
       <image src='{{item.course.phoUrl}}' class='image' />
       <view class='mask' />
       <view class="desc">
-        <image src='../../image/ic_kuang.png' class='image' />
+        <image src='../../image/ic_kuang.png' mode='aspectFit' class='image' />
         <view class="text">
-          <text style='font-size:35rpx;color:#FEFEFE'>{{item.course.title}}</text>
-          <text style='font-size:27rpx;background:#FEFEFE;color:#161A22;padding:1rpx' decode="{{true}}">{{item.teacher.name}}&nbsp;&nbsp;{{item.teacher.title}}</text>
+          <text style='font-size:30rpx;color:#FEFEFE'>{{item.course.title}}</text>
+          <text style='font-size:24rpx;background:#FEFEFE;color:#161A22;padding:1rpx' decode="{{true}}">{{item.teacher.name}}&nbsp;&nbsp;{{item.teacher.title}}</text>
         </view>
         <view class='bottom'>
           <text style='font-size:21rpx;color:#FEFEFE;margin-left:32rpx'>{{item.course.learnNum}}学过/评分{{item.course.score}}</text>

@@ -6,7 +6,7 @@
     <view class='head'>
       <text class='content'>{{item.content}}</text>
       <image class='delete' src="../../../image/ic_delete_2.png" catchtap='deleteWork' data-id='{{item.workId}}' data-index='{{index}}' />
-      <!-- <view class='mask'/> -->
+      <view class='mask'/>
     </view>
     <image class='image'  data-index='{{index}}' src="{{item.phoUrl}}" bindtap='previewImage'/>
     <view class='bottom'>

@@ -6,7 +6,7 @@
     <view class='mask'/>
     <view class='info'>
       <image class='douhao' src='../../image/ic_douhao.png' />
-      <image class='avatar_image' src='{{item.avatarUrl}}' />
+      <image class='avatar_image'  mode='aspectFill' src='{{item.avatarUrl}}' />
       <text class='title' decode='{{true}}'>{{item.name}}&nbsp;&nbsp;/&nbsp;&nbsp;{{item.title}}</text>
     </view>
   </navigator>

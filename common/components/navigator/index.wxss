@@ -26,7 +26,7 @@
 }
 
 .on{
-  color: #AC6601;
+  color: #ffc952;
   text-align: center;
   font-size: 27rpx;
   width: 156rpx;

@@ -1,6 +1,6 @@
 <!--pages/home/contact.wxml-->
 <view class='page'>
-    <image class='background-image' src='../../image/ic_lianxiwomen.png'></image>
+    <image class='background-image' mode='aspectFill'  src='../../image/ic_lianxiwomen.png'></image>
     <view class='background-content'>
         在线交流...
     </view>

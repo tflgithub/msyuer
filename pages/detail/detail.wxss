@@ -5,7 +5,6 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 10000;
   border: solid 1rpx #FFFFFF;
   border-radius: 8rpx;
   margin:-30rpx 0 0 -80rpx;
@@ -17,7 +16,6 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 10000;
   margin:-66rpx 0 0 -66rpx;
   width: 120rpx;
   height: 120rpx;

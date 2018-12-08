@@ -15,7 +15,7 @@
           <text style='font-size:24rpx;color:#666666;margin-left:10rpx'>{{item.likeNum}}</text>
         </view>
         <view bindtap='dolike' data-index='{{index}}' data-id="{{item.workId}}" style='padding:10rpx;display:inline-flex;align-items: center' wx:else>
-          <image  src="../../image/ic_sc.png" style='width:25rpx;height:23rpx' />
+          <image  src="../../image/ic_sc.png" mode='aspectFit' style='width:25rpx;height:23rpx' />
           <text style='font-size:24rpx;color:#666666;margin-left:10rpx'>{{item.likeNum}}</text>
         </view>
     </view>

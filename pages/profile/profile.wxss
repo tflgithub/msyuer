@@ -13,7 +13,7 @@
   background-color: #fff;
   border-radius: 40rpx;
   position: absolute;
-  top: 298rpx;
+  top: 198rpx;
 }
 
 .userinfo .avatar {
@@ -23,27 +23,27 @@
   align-items: center;
   border-radius: 50%;
   position: absolute;
-  top: 243rpx;
+  top: 143rpx;
 }
 
 .userinfo .nickname {
   color: #2e2e2e;
   font-size: 45rpx;
   position: absolute;
-  top: 387rpx;
+  top: 287rpx;
 }
 
 .userinfo .mobile {
   color: #986800;
   font-size: 27rpx;
   position: absolute;
-  top: 480rpx;
+  top: 380rpx;
 }
 
 .item_list {
   width: 100%;
   position: absolute;
-  top: 610rpx;
+  top: 510rpx;
   display: flex;
   flex-direction: column;
   align-items: center;

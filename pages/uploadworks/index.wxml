@@ -1,22 +1,22 @@
 <!--pages/uploadworks/index.wxml-->
 
 <view class="page" style='margin-left:73rpx'>
-<image src='../../image/ic_lianjiehuati.png' style='width:32rpx;height:23rpx'/>
-<view style='font-size:26rpx;color:#000000'>{{title}}</view>
- <view class='star-row'>
-  <view style='font-size:27rpx;color:#666666;margin-right:30rpx'>老师讲解</view>
-  <star bindselectLeft="onteacher" bindselectRight="unteacher"/>
- </view >
- <view  class='star-row'>
- <text style='font-size:27rpx;color:#666666;margin-right:30rpx'>课程难度</text>
-  <star  bindselectLeft="oncourse" bindselectRight="uncourse"/>
+  <image src='../../image/ic_lianjiehuati.png' style='width:32rpx;height:23rpx' />
+  <view style='font-size:26rpx;color:#000000'>{{title}}</view>
+  <view class='star-row'>
+    <view style='font-size:27rpx;color:#666666;margin-right:30rpx'>老师讲解</view>
+    <star bindselectLeft="onteacher" bindselectRight="unteacher" />
   </view>
-  <view  class='star-row'>
-   <text style='font-size:27rpx;color:#666666;margin-right:30rpx'>成品口感</text>
-  <star bindselectLeft="ontaste" bindselectRight="untaste"/>
+  <view class='star-row'>
+    <text style='font-size:27rpx;color:#666666;margin-right:30rpx'>课程难度</text>
+    <star bindselectLeft="oncourse" bindselectRight="uncourse" />
   </view>
-   <textarea class="textarea" bindinput="bindinput" maxlength="{{max}}" placeholder="关于这个课程的心得，快快与我们分享吧～" />
-  <image src='../../image/ic_zuiping.png' style='width:32rpx;height:23rpx'/>
+  <view class='star-row'>
+    <text style='font-size:27rpx;color:#666666;margin-right:30rpx'>成品口感</text>
+    <star bindselectLeft="ontaste" bindselectRight="untaste" />
+  </view>
+  <textarea class="textarea" bindinput="bindinput" maxlength="{{max}}" placeholder="关于这个课程的心得，快快与我们分享吧～" />
+  <image src='../../image/ic_zuiping.png' style='width:32rpx;height:23rpx' />
   <view style='font-size:27rpx;color:#000000'>添加作品</view>
   <view>
     <block wx:for="{{files}}" wx:key="*this">
@@ -27,7 +27,7 @@
     </block>
     <image src='../../image/ic_add.png' class="add-image" hidden='{{hiddenAdd}}' bindtap="chooseImage" />
   </view>
-  
+
 </view>
- 
-   <button class="button" bindtap="commit">交作业</button>
+
+<button class="button" bindtap="commit">交作业</button>
