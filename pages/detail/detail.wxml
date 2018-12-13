@@ -32,16 +32,22 @@
     </view>
   </view>
 </custom-modal>
+<view class='mask' hidden='{{showKefu}}'>
+  <view class='modal-content' style='height:250rpx;width:551rpx'>
+    <text style='font-size:34rpx;color:#000;text-align:center;margin-top:50rpx'>回复数字"1",然后点击链接进行购买</text>
+    <button class='confirm-btn' session-from='{"params":"id={{courseId}}"}' open-type="contact" style='color:#000000' bindtap='iosBuy'>确定</button>
+  </view>
+</view>
 <scroll-view scroll-y="true" scroll-into-view="{{toView}}" bindscroll='onscroll' style='height:100%'>
   <view style="width:750rpx;height:453rpx; position: relative;display:flex" wx:if='{{isShowCoverView}}'>
-    <image src='{{courseInfo.phoUrl}}' style="width:750rpx;height:453rpx;"/>
+    <image src='{{courseInfo.phoUrl}}' style="width:750rpx;height:453rpx;" />
     <view style='position: absolute;top: 0;background:#000;opacity:0.2;width:750rpx;height:453rpx;' />
     <image src='../../image/ic_video.png' wx:if='{{hadFee}}' class='play-video' bindtap='startPlay' />
     <view wx:else class='play-ad' bindtap='startPlay'>
       <view style='font-size:32rpx;color:#FFFFFF;padding:10rpx 10rpx 10rpx 10rpx'>播放宣传片</view>
     </view>
   </view>
-  <video wx:else id="myVideo" style="width:750rpx;height:453rpx;" src='{{videoUrl}}' controls='true' custom-cache='{{false}}' >
+  <video wx:else id="myVideo" style="width:750rpx;height:453rpx;" src='{{videoUrl}}' controls='true' custom-cache='{{false}}'>
   </video>
   <!-- <cover-view style="width:750rpx;height:453rpx;" wx:if='{{isShowCoverView}}'>
     <cover-image src='{{courseInfo.phoUrl}}'></cover-image>
@@ -212,14 +218,13 @@
     </view>
 
   </view>
-  <view wx:elif='{{!disabledBuy}}' class='bottom-buy'>
+  <!-- <view wx:elif="{{platform == 'android'}}" class='bottom-buy'>
     <view style='display:inline;width:473rpx;'>
       <text style='font-size:35rpx;color:#AC6601;padding:30rpx'>¥{{courseInfo.price}}</text>
       <text style='font-size:28rpx;color:#666666;text-decoration:line-through'>¥{{courseInfo.oriPrice}}</text>
     </view>
     <view style='width:277rpx;height:96rpx;background-color:#FFBD2D;font-size:35rpx;line-height:96rpx;text-align:center' ontap='buy'>购买课程</view>
-  </view>
-  <view wx:else class='bottom-disabledBuy'>
-    暂时不支持IOS用户购买
-  </view>
+  </view> -->
+  <button wx:elif="{{platform == 'ios' || platform=='android'}}" class='bottom-disabledBuy' bindtap='iosBuy'>IOS用户购买，请联系客服</button>
+
 </scroll-view>

@@ -54,7 +54,8 @@ Page({
     bgImage: null,
     currentData: 0,
     courseId: null,
-    disabledBuy: false,
+    showKefu: true,
+    platform: null,
     workImages: [],
     isShowCoverView: true
   },
@@ -89,11 +90,10 @@ Page({
     //   }
     // })
     wxapi('getSystemInfo').then(res => {
-      if (res.platform == 'ios' || res.platform == "devtools") {
-        that.setData({
-          disabledBuy: true
-        })
-      }
+      that.setData({
+        platform: res.platform
+      })
+      console.log(platform)
     })
   },
   reload: function(e) {
@@ -399,6 +399,12 @@ Page({
   onscroll: function(e) {
     this.setData({
       top: e.detail.scrollTop
+    })
+  },
+  iosBuy: function(e) {
+    let show = this.data.showKefu
+    this.setData({
+      showKefu: !show
     })
   }
 })

@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/profile/profile",
     "pages/infolist/details",
+    "pages/detail/detail",
+    "pages/profile/profile",
     "pages/infolist/infolist",
     "pages/profile/works/index",
-    "pages/detail/detail",
     "pages/classification/classification",
     "pages/uploadworks/index",
     "pages/profile/courses/index",
