@@ -8,10 +8,11 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"nodeModules": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.3.0",
+	"libVersion": "2.4.2",
 	"appid": "wxaebf1ed1ab5d1472",
 	"projectname": "mishaoketang",
 	"isGameTourist": false,
@@ -38,7 +39,7 @@
 				{
 					"id": 0,
 					"name": "扫码",
-					"pathName": "pages/home/home",
+					"pathName": "pages/detail/detail",
 					"query": "",
 					"scene": "1011"
 				}

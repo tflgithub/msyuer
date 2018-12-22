@@ -5,6 +5,7 @@ const api = require('../../api/config.js').api;
 const wxapi = require("../../api/base.js").wxapi;
 const util = require('../../utils/util.js');
 import pageState from '../../common/pageState/pageState.js'
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -35,6 +36,7 @@ Page({
       }
     ],
     courseInfo: {},
+    posterConfig:{},
     summaryInfo: {},
     workInfo: {},
     pptInfo: {},
@@ -57,7 +59,30 @@ Page({
     showKefu: true,
     platform: null,
     workImages: [],
-    isShowCoverView: true
+    isShowCoverView: true,
+    canPay:false,
+    officialAccount:false,
+    actionSheetHidden:true
+  },
+  listenerActionSheet: function () {
+    this.setData({
+      actionSheetHidden: !this.data.actionSheetHidden
+    })
+  },
+  listenerButton: function () {
+    this.setData({
+      actionSheetHidden: !this.data.actionSheetHidden
+    });
+  },
+  onPosterSuccess(e) {
+    const { detail } = e;
+    wx.previewImage({
+      current: detail,
+      urls: [detail]
+    })
+  },
+  onPosterFail(e){
+   util.showToast('生成海报失败','none',2000)
   },
   radioChange: function(e) {
     var index = e.currentTarget.dataset.index;
@@ -77,24 +102,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this
-    console.log("传入" + options.id)
-    this.videoContext = wx.createVideoContext('myVideo')
     this.setData({
-      courseId: options.id
+      officialAccount: app.globalData.officialAccount
     })
+    this.videoContext = wx.createVideoContext('myVideo')
+  },
+  onShow:function(){
     this.loadData()
-    // wxapi('getNetworkType').then(res => {
-    //   if ('wifi' == res.networkType) {
-    //     that.startPlay();
-    //   }
-    // })
-    wxapi('getSystemInfo').then(res => {
-      that.setData({
-        platform: res.platform
-      })
-      console.log(platform)
-    })
   },
   reload: function(e) {
     this.setData({
@@ -104,13 +118,16 @@ Page({
   },
   //获取当前滑块的index
   bindchange: function(e) {
-    const that = this;
-    that.setData({
+    this.setData({
       currentData: e.detail.current
     })
   },
   buy: function(e) {
-    console.log(JSON.stringify(wx.getStorageSync('token')))
+    console.log(this.data.hadFee)
+    if (this.data.hadFee) {
+      this.startPlay()
+      return
+    }
     var that = this
     wxapi('getSetting').then(res => {
       if (!res.authSetting['scope.userInfo']) {
@@ -118,12 +135,21 @@ Page({
           url: '../auth/auth'
         })
       } else {
-        //手机绑定才能支付
-        console.log(JSON.stringify(wx.getStorageSync('setUserInfo')))
-        if (wx.getStorageSync('setUserInfo') == 1) {
+        var systemInfo = wx.getSystemInfoSync()
+        if (systemInfo.platform == 'android') {
+          wx.showLoading({
+            title: '正在提交订单...',
+          })
+          that.setData({
+            canPay:true
+          })
           request.fetch(api.pay, {
             courseId: that.data.courseInfo.courseId
           }).then(res => {
+            that.setData({
+              canPay: false
+            })
+            wx.hideLoading()
             var postData = {
               'timeStamp': res.data.timeStamp,
               'nonceStr': res.data.nonceStr,
@@ -138,26 +164,23 @@ Page({
               util.showToast('支付失败', 'none', 2000)
             })
           }).catch(e => {
-            util.showToast(e, 'none', 2000)
+            wx.hideLoading()
+            that.setData({
+              canPay: false
+            })
+            util.showToast('支付失败', 'none', 2000)
           })
         } else {
-          wx.navigateTo({
-            url: '../bindaccount/bindaccount'
-          })
+          this.iosBuy()
         }
       }
     })
   },
   //点击切换，滑块index赋值
   checkCurrent: function(e) {
-    var that = this;
-    if (that.data.currentData === e.target.dataset.current) {
-      return false;
-    } else {
-      that.setData({
-        currentData: e.target.dataset.current
-      })
-    }
+    this.setData({
+      currentData: e.target.dataset.current
+    })
   },
   loadData: function() {
     var that = this;
@@ -165,28 +188,21 @@ Page({
     request.fetch(api.getCourseDetail, {
       courseId: this.data.courseId
     }).then(data => {
+      console.log(JSON.stringify(data.data))
       pageState(that).finish()
-      try {
-        WxParse.wxParse('article', 'html', data.data.summaryInfo.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
-        WxParse.wxParse('teacher_article', 'html', data.data.teacherInfo.summary.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
-        if (data.data.pptInfo.content) {
-          WxParse.wxParse('ppt_article', 'html', data.data.pptInfo.content.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
-        }
-      } catch (e) {
-        console.log('富文本解析出错')
-      }
-      var images = []
-      if (data.data.workInfo.items.length > 3) {
-        for (var i = 0; i < 3; i++) {
-          images.push(data.data.workInfo.items[i].phoUrl[0])
-        }
-      }
+      
+      // var images = []
+      // if (data.data.workInfo.items.length > 3) {
+      //   for (var i = 0; i < 3; i++) {
+      //     images.push(data.data.workInfo.items[i].phoUrl[0])
+      //   }
+      // }
       var url = data.data.courseInfo.adUrl;
       if (data.data.courseInfo.hadFee) {
         url = data.data.courseInfo.videoUrl;
       }
       that.setData({
-        workImages: images,
+        teacherInfo: data.data.teacherInfo,
         videoUrl: url,
         courseInfo: data.data.courseInfo,
         likeNum: data.data.courseInfo.likeNum,
@@ -195,8 +211,128 @@ Page({
         hadScore: data.data.courseInfo.hadScore,
         summaryInfo: data.data.summaryInfo,
         workInfo: data.data.workInfo,
-        teacherInfo: data.data.teacherInfo
+        posterConfig: {
+          width: 750,
+          height: 1334,
+          backgroundColor: '#fff',
+          debug: false,
+          blocks: [
+            {
+              width: 690,
+              height: 748,
+              x: 30,
+              y: 183,
+              borderWidth: 2,
+              borderColor: '#FFBD2D',
+              borderRadius: 20
+            },
+            {
+              width: 634,
+              height: 74,
+              x: 59,
+              y: 770,
+              backgroundColor: '#fff',
+              opacity: 0.5,
+              zIndex: 100
+            },
+          ],
+          texts: [
+            {
+              x: 113,
+              y: 61,
+              baseLine: 'middle',
+              text: app.globalData.userInfo.nickName,
+              fontSize: 32,
+              color: '#8d8d8d'
+            },
+            {
+              x: 30,
+              y: 113,
+              baseLine: 'top',
+              text: '发现一个烘焙好课程，推荐给你呀',
+              fontSize: 38,
+              color: '#080808'
+            },
+            {
+              x: 92,
+              y: 810,
+              fontSize: 38,
+              baseLine: 'middle',
+              text: data.data.courseInfo.title,
+              width: 570,
+              lineNum: 1,
+              color: '#8d8d8d',
+              zIndex: 200
+            },
+            {
+              x: 59,
+              y: 895,
+              baseLine: 'middle',
+              text: [
+                {
+                  text: '仅售',
+                  fontSize: 28,
+                  color: '#ec1731'
+                },
+                {
+                  text: '¥'+data.data.courseInfo.price,
+                  fontSize: 36,
+                  color: '#ec1731',
+                  marginLeft: 30
+                }
+              ]
+            },
+            {
+              x: 522,
+              y: 895,
+              baseLine: 'middle',
+              text: '已有' + data.data.courseInfo.learnNum+'学习',
+              fontSize: 28,
+              color: '#929292'
+            },
+            {
+              x: 360,
+              y: 1100,
+              baseLine: 'top',
+              text: '长按识别小程序码',
+              fontSize: 38,
+              color: '#080808'
+            }
+          ],
+          images: [
+            {
+              width: 62,
+              height: 62,
+              x: 30,
+              y: 30,
+              borderRadius: 62,
+              url: app.globalData.userInfo.avatarUrl
+            },
+            {
+              width: 634,
+              height: 634,
+              x: 59,
+              y: 210,
+              url: data.data.courseInfo.phoUrl
+            },
+            {
+              width: 220,
+              height: 220,
+              x: 92,
+              y: 1020,
+              url: 'http://api.miskitchen.com/h5/share001.jpg'
+            }
+          ]
+        }
       })
+      try {
+        WxParse.wxParse('article', 'html', data.data.summaryInfo.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
+        WxParse.wxParse('about_article', 'html', data.data.courseInfo.aboutInfo.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
+        WxParse.wxParse('wxgz_article', 'html', data.data.courseInfo.wxgzInfo.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
+        WxParse.wxParse('kejian_article', 'html', data.data.pptInfo.content.replace(/\<img/gi, '<img class="rich-img" '), that, 200)
+      } catch (e) {
+        console.log('富文本解析出错')
+      }
     }).catch(e => {
       pageState(this).error(e)
       console.log(JSON.stringify(e))

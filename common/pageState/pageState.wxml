@@ -6,8 +6,9 @@
       <view class="message">{{message}}</view>
     </view>
     <view class="page-state-loading page-state-center" wx:if="{{state == 'loading'}}">
-      <icon type="waiting" size="50" />
-      <view class="message">{{message}}</view>
+      <!-- <icon type="waiting" size="50" /> -->
+      <image src='../../image/loading.gif' style='height:190rpx;width:157rpx'></image>
+      <!-- <view class="message">{{message}}</view> -->
     </view>
     <view class="page-state-error page-state-center" wx:if="{{state == 'error'}}">
       <icon type="warn" size="50" />

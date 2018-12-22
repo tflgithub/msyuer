@@ -1,7 +1,9 @@
 {
+  "enablePullDownRefresh": false,
   "disableScroll": true,
-  "navigationBarTitleText": "详情",
+  "navigationBarTitleText": "米勺课堂",
   "usingComponents": {
+    "poster": "wxa-plugin-canvas/poster",
     "custom-modal": "../../common/components/customModal/index"
   }
 }

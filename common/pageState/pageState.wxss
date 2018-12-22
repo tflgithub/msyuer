@@ -1,6 +1,7 @@
 /* res/components/pageState/pageSate.wxss */
 
 .page-state-center {
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;

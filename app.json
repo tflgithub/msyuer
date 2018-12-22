@@ -1,50 +1,13 @@
 {
   "pages": [
-    "pages/home/home",
-    "pages/infolist/details",
     "pages/detail/detail",
-    "pages/profile/profile",
-    "pages/infolist/infolist",
-    "pages/profile/works/index",
-    "pages/classification/classification",
-    "pages/uploadworks/index",
-    "pages/profile/courses/index",
-    "pages/bindaccount/bindaccount",
-    "pages/profile/collect/index",
-    "pages/auth/auth",
-    "pages/detail/works",
-    "pages/home/contact",
-    "pages/home/best",
-    "pages/home/discount"
+    "pages/auth/auth"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "米勺课堂",
     "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "selectedColor": "#F9D943",
-    "list": [
-      {
-        "pagePath": "pages/home/home",
-        "text": "发现",
-        "iconPath": "image/icon_search_default.png",
-        "selectedIconPath": "image/icon_search_click.png"
-      },
-      {
-        "pagePath": "pages/classification/classification",
-        "text": "分类",
-        "iconPath": "image/icon_classify_default.png",
-        "selectedIconPath": "image/icon_classify_click.png"
-      },
-      {
-        "pagePath": "pages/profile/profile",
-        "text": "我的",
-        "iconPath": "image/icon_me_default.png",
-        "selectedIconPath": "image/icon_me_click.png"
-      }
-    ]
   },
   "networkTimeout": {
     "request": 20000,
