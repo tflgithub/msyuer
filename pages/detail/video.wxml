@@ -1,0 +1,3 @@
+<!--pages/detail/video.wxml-->
+<video id="myVideo" style='height:100%;width:100%' objectFit='fit' src='{{videoUrl}}' controls='true' custom-cache='{{false}}' bindended='stopPlay' bindfullscreenchange='onFullScreen'>
+</video>

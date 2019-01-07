@@ -92,7 +92,7 @@ const main = {
         if (borderRadius > 0) {
             this._drawRadiusRect(x, y, w, h, borderRadius);
             this.ctx.clip();
-            this.ctx.drawImage(imgPath, this.toPx(sx), this.toPx(sy), this.toPx(sw), this.toPx(sh), this.toPx(x), this.toPx(y), this.toPx(w), this.toPx(h));
+          this.ctx.drawImage(imgPath, this.toPx(sx), this.toPx(sy), this.toPx(sw), this.toPx(sh), this.toPx(x), this.toPx(y), this.toPx(w), this.toPx(h));
             if (borderWidth > 0) {
                 this.ctx.setStrokeStyle(borderColor);
                 this.ctx.setLineWidth(this.toPx(borderWidth));
@@ -286,7 +286,7 @@ const helper = {
         return new Promise((resolve, reject) => {
             if (/^http/.test(imageUrl) && !new RegExp(wx.env.USER_DATA_PATH).test(imageUrl)) {
                 wx.downloadFile({
-                    url: this._mapHttpToHttps(imageUrl),
+                  url: this._mapHttpToHttps(imageUrl),
                     success: (res) => {
                         if (res.statusCode === 200) {
                             resolve(res.tempFilePath);
@@ -405,7 +405,7 @@ Component({
                     let time = 0;
                     if (platform === 'android') {
                         // 在安卓平台，经测试发现如果海报过于复杂在转换时需要做延时，要不然样式会错乱
-                        time = 300;
+                        time = 700;
                     }
                     this.ctx.draw(false, () => {
                         setTimeout(() => {

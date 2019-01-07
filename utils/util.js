@@ -86,7 +86,7 @@ function imageUtil(e) {
   var originalScale = originalHeight / originalWidth; //图片高宽比  
   //获取屏幕宽高  
   wx.getSystemInfo({
-    success: function (res) {
+    success: function(res) {
       var windowWidth = 200;
       var windowHeight = 200;
       var windowscale = windowHeight / windowWidth; //屏幕高宽比  
@@ -106,6 +106,13 @@ function imageUtil(e) {
   return imageSize;
 }
 
+
+function replaceUrl(url) {
+  var reg = /^http(s)?:\/\/(.*?)\//
+  var ToReplace = 'https://h5.miskitchen.com/'
+  return url.replace(reg, ToReplace)
+}
+
 module.exports = {
   formatTime: formatTime,
   getCurrentPageUrl: getCurrentPageUrl,
@@ -113,5 +120,6 @@ module.exports = {
   showToast,
   hideToast,
   showModal,
+  replaceUrl: replaceUrl,
   imageUtil: imageUtil
 }

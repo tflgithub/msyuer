@@ -1,6 +1,6 @@
 const api = {
   image_url: 'https://v.miskitchen.com',
-  base_url: 'http://test.miskitchen.com',
+  base_url: 'https://api.miskitchen.com',
   login: '/apikt/wxa/v1/login/wxCode',
   getSmsCode:'/apikt/wxa/v1/login/getSmsCode',
   register:'/apikt/wxa/v1/user/register',

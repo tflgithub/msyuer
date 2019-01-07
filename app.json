@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/detail/detail",
-    "pages/auth/auth"
+    "pages/auth/auth",
+    "pages/detail/video"
   ],
   "window": {
     "backgroundTextStyle": "light",

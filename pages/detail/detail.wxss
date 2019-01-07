@@ -41,11 +41,8 @@
 
 .topTabSwiper {
   padding-left: 40rpx;
-  margin-top: 40rpx;
-  padding-top:20rpx;
-  padding-bottom: 40rpx;
   padding-right: 40rpx;
-  background-color: #FFF;
+  background-color: #fff;
   zoom: 1;
 }
 
@@ -75,8 +72,11 @@
 }
 
 .list-masonry {
+  margin-left: 20px;
+  margin-right: 20px;
   column-count: 2;
   column-gap: 20rpx;
+  margin-top: 20rpx;
 }
 
 .item-masonry {
@@ -90,36 +90,37 @@
 .item-masonry image {
   vertical-align: top;
   width: 100%;
-  border-top-left-radius: 10rpx;
-  border-top-right-radius: 10rpx;
+  height: 180rpx;
+  border-radius: 10rpx;
 }
 
 .teacher {
+  position: relative;
   display: flex;
   flex-direction: row;
   height: 166rpx;
   width: 100%;
-  background-color: #FFF8E2;
+  background-color: #fff8e2;
   padding-left: 40rpx;
+  align-items: center;
 }
 
-.teacher .info{
+.teacher .info {
   display: flex;
   flex-direction: column;
   margin-left: 30rpx;
   justify-content: center;
 }
 
-.zhiwei{
+ .teacher .zhiwei {
   position: absolute;
-  top:100rpx;
-  left:55rpx;
-  background:rgba(255,192,7,1);
-  border-radius:4rpx;
-  padding: 0 5rpx 0 5rpx;
-  font-size: 24rpx;
+  top: 125rpx;
+  left: 70rpx;
+  background: rgba(255, 192, 7, 1);
+  border-radius: 4rpx;
+  padding: 0 2rpx 0 2rpx;
+  font-size: 20rpx;
 }
-
 
 
 .midlle {
@@ -127,7 +128,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #FFF;
+  background-color: #fff;
 }
 
 .midlle .cell {
@@ -275,6 +276,40 @@
   text-align: center;
   font-size: 29rpx;
   border-radius: 6rpx;
-  background-color: #FFBD2D;
+  background-color: #ffbd2d;
   margin-bottom: 20rpx;
 }
+
+.catalog {
+  display: flex;
+  flex-direction: row;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border-bottom: 1rpx #efefef solid;
+  justify-content: space-between;
+  padding-bottom: 20rpx;
+}
+
+.catalog_title
+{
+  margin-left:10rpx;
+  font-size:32rpx;
+  width:80%;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+
+._catalog_title
+{
+  margin-left:10rpx;
+  color: #ac6601;
+  font-size:32rpx;
+  width:80%;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+
