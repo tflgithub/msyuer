@@ -1,3 +1,10 @@
 {
-  "navigationBarTitleText": "米勺课堂"
+  "navigationBarTitleText": "我的",
+  "navigationBarBackgroundColor": "#FDD059",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "custom-modal": "../../common/components/customModal/chooseModal",
+    "tabbar": "../../common/components/customTabbar/tabBar"
+  }
 }

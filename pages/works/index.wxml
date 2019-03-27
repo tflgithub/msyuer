@@ -1,0 +1,11 @@
+<!--pages/works/index.wxml-->
+<import src="../../common/templates/worktemplate/workitem.wxml" />
+<import src="../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" />
+<view class='page'>
+  <view class='work'>
+    <block wx:for="{{works}}" wx:key="{{item}}">
+      <template  is="workitem" data="{{item}}"></template>
+    </block>
+  </view>
+</view>

@@ -9,6 +9,8 @@
   align-content: center;
   height: 100%;
   width: 100%;
+  background: #FFFFFF;
+  z-index: 999;
 }
 
 .page-state-container {
@@ -37,6 +39,8 @@
 
 .retrybtn {
   font-size: 28rpx;
+  background-color: #FFBE2D;
+  color: #FFFFFF;
 }
 
 page {

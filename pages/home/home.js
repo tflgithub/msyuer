@@ -2,24 +2,37 @@
 const request = require('../../utils/wxRequest.js')
 const api = require('../../api/config.js').api
 const util = require('../../utils/util.js')
+const wxapi = require("../../api/base.js").wxapi;
+import pageState from '../../common/pageState/pageState.js'
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    isFresh: false,
-    bestCourses: null,
-    newCourses:null
+    tabbar: {},
+    hideModal: true,
+    swiperIndex: 0,
+    courses: [],
+    works: []
+  },
+  swiperChange(e) {
+    const that = this;
+    that.setData({
+      swiperIndex: e.detail.current,
+    })
   },
   goCoursesDetail: function(e) {
+    console.log('课程id:' + e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: `../detail/detail?id=${e.currentTarget.dataset.id}`
+      url: `../detail/index?id=${e.currentTarget.dataset.id}`
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    app.editTabbar()
     this.onRetry()
   },
   onRetry: function() {
@@ -27,33 +40,61 @@ Page({
   },
   loadData: function() {
     var that = this;
-    wx.showLoading({
-      title: '加载中...',
-    })
-    request.fetch(api.index).then(data => {
-      wx.hideLoading();
+    pageState(this).loading()
+    //课程
+    request.fetch(api.getCoursesCategory, '', request.method.post, false).then(data => {
+      console.log(JSON.stringify(data))
       that.setData({
-        bestCourses: data.data.items[0],
-        newCourses: data.data.items[1]
+        courses: data.data.items
+      })
+      pageState(that).finish()
+    }).catch(e => {
+      console.log(JSON.stringify(e))
+      if (e == request.status.noNetWork) {
+        pageState(that).error('您的网络好像出问题啦～')
+      } else {
+        pageState(that).error()
+      }
+    })
+  },
+  onShow:function(){
+    wx.hideTabBar();
+    var that=this
+    //作业
+    var data = {
+      lastStamp: 0,
+      pageSize: 6
+    }
+    request.fetch(api.getWorks, data, request.method.post, false).then(data => {
+      console.log(JSON.stringify(data))
+      that.setData({
+        works: data.data.items
       })
     }).catch(e => {
       console.log(JSON.stringify(e))
     })
   },
-  scrolltolower: function() {
+  uploadWork: function(e) {
+    this.setData({
+      hideModal: !e.detail.showModal
+    })
+  },
+  onPullDownRefresh: function(e) {
     var that = this;
-    if (that.data.isFresh) {
-      util.showToast('刷新太快啦!', 'none', 2000)
-    } else {
-      that.setData({
-        isFresh: true
-      })
-      that.loadData();
+    wx.showNavigationBarLoading()
+    var data = {
+      lastStamp: 0,
+      pageSize: 6
     }
-    setTimeout(function() {
+    request.fetch(api.getWorks, data).then(data => {
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
       that.setData({
-        isFresh: false
+        works: data.data.items
       })
-    }, 500)
+    }).catch(e => {
+      util.showToast(e, 'none', 2000)
+      wx.hideNavigationBarLoading()
+    })
   }
 })

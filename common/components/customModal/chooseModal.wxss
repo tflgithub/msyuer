@@ -1,0 +1,25 @@
+/* common/components/customModal/chooseModal.wxss */
+@import 'common.wxss';
+.choose-upload-style {
+  height: 202rpx;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.choose-upload-style image {
+  height: 97rpx;
+  width: 97rpx;
+  margin-right: 20rpx;
+}
+
+.layout_vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.line {
+  background-color: #e3e3e3;
+  height: 1px;
+}

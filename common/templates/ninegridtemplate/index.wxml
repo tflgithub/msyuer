@@ -1,0 +1,10 @@
+<template name='ninegrideview'>
+  <view wx:if="{{workInfo.phoUrl.length == 1 }}" class="photos photos-{{workInfo.phoUrl.length}}">
+        <image src="{{workInfo.phoUrl[0]}}" mode='aspectFill' bindtap='previewImage'></image>
+      </view>
+      <view wx:else class="photos photos-{{workInfo.phoUrl.length}}">
+        <block wx:for="{{workInfo.phoUrl}}" wx:key="item"  wx:for-index="idx">
+          <image src="{{item}}"  mode='aspectFill' data-idx="{{ idx }}" bindtap='previewImage'></image>
+        </block>
+      </view>
+</template>

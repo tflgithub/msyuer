@@ -63,7 +63,7 @@ const hideToast = () => {
 
 const showModal = (title = '系统提示', str = '', showCancel = true, confirmText = '确定', fn, color = {
   cancelColor: '#999999',
-  confirmColor: '#72B9C3'
+  confirmColor: '#FDD059'
 }, cancelText = "取消") => {
   wx.showModal({
     title: title,

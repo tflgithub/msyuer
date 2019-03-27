@@ -10,10 +10,21 @@ const loading = (that) => {
 }
 
 const error = (that, message) => {
-  return (message = '请检查您的网络连接') => {
+  return (message = '哎呀,服务器飞走啦～') => {
     that.setData({
       pageState: {
         state: 'error',
+        message
+      }
+    })
+  }
+}
+
+const notFound = (that, message) => {
+  return (message = '数据不存在') => {
+    that.setData({
+      pageState: {
+        state: 'notFound',
         message
       }
     })
@@ -44,11 +55,24 @@ const finish = (that) => {
   }
 }
 
+const auth = (that, message) => {
+  return (message = '请授权小程序进行下一步操作') => {
+    that.setData({
+      pageState: {
+        state: 'auth',
+        message
+      }
+    })
+  }
+}
+
 export default (that) => {
   return {
     loading: loading(that),
     error: error(that),
+    notFound: notFound(that),
     empty: empty(that),
+    auth:auth(that),
     finish: finish(that)
   }
 }

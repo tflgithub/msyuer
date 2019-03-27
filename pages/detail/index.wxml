@@ -1,0 +1,46 @@
+<!--pages/detail/course/index.wxml-->
+<import src="../../common/templates/worktemplate/workitem.wxml" />
+<import src="../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" />
+<import src="../../wxParse/wxParse.wxml" />
+<custom-modal hideModal="{{hideModal}}" bindchooseOne='askQuestion' bindchooseTwo='shareWork' height='404rpx' width='486rpx'>
+</custom-modal>
+<view class='page' style='background-color:#f5f5f5'>
+  <view class='box' wx:if='{{workInfo.items.length>5}}'>
+    <view class='layout_horizontal'>
+      <view class='line_vertical' />
+      <text style='font-size:36rpx'>学员作业</text>
+    </view>
+    <view class="scroll-header">
+      <view wx:for="{{workInfo.items}}" wx:key="{{item}}">
+        <template is="workitem" data="{{item}}"></template>
+      </view>
+      <view  bindtap='showMore' class='item' style='display:flex;flex-direction: column;align-items:center;justify-content:center;padding:0 20rpx 0 20rpx'>
+        <image src='../../image/btn_more.png' style='height:48rpx;width:48rpx'></image>
+        <text style='font-size:26rpx;margin-top:10rpx;color:#C2C5CC'>查看更多</text>
+      </view>
+      <text decode='{{true}}'>&nbsp;</text>
+    </view>
+  </view>
+
+  <view class='box'>
+    <view class='layout_horizontal'>
+      <view class='line_vertical' />
+      <text style='font-size:36rpx;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;'>{{courseInfo.title}}</text>
+    </view>
+    <view style='display:flex; justify-content: center'>
+      <image src='{{courseInfo.phoUrl}}' class='course-image' />
+    </view>
+  </view>
+
+  <view class='box'>
+    <view class='layout_horizontal'>
+      <view class='line_vertical' />
+      <text style='font-size:36rpx'>课程简介</text>
+    </view>
+    <view class="wxParse" style='width:100%!important'>
+      <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+    </view>
+  </view>
+  <button class='add-button' bindtap='uploadWork'></button>
+</view>

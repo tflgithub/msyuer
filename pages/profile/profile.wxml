@@ -1,23 +1,26 @@
-<template name="item_list">
-  <navigator class='item' url='{{url}}'>
-    <image src='{{icon}}' style='{{style}}' />
-    <text class='text'>{{text}}</text>
-  </navigator>
+<import src="../../common/pageState/pageState.wxml" />
+ <template is="pageState" data="{{...pageState}}" />
+<template name="workitem">
+  <view class="item">
+    <image class='thump' src="{{item.phoUrl[0]}}" mode="aspectFill"></image>
+    <image wx:if='{{item.flag_fail=="1"}}' src='../../image/ic_success.png' class='flag' />
+    <image wx:if='{{item.flag_fail=="0"}}' src='../../image/ic_failure.png' class='flag' />
+    <view class="content">{{item.content}}</view>
+  </view>
 </template>
-
-<view style='background-color:#F1F1F1;width:100%;height:100%' wx:if='{{mobile}}'>
+<view class='page'>
   <view class="userinfo">
-    <image src='../../image/ic_mine_bg.png' style='width:100%;height:287rpx'/>
-    <view class="bg"/>
-    <image class="avatar" src="{{avatarUrl}}" mode="cover" />
-    <text class="nickname">{{nickName}}</text>
-    <text class="mobile">{{mobile}}</text>
+    <image src="{{avatarUrl}}" mode="cover" />
+    <text>{{nickName}}</text>
   </view>
-  <view class='item_list'>
-    <template is='item_list' data="{{url:'courses/index',icon:'../../image/ic_mine_course.png',style:'width:44rpx;height:39rpx',text:'我的课程'}}" />
-
-    <template is='item_list' data="{{url:'collect/index',icon:'../../image/ic_mine_sc.png',style:'width:48rpx;height:41rpx',text:'我的收藏'}}" />
-
-    <template is='item_list' data="{{url:'works/index',icon:'../../image/ic_wozuoping.png',style:'width:43rpx;height:41rpx',text:'我的作品'}}" />
-  </view>
+  <block wx:if='{{works.length>0}}'>
+    <view style='color:#575757;font-size:32rpx;margin:300rpx 0 10rpx 44rpx'>我的作业</view>
+    <view class='work'>
+      <view wx:for="{{works}}" wx:key="{{item}}" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd" bindtap='goDetail' data-id='{{item.workId}}' data-index='{{index}}' bindlongtap='openDelete'>
+        <template is="workitem" data="{{item}}"></template>
+      </view>
+    </view>
+  </block>
+  <view style='height:248rpx'></view>
 </view>
+<tabbar tabbar="{{tabbar}}" bindopen='uploadWork'></tabbar>

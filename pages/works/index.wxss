@@ -1,0 +1,13 @@
+/* pages/works/index.wxss */
+@import "../../common/templates/worktemplate/workitem.wxss";
+.work{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+  flex-wrap:wrap;
+  overflow:hidden;
+  margin-left: 37rpx;
+}
+.item {
+  margin: 20rpx; 
+}

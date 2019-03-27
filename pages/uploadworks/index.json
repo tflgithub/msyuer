@@ -1,6 +1,5 @@
 {
-  "navigationBarTitleText": "交作业",
   "usingComponents": {
-    "star": "../../common/components/star/index"
+    "custom-modal": "../../common/components/customModal/shareModal"
   }
 }

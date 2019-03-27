@@ -1,0 +1,11 @@
+<!--common/components/customModal/shareModal.wxml-->
+<view class='mask' hidden='{{hideModal}}' bindconfirm='modalCancel'>
+  <view class='modal-content'>
+    <slot></slot>
+  </view>
+  <view class='modal-btn-wrapper'>
+      <!-- <button class='cancel-btn' style='color:rgba(7,17,27,0.6);' plain="true" bindtap='cancel'>{{left}}</button> -->
+      <button class='btn-share' open-type='share' style='color:#FFFFFF;' bindtap='confirm'>{{right}}</button>
+    </view>
+</view>
+

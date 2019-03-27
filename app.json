@@ -1,8 +1,12 @@
 {
   "pages": [
-    "pages/detail/detail",
-    "pages/auth/auth",
-    "pages/detail/video"
+    "pages/home/home",
+    "pages/uploadworks/index",
+    "pages/detail/index",
+    "pages/profile/profile",
+    "pages/workdetail/index",
+    "pages/works/index",
+    "pages/courses/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -10,9 +14,25 @@
     "navigationBarTitleText": "米勺课堂",
     "navigationBarTextStyle": "black"
   },
+  "tabBar": {
+    "selectedColor": "#000",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "image/ic_home_default.png",
+        "selectedIconPath": "image/ic_home_click.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "image/ic_mine_default.png",
+        "selectedIconPath": "image/ic_mine_click.png"
+      }
+    ]
+  },
   "networkTimeout": {
     "request": 20000,
-    "connectSocket": 20000,
     "uploadFile": 20000,
     "downloadFile": 20000
   },

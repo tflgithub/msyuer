@@ -84,6 +84,8 @@ function calMoreImageInfo(e, idx, that, bindName) {
   var temImages = temData.images;
   //因为无法获取view宽度 需要自定义padding进行计算，稍后处理
   var recal = wxAutoImageCal(e.detail.width, e.detail.height,that,bindName); 
+
+
   // temImages[idx].width = recal.imageWidth;
   // temImages[idx].height = recal.imageheight; 
   // temData.images = temImages;
@@ -113,7 +115,7 @@ function wxAutoImageCal(originalWidth, originalHeight,that,bindName) {
   //判断按照那种方式进行缩放
   // console.log("windowWidth" + windowWidth);
   if (originalWidth > windowWidth) {//在图片width大于手机屏幕width时候
-    autoWidth = windowWidth;
+    autoWidth = windowWidth*0.94;
     // console.log("autoWidth" + autoWidth);
     autoHeight = (autoWidth * originalHeight) / originalWidth;
     // console.log("autoHeight" + autoHeight);

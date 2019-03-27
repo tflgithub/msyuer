@@ -1,0 +1,56 @@
+/* pages/courses/index.wxss */
+
+.box {
+  display: flex;
+  flex-direction: row;
+  margin: 36rpx;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item {
+  display: flex;
+  flex: row;
+  justify-items: center;
+  justify-content: center;
+}
+
+.item image {
+  height: 180rpx;
+  width: 220rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.item text {
+  width: 280rpx;
+  font-size: 28rpx;
+  display:flex;  /*设置为弹性盒子*/
+  -webkit-line-clamp: 4;  /*最多显示4行*/
+  overflow: hidden;  /*超出隐藏*/
+  text-overflow: ellipsis;  /*超出显示为省略号*/
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;  /*强制英文单词自动换行*/
+  align-items: center;
+}
+
+.choose-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  padding: 10rpx 40rpx 10rpx 40rpx;
+  border: #FFBE2D solid 1rpx;
+  border-radius: 80rpx;
+}
+
+.choose-btn-selected{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  padding: 10rpx 40rpx 10rpx 40rpx;
+  background-color: #FFBE2D;
+  color: #FFFFFF;
+  border-radius: 80rpx;
+}

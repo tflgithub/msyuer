@@ -1,19 +1,35 @@
 <!--res/components/pageState/pageSate.wxml-->
 <template name="pageState">
   <view class="page-state-container" wx:if="{{state != 'finish'}}">
-    <view class="page-state-empty" style='align-items: center;width: 100%; display:flex;flex-direction: column;margin-top:260rpx' wx:if="{{state == 'empty'}}">
-      <image src='{{icon}}' class='icon' />
+    <!--空数据--->
+    <view class="page-state-center" wx:if="{{state == 'empty'}}">
+     <image src='../../image/img_empty.png' style='height:144rpx;width:126rpx'></image>
       <view class="message">{{message}}</view>
     </view>
-    <view class="page-state-loading page-state-center" wx:if="{{state == 'loading'}}">
-      <!-- <icon type="waiting" size="50" /> -->
-      <image src='../../image/loading.gif' style='height:190rpx;width:157rpx'></image>
+    <!--加载--->
+    <view class="page-state-center" wx:if="{{state == 'loading'}}">
+      <image src='../../image/loading.gif' style='height:120rpx;width:120rpx'></image>
       <!-- <view class="message">{{message}}</view> -->
     </view>
-    <view class="page-state-error page-state-center" wx:if="{{state == 'error'}}">
-      <icon type="warn" size="50" />
+
+     <!--服务器异常--->
+    <view class="page-state-center" wx:if="{{state == 'error'}}">
+     <image src='../../image/img_error.png' style='height:120rpx;width:120rpx'></image>
       <view class="message">{{message}}</view>
-      <button class="retrybtn" type="warn" catchtap="onRetry">重试</button>
+      <view class="retrybtn" catchtap="onRetry">点击重试</view>
+    </view>
+    
+    <!---数据失效-->
+    <view class="page-state-center" wx:if="{{state == 'notFound'}}">
+     <image src='../../image/img_not_found.png' style='height:144rpx;width:126rpx'></image>
+      <view class="message">{{message}}</view>
+    </view>
+
+     <!--未授权--->
+    <view class="page-state-center" wx:if="{{state == 'auth'}}">
+      <image src='../../image/img_un_auth.png' style='height:106rpx;width:130rpx'></image>
+      <view class="message">{{message}}</view>
+      <button class="retrybtn" open-type='getUserInfo'     bindgetuserinfo='completeAuth' >微信授权</button>
     </view>
   </view>
 </template>

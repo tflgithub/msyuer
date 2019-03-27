@@ -3,7 +3,8 @@ function wxapi(function_name, obj) {
     wx[function_name]({
       ...obj,
       success: res => resole(res),
-      faile: res => reject(res)
+      faile: res => reject(res),
+      complete:res=>reject(res)
     })
   })
 }

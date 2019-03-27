@@ -1,10 +1,13 @@
-@import 'common/style/weui.wxss';
 @import "res/iconfont/iconfont.wxss";
-@import 'res/components/showToast/showToast.wxss';
 @import 'common/pageState/pageState.wxss';
 
 page {
   background-color: #fff;
+  width: 100%;
+  overflow-y: auto;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
   font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }
 
@@ -14,6 +17,7 @@ page {
 .layout_horizontal {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 /*纵向布局  */
@@ -28,9 +32,22 @@ page {
 .line {
   background-color: #e3e3e3;
   height: 1px;
-  width: 100%;
+}
+
+.line_vertical {
+  width: 8rpx;
+  height: 36rpx;
+  background-color: #f3b94b;
+  margin-right: 10rpx;
 }
 
 button::after {
   border: none;
+}
+
+/*隐藏滚动条*/
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }

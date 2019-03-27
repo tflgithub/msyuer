@@ -1,0 +1,12 @@
+<template name="workitem">
+    <navigator class="item" url="../../pages/workdetail/index?id={{item.workId}}">
+      <image class='thump' src="{{item.phoUrl}}" mode="aspectFill"></image>
+      <image wx:if='{{item.flag_fail=="1"}}' src='../../image/ic_success.png' class='flag'/>
+      <image wx:if='{{item.flag_fail=="0"}}' src='../../image/ic_failure.png' class='flag'/>
+      <view class="content">{{item.content}}</view>
+      <view class="user-info">
+          <image src="{{item.avatarUrl}}"/>
+          <text>{{item.name}}</text>
+      </view>
+  </navigator>
+</template>

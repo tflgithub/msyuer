@@ -1,0 +1,16 @@
+<!--common/components/customTabbar/tabBar.wxml-->
+<custom-modal hideModal="{{hideModal}}" bindchooseOne='askQuestion' bindchooseTwo='shareWork' height='404rpx' width='486rpx'>
+</custom-modal>
+<view class="tabbar_box {{isIphoneX?'iphoneX-height':''}}" style="background-color:{{tabbar.backgroundColor}}">
+  <block wx:for="{{tabbar.list}}" wx:key="{{item.pagePath}}">
+    <view wx:if="{{item.isSpecial}}" class="tabbar_nav" bindtap='open' data-path="{{item.pagePath}}" style="color:{{tabbar.selectedColor}}" >
+      <view class='special-wrapper'><image class="{{hideModal?'tabbar_icon':'tabbar_center_icon'}}" src="{{item.iconPath}}"></image></view>
+      <image class='special-text-wrapper'></image>
+      <text>{{item.text}}</text>
+    </view>
+    <navigator wx:else class="tabbar_nav" hover-class="none" url="{{item.pagePath}}" style="color:{{item.selected ? tabbar.selectedColor : tabbar.color}}" open-type="switchTab">
+      <image class="tabbar_icon" src="{{item.selected ? item.selectedIconPath : item.iconPath}}"></image>
+      <text>{{item.text}}</text>
+    </navigator>
+  </block>
+</view>

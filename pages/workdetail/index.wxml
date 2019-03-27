@@ -1,0 +1,24 @@
+<import src="../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" />
+<import src="../../common/templates/ninegridtemplate/index.wxml" />
+<view class='page'>
+<view class='user-info'>
+      <image src='{{workInfo.avatarUrl}}' />
+      <text>{{workInfo.name}}</text>
+    </view>
+  <view class='work-time'>{{workInfo.createTime}}</view>
+  <view class='work-content'>{{workInfo.content}}</view>
+  <view style='padding:0 53rpx 0 53rpx'>
+    <template is="ninegrideview" data="{{workInfo}}"></template>
+  </view>
+  <view class='course-name' bindtap='goCoursePage'>#{{courseInfo.courseName}}#</view>
+  <text wx:if='{{commentInfo.length>0}}' class='teacher-comment'>留言评论</text>
+  <block wx:for='{{commentInfo}}'>
+    <view class='comment-user-info'>
+      <image src='{{item.avatarUrl}}' />
+      <text>{{item.name}}</text>
+    </view>
+    <view class='comment-time'>{{item.createTime}}</view>
+    <view class='comment-content'>{{item.content}}</view>
+  </block>
+</view>

@@ -1,0 +1,85 @@
+@import "../../common/templates/ninegridtemplate/index.wxss";
+.course-name {
+  font-size: 32rpx;
+  color: #f3b94b;
+  padding: 10rpx 0 0 0;
+  margin-left: 53rpx;
+  margin-right: 53rpx;
+  margin-bottom: 20rpx;
+}
+
+.work-content {
+  font-size: 32rpx;
+  margin: 20rpx 53rpx 20rpx 53rpx;
+  word-break: break-all;
+}
+
+.work-time {
+  font-size: 28rpx;
+  color: #a5a5a5;
+  margin-left: 53rpx;
+}
+
+.teacher-comment {
+  font-size: 26rpx;
+  border-bottom-color: #383a3e;
+  border-bottom-style: solid;
+  border-bottom-width: 1rpx;
+  margin-left: 53rpx;
+  padding: 40rpx 0 10rpx 0;
+}
+
+.user-info {
+  display: flex;
+  padding: 10rpx 0 0 10rpx;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user-info image {
+  width: 35rpx;
+  height: 35rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+
+.user-info text {
+  font-size: 26rpx;
+  color: #383a3e;
+}
+
+.comment-user-info {
+  margin-left: 53rpx;
+  margin-top: 20rpx;
+  display: flex;
+  padding: 10rpx 0 0 0;
+  flex-direction: row;
+  align-items: center;
+}
+
+.comment-user-info image {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.comment-user-info text {
+  font-size: 26rpx;
+  color: #383a3e;
+}
+
+.comment-time {
+  font-size: 16rpx;
+  color: #a5a5a5;
+  margin-left: 103rpx;
+  margin-right: 53rpx;
+}
+
+.comment-content {
+  font-size: 22rpx;
+  margin-left: 103rpx;
+  margin-top: 10rpx;
+  margin-right: 53rpx;
+  word-break: break-all;
+}

@@ -1,33 +1,47 @@
 <!--pages/uploadworks/index.wxml-->
+<custom-modal hideModal="{{hideModal}}" right='分享'>
+  <view style='height:460rpx;width:420rpx;background-color:white;border-radius:8rpx; '>
+  <view style=' display:flex;flex-direction:row;justify-content: space-between'>
+    <view class='user-info'>
+      <image src='{{avatarUrl}}' />
+      <text>{{nickName}}</text>
+    </view>
+    <image src='../../image/ic_delete_2.png' style='width:26rpx;height:26rpx;padding:20rpx' bindtap='modalCancel'/>
+    </view>
+    <view class='work-info'>
+      <image src='{{files[0]}}' />
+      <view class='work-desc'>
+        <text class='modal-course-name'>{{courseName}}</text>
+        <text class='modal-content'>{{content}}</text>
+      </view>
+    </view>
+    <image src='../../image/img_commit_success.png'  class="{{isIphoneX?'iphone-x-commit-image':'commit-image'}}"/>
+  </view>
+</custom-modal>
 
-<view class="page" style='margin-left:73rpx'>
-  <image src='../../image/ic_lianjiehuati.png' style='width:32rpx;height:23rpx' />
-  <view style='font-size:26rpx;color:#000000'>{{title}}</view>
-  <view class='star-row'>
-    <view style='font-size:27rpx;color:#666666;margin-right:30rpx'>老师讲解</view>
-    <star bindselectLeft="onteacher" bindselectRight="unteacher" />
-  </view>
-  <view class='star-row'>
-    <text style='font-size:27rpx;color:#666666;margin-right:30rpx'>课程难度</text>
-    <star bindselectLeft="oncourse" bindselectRight="uncourse" />
-  </view>
-  <view class='star-row'>
-    <text style='font-size:27rpx;color:#666666;margin-right:30rpx'>成品口感</text>
-    <star bindselectLeft="ontaste" bindselectRight="untaste" />
-  </view>
-  <textarea class="textarea" bindinput="bindinput" maxlength="{{max}}" placeholder="关于这个课程的心得，快快与我们分享吧～" />
-  <image src='../../image/ic_zuiping.png' style='width:32rpx;height:23rpx' />
-  <view style='font-size:27rpx;color:#000000'>添加作品</view>
-  <view>
+<view class='page'>
+  <navigator hover-class='none' class='choose-course' url='../courses/index?id={{courseId}}'>
+    <image src='../../image/ic_calendar.png' />
+    <text>{{courseName}}</text>
+  </navigator>
+   <textarea class='textarea' fixed="true" bindinput="bindinput" maxlength="{{max}}" placeholder="{{placeholder}}" wx:if="{{hideModal}}" />
+
+  <checkbox-group bindchange="checkboxChange">
+    <label class="checkbox" wx:for="{{items}}">
+      <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+      <text style='font-size:28rpx;color:#D1D1D6'>{{item.value}}</text>
+    </label>
+  </checkbox-group>
+  <view style='margin:20rpx 0 0 36rpx;height:auto;'>
     <block wx:for="{{files}}" wx:key="*this">
       <view class='upload-image' id="{{item}}">
         <image src="{{item}}" class='image' mode="aspectFill" />
         <image src='../../image/ic_delete.png' class='delete-image' catchtap='deleteImage' data-index='{{index}}' />
       </view>
     </block>
-    <image src='../../image/ic_add.png' class="add-image" hidden='{{hiddenAdd}}' bindtap="chooseImage" />
+     <image src='../../image/ic_add.png' class="add-image" hidden='{{hiddenAdd}}' bindtap="chooseImage" />
   </view>
-
 </view>
-
-<button class="button" bindtap="commit">交作业</button>
+<form bindsubmit="submit" report-submit='true'>
+  <button form-type="submit" open-type='getUserInfo' class="button">提交</button>
+</form>

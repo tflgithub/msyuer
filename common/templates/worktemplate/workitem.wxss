@@ -1,0 +1,53 @@
+.item {
+  width: 192rpx;
+  height: 214rpx;
+  white-space: nowrap;
+  border-radius: 9rpx;
+  background-color: #fff;
+  margin: 19rpx;
+  box-shadow: 0px 0px 10rpx rgba(0, 0, 0, 0.2);
+}
+
+.thump {
+  width: 100%;
+  height: 140rpx;
+  border-top-left-radius: 9rpx;
+  border-top-right-radius: 9rpx;
+}
+
+.flag {
+  width: 92rpx;
+  height: 30rpx;
+  position: relative;
+  top: -112rpx;
+  right: 192rpx;
+}
+
+.content {
+  font-size: 16rpx;
+  color: #707174;
+  padding: 0 10rpx 5rpx 10rpx;
+  line-height: 20rpx;
+  height: 20rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  padding-left: 10rpx;
+  align-items: center;
+}
+
+.user-info image {
+  width: 26rpx;
+  height: 26rpx;
+  border-radius: 50%;
+}
+
+.user-info text {
+  padding-left: 10rpx;
+  font-size: 12rpx;
+  color: #a5a5a5;
+}

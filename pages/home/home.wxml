@@ -1,65 +1,51 @@
-<template name="item_list">
-  <view class='item'>
-    <image src="{{img}}" style="{{style}}"></image>
-    <view style='font-size:29rpx;color:#444444;margin-top:20rpx'>{{text}}</view>
-  </view>
-</template>
-
-<scroll-view scroll-y="true" style='width:100%;height:100%;' bindscrolltolower='scrolltolower'>
-  <view style='display: inline-block;margin-left:33rpx;'>
-    <text style='font-size:36rpx;color:#141414;margin-right:20rpx'>{{bestCourses.name}}</text>
-    <image src='../../image/ic_zuiia.png' style='width:36rpx;height:27rpx' />
-  </view>
-  <scroll-view scroll-x="true" style="white-space:nowrap; display:flex;margin:20rpx 30rpx 40rpx 30rpx;width:720rpx;">
-    <view wx:for="{{bestCourses.list}}" wx:key='*this' class='x-card' bindtap="goCoursesDetail" data-id="{{item.course.courseId}}">
-      <image class='image'  mode='aspectFill' src='{{item.course.phoUrl}}' />
-      <view class='mask' />
-      <view class='desc'>
-        <view class="text">
-          {{item.course.title}}
-        </view>
-        <view class='teacher'>
-          <image src='{{item.teacher.avatarUrl}}' mode='aspectFill' class='image' />
-          <view class='info'>
-            <text class='nickname'>{{item.teacher.name}}</text>
-            <text class='title'>{{item.teacher.title}}</text>
+<import src="../../common/templates/worktemplate/workitem.wxml" />
+<import src="../../common/pageState/pageState.wxml" />
+<template is="pageState" data="{{...pageState}}" />
+<!-- <custom-modal hideModal="{{hideModal}}" bindchooseOne='askQuestion' bindchooseTwo='shareWork' height='404rpx' width='486rpx'>
+</custom-modal> -->
+<view class='page'>
+  <swiper class="swiper-block" previous-margin="70rpx" next-margin="70rpx" current="0" bindchange="swiperChange">
+    <block wx:for="{{courses}}" wx:index="{{index}}">
+      <swiper-item class="swiper-item">
+        <view class="slide-view {{swiperIndex == index ? 'active' : ''}}" bindtap='goCoursesDetail' data-id='{{item.course.courseId}}'>
+          <image mode="aspectFill" src="{{item.course.phoUrl}}" />
+          <view class='layout_vertical' style='padding:10rpx;'>
+            <text style='font-size:28rpx;color:#004E46;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;'>{{item.course.title}}</text>
+            <view>
+              <text decode='{{true}}' style='font-size:20rpx;color:#C2C5CC'>{{item.course.learnNum}}人学过&nbsp;&nbsp;{{item.course.workNum}}人做过</text>
+              <text decode='{{true}}' style='font-size:20rpx;color:#C2C5CC'>&nbsp;&nbsp;&nbsp;口味&nbsp;</text>
+              <block wx:for='{{item.course.taste}}'>
+                <image style='width:16rpx;height:16rpx' src='../../image/ic_star_full.png' />
+              </block>
+              <text decode='{{true}}' style='font-size:20rpx;color:#C2C5CC'>&nbsp;&nbsp;&nbsp;难度&nbsp;</text>
+              <block wx:for='{{item.course.difficult}}'>
+                <image style='width:16rpx;height:16rpx' src='../../image/ic_star_full.png' />
+              </block>
+            </view>
           </view>
         </view>
-      </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view style='margin:42rpx 0 22rpx 47rpx;align-items:center;display: flex;flex-direction:row;justify-content: space-between'>
+    <view>
+      <text style='font-size:30rpx;' decode='{{true}}'>作业展示&nbsp;</text>
+      <text style='font-size:20rpx;color:#A5A5A5' decode='{{true}}'>\&nbsp;WORK</text>
     </view>
-  </scroll-view>
-  <view class='navigator'>
-    <navigator style='width:25%' url="../infolist/infolist" hover-class='none'>
-      <template is="item_list" data="{{text:'烘焙大师',img:'../../image/ic_bake.png',style:'width:53rpx;height:53rpx'}}" />
-    </navigator>
-    <navigator style='width:25%' url="best" hover-class='none'>
-      <template is="item_list" data="{{text:'精品课程',img:'../../image/ic_kecheng.png',style:'width:57rpx;height:53rpx'}}" />
-    </navigator>
-    <navigator style='width:25%' url="contact" hover-class='none'>
-      <template is="item_list" data="{{text:'在线交流',img:'../../image/ic_jiaoliu.png',style:'width:54rpx;height:54rpx'}}" />
-    </navigator>
-    <navigator style='width:25%' url="discount" hover-class='none'>
-      <template is="item_list" data="{{text:'课程折扣',img:'../../image/ic_zhekou.png',style:'width:57rpx;height:51rpx'}}" />
+    <navigator hover-class='none' style='font-size:20rpx;color:#A5A5A5;padding-right:37rpx' url='../works/index'>
+      查看更多>>
     </navigator>
   </view>
-  <view style='display: inline-block;margin-left:33rpx;margin-top:40rpx'>
-    <text style='font-size:36rpx;color:#141414;margin-right:20rpx'>{{newCourses.name}}</text>
-    <image src='../../image/ic_zuixinkecheng.png' style='width:36rpx;height:27rpx' />
+
+  <view class='work'>
+    <block wx:for="{{works}}" wx:key="{{item}}">
+      <template is="workitem" data="{{item}}"></template>
+    </block>
   </view>
-  
-    <view wx:for="{{newCourses.list}}" wx:key='*this' bindtap="goCoursesDetail" data-id="{{item.course.courseId}}" class='y-card'>
-      <image src='{{item.course.phoUrl}}' class='image' />
-      <view class='mask' />
-      <view class="desc">
-        <image src='../../image/ic_kuang.png' mode='aspectFit' class='image' />
-        <view class="text">
-          <text style='font-size:30rpx;color:#FEFEFE'>{{item.course.title}}</text>
-          <text style='font-size:24rpx;background:#FEFEFE;color:#161A22;padding:1rpx' decode="{{true}}">{{item.teacher.name}}&nbsp;&nbsp;{{item.teacher.title}}</text>
-        </view>
-        <view class='bottom'>
-          <text style='font-size:21rpx;color:#FEFEFE;margin-left:32rpx'>{{item.course.learnNum}}学过/评分{{item.course.score}}</text>
-          <text style='font-size:24rpx;color:#FFBD2D'>¥{{item.course.price}}</text>
-        </view>
-      </view>
-    </view>
-</scroll-view>
+
+  <!-- <movable-view direction="all" class='add-button' bindtap='uploadWork'  x='500rpx' y='700rpx'>
+    <!-- <button class='add-button' open-type='getUserInfo' bindgetuserinfo='uploadWork'></button> -->
+  <!-- </movable-view>  -->
+</view>
+
+<tabbar tabbar="{{tabbar}}" bindopen='uploadWork'></tabbar>

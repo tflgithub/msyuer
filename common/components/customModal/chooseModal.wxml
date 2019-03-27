@@ -1,0 +1,22 @@
+<!--common/components/customModal/chooseModal.wxml-->
+<view class='mask' hidden='{{hideModal}}'>
+  <view class='modal-content' style='height:{{height}};width:{{width}}'>
+  <view style='main-content '>
+    <view class='choose-upload-style' bindtap='chooseOne'>
+    <image src='../../../image/ic_upload_failure.png' />
+    <view class='layout_vertical' style='width:264rpx'>
+      <text style='font-size:28rpx;color: #383A3E; font-weight: bold'>提问</text>
+      <text style='font-size:24rpx;color:#9FA1A9'>您的提问会在24小时内得到米勺老师的解答哦～</text>
+    </view>
+  </view>
+  <view class='line' style='margin:0 20rpx 0 20rpx' />
+  <view class='choose-upload-style' bindtap='chooseTwo'>
+    <image src='../../../image/ic_upload_work.png' />
+    <view class='layout_vertical' style='width:264rpx'>
+      <text style='font-size: 28rpx;color: #383A3E; font-weight: bold'>晒图</text>
+      <text style='font-size:24rpx;color:#9FA1A9'>分享成功经验，接受小伙伴的顶礼膜拜吧～</text>
+    </view>
+  </view>
+  </view>
+  </view>
+</view>
