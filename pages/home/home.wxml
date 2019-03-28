@@ -25,7 +25,7 @@
       </swiper-item>
     </block>
   </swiper>
-  <view style='margin:40rpx 0 22rpx 47rpx;align-items:center;display: flex;flex-direction:row;justify-content: space-between'>
+  <view style='margin:40rpx 0 22rpx 30rpx;align-items:center;display: flex;flex-direction:row;justify-content: space-between'>
     <view>
       <text style='font-size:30rpx; font-weight: bold' decode='{{true}}'>作业展示&nbsp;</text>
       <text style='font-size:20rpx;color:#A5A5A5' decode='{{true}}'>\&nbsp;WORK</text>
@@ -39,7 +39,7 @@
     <!--没有找到padding-right为什么在这里会无效，暂时用view占位解决。-->
     <view style='width:40rpx;color:#FFFFFF'>""</view>
   </view>
-  <view style='margin:42rpx 0 42rpx 47rpx;align-items:center;display: flex;flex-direction:row;justify-content: space-between'>
+  <view style='margin:42rpx 0 42rpx 30rpx;align-items:center;display: flex;flex-direction:row;justify-content: space-between'>
     <view>
       <text style='font-size:30rpx; font-weight: bold' decode='{{true}}'>往期课程&nbsp;</text>
       <text style='font-size:20rpx;color:#A5A5A5' decode='{{true}}'>\&nbsp;COURSES</text>

@@ -1,6 +1,5 @@
 {
   "enablePullDownRefresh": true,
-  "navigationBarTitleText": "每日课程",
   "usingComponents": {
     "custom-modal": "../../common/components/customModal/chooseModal",
     "tabbar": "../../common/components/customTabbar/tabBar"

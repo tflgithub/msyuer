@@ -6,7 +6,7 @@
 <custom-modal hideModal="{{hideModal}}" bindchooseOne='askQuestion' bindchooseTwo='shareWork' height='404rpx' width='489rpx'>
 </custom-modal>
 <view class='page' style='background-color:#f5f5f5'>
-  <view class='box' wx:if='{{workInfo.items.length>5}}'>
+  <view class='box' wx:if='{{workInfo.items.length>0}}'>
     <view class='title'>
       <view class='line_vertical' />
       <text style='font-size:30rpx'>学员作业</text>
@@ -15,7 +15,7 @@
       <view wx:for="{{workInfo.items}}" wx:key="{{item}}">
         <template is="workitem" data="{{item}}"></template>
       </view>
-      <view bindtap='showMore' class='item' style='display:flex;flex-direction: column;align-items:center;justify-content:center;padding:0 20rpx 0 20rpx'>
+      <view wx:if='{{workInfo.items.length>3}}' bindtap='showMore' class='item' style='display:flex;flex-direction: column;align-items:center;justify-content:center;padding:0 20rpx 0 20rpx'>
         <image src='../../image/btn_more.png' style='height:48rpx;width:48rpx'></image>
         <text style='font-size:26rpx;margin-top:10rpx;color:#C2C5CC'>查看更多</text>
       </view>
@@ -28,7 +28,7 @@
       <view class='line_vertical' />
       <text style='font-size:30rpx'>{{courseInfo.title}}</text>
     </view>
-    <image src='{{courseInfo.phoUrl}}' class='course-image' />
+    <image src='{{courseInfo.phoUrl}}' mode='aspectFill' class='course-image' />
   </view>
 
   <view class='box'>
@@ -36,9 +36,9 @@
       <view class='line_vertical' />
       <text style='font-size:30rpx'>课程简介</text>
     </view>
-    <!-- <view class="wxParse"> -->
+    <view class="wxParse">
       <template is="wxParse" data="{{wxParseData:article.nodes}}" />
-    <!-- </view> -->
+    </view>
   </view>
   <button class='add-button' bindtap='uploadWork'></button>
 </view>

@@ -3,7 +3,7 @@
   <view wx:for='{{courses}}'>
   <view class='box'>
     <view class='item'>
-      <image src='{{item.course.phoUrl}}'/>
+      <image src='{{item.course.phoUrl}}' mode='aspectFill'/>
         <text>{{item.course.title}}</text>
     </view>
     <view class="{{item.course.courseId==courseId?'choose-btn-selected':'choose-btn'}}" bindtap='chooseCourse' data-index='{{index}}'>选择</view>
