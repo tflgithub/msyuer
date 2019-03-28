@@ -25,8 +25,6 @@ Page({
    */
   onLoad: function(options) {
     app.editTabbar()
-  },
-  onShow: function() {
     var that = this;
     wxapi("getSetting").then(res => {
       if (res.authSetting['scope.userInfo']) {

@@ -12,6 +12,7 @@
     <template is="ninegrideview" data="{{workInfo}}"></template>
   </view>
   <view class='course-name' bindtap='goCoursePage'>#{{courseInfo.courseName}}#</view>
+  <view style='margin-bottom:48rpx'>
   <text wx:if='{{commentInfo.length>0}}' class='teacher-comment'>留言评论</text>
   <block wx:for='{{commentInfo}}'>
     <view class='comment-user-info'>
@@ -21,4 +22,5 @@
     <view class='comment-time'>{{item.createTime}}</view>
     <view class='comment-content'>{{item.content}}</view>
   </block>
+  </view>
 </view>

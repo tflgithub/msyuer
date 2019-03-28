@@ -14,7 +14,11 @@ Page({
     hideModal: true,
     swiperIndex: 0,
     courses: [],
-    works: []
+    recommends: [],
+    works: [],
+    pageSize: 10,
+    currentPage: 0,
+    haveNext: true
   },
   swiperChange(e) {
     const that = this;
@@ -40,16 +44,30 @@ Page({
   },
   loadData: function() {
     var that = this;
-    pageState(this).loading()
+    //推荐
+    var getRecommends = request.fetch(api.getRecommends, '', request.method.post, false)
     //课程
-    request.fetch(api.getCoursesCategory, '', request.method.post, false).then(data => {
-      console.log(JSON.stringify(data))
-      that.setData({
-        courses: data.data.items
-      })
+    var getCourses = request.fetch(api.getCoursesCategory, {
+      lastStamp: this.data.currentPage,
+      pageSize: this.data.pageSize
+    }, request.method.post, false)
+    //作业
+    var getWorks = request.fetch(api.getWorks, {
+      lastStamp: 0,
+      pageSize: 10
+    }, request.method.post, false)
+    pageState(this).loading()
+    Promise.all([getRecommends, getCourses,getWorks]).then((result) => {
+      console.log(JSON.stringify(result))
       pageState(that).finish()
-    }).catch(e => {
-      console.log(JSON.stringify(e))
+      that.setData({
+        recommends: result[0].data.items,
+        courses: result[1].data.items,
+        currentPage: result[1].data.lastStamp,
+        haveNext: result[1].data.haveNext,
+        works: result[2].data.items
+      })
+    }).catch((e) => {
       if (e == request.status.noNetWork) {
         pageState(that).error('您的网络好像出问题啦～')
       } else {
@@ -57,22 +75,8 @@ Page({
       }
     })
   },
-  onShow:function(){
+  onShow: function() {
     wx.hideTabBar();
-    var that=this
-    //作业
-    var data = {
-      lastStamp: 0,
-      pageSize: 6
-    }
-    request.fetch(api.getWorks, data, request.method.post, false).then(data => {
-      console.log(JSON.stringify(data))
-      that.setData({
-        works: data.data.items
-      })
-    }).catch(e => {
-      console.log(JSON.stringify(e))
-    })
   },
   uploadWork: function(e) {
     this.setData({
@@ -82,19 +86,57 @@ Page({
   onPullDownRefresh: function(e) {
     var that = this;
     wx.showNavigationBarLoading()
-    var data = {
+    //推荐
+    var getRecommends = request.fetch(api.getRecommends, '', request.method.post, false)
+    //课程
+    var getCourses = request.fetch(api.getCoursesCategory, {
+      lastStamp: this.data.currentPage,
+      pageSize: this.data.pageSize
+    }, request.method.post, false)
+    //作业
+    var getWorks = request.fetch(api.getWorks, {
       lastStamp: 0,
-      pageSize: 6
-    }
-    request.fetch(api.getWorks, data).then(data => {
+      pageSize: 10
+    }, request.method.post, false)
+    Promise.all([getRecommends, getCourses,getWorks]).then((result) => {
+      console.log(JSON.stringify(result))
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
       that.setData({
-        works: data.data.items
+        recommends: result[0].data.items,
+        courses: result[1].data.items,
+        currentPage: result[1].data.lastStamp,
+        haveNext: result[1].data.haveNext,
+        works: result[2].data.items
       })
-    }).catch(e => {
+    }).catch((e) => {
       util.showToast(e, 'none', 2000)
       wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
     })
+  },
+  getMoreData: function() {
+    var that = this
+    var postData = {
+      lastStamp: this.data.currentPage,
+      pageSize: this.data.pageSize
+    }
+    request.fetch(api.getCoursesCategory, postData, request.method.post, false).then(data => {
+      console.log(data.data.lastStamp)
+      var list = that.data.courses;
+      list = list.concat(data.data.items);
+      that.setData({
+        courses: list,
+        haveNext: data.data.haveNext,
+        currentPage: data.data.lastStamp
+      })
+    }).catch(res => {
+      util.showToast(res, 'none', 2000)
+    })
+  },
+  onReachBottom: function() {
+    if (this.data.haveNext) {
+      this.getMoreData()
+    }
   }
 })

@@ -6,8 +6,6 @@
   margin-top: 30rpx;
   flex-wrap:wrap;
   overflow:hidden;
-  margin-left: 37rpx;
-}
-.item {
-  margin: 20rpx; 
+  margin-bottom: 48rpx;
+  margin-left: 30rpx;
 }

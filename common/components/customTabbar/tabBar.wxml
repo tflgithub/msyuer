@@ -1,5 +1,5 @@
 <!--common/components/customTabbar/tabBar.wxml-->
-<custom-modal hideModal="{{hideModal}}" bindchooseOne='askQuestion' bindchooseTwo='shareWork' height='404rpx' width='486rpx'>
+<custom-modal  hideModal="{{hideModal}}" bindchooseOne='askQuestion' bindchooseTwo='shareWork' animationData="{{animationData}}" bindcancelModal='closeModal' height='404rpx' width='489rpx'>
 </custom-modal>
 <view class="tabbar_box {{isIphoneX?'iphoneX-height':''}}" style="background-color:{{tabbar.backgroundColor}}">
   <block wx:for="{{tabbar.list}}" wx:key="{{item.pagePath}}">

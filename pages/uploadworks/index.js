@@ -29,7 +29,8 @@ Page({
     style: '',
     anonymous: '1',
     workId: null,
-    isIphoneX: app.globalData.systemInfo.model == "iPhone X" || app.globalData.systemInfo.model == "iPhone XR<iPhone11,8>" ? true : false
+    isIphoneX: app.globalData.systemInfo.model == "iPhone X" || app.globalData.systemInfo.model == "iPhone XR<iPhone11,8>" ? true : false,
+    commitDisabled:false
   },
   chooseImage: function(e) {
     var that = this;
@@ -115,6 +116,9 @@ Page({
         wx.showLoading({
           title: '正在提交...',
         })
+        that.setData({
+          commitDisabled:true
+        })
         request.fetch(api.getQiuniuToken).then(res => {
           for (let i = 0; i < that.data.files.length; i++) {
             qiniuUploader.upload(that.data.files[i], (res) => {
@@ -134,12 +138,16 @@ Page({
                   console.log(JSON.stringify(res))
                   that.setData({
                     hideModal: false,
+                    commitDisabled:false,
                     workId: res.data.id
                   })
                 }).catch(res => {
                   wx.hideLoading()
                   console.log('作业提交失败：' + res)
                   util.showToast(res, 'none', 2000)
+                  that.setData({
+                    commitDisabled: false
+                  })
                 })
               }
             }, (error) => {
@@ -160,6 +168,9 @@ Page({
           console.log('提交失败：' + res)
           wx.hideLoading()
           util.showToast(res, 'none', 2000)
+          that.setData({
+            commitDisabled: false
+          })
         })
       }
     })

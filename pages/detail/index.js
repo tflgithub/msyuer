@@ -34,9 +34,6 @@ Page({
       pageState(that).error()
     })
   },
-  onShow:function(){
-    this.onRetry()
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -44,6 +41,7 @@ Page({
     this.setData({
       courseId: options.id
     })
+    this.onRetry()
   },
   uploadWork: function() {
     this.setData({

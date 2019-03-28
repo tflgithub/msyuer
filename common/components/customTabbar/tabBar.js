@@ -39,7 +39,8 @@ Component({
    */
   data: {
     isIphoneX: app.globalData.systemInfo.model == "iPhone X" ? true : false,
-    hideModal: true
+    hideModal: true,
+    animationData:{}
   },
 
   /**
@@ -48,13 +49,15 @@ Component({
   methods: {
     open: function(e) {
       if (this.data.hideModal) {
-        this.setData({
-          hideModal: false
-        })
+        // this.setData({
+        //   hideModal: false
+        // })
+        this.showModal()
       } else {
-        this.setData({
-          hideModal: true
-        })
+        // this.setData({
+        //   hideModal: true
+        // })
+        this.hideModal()
       }
       //this.triggerEvent('open')
     },
@@ -78,5 +81,49 @@ Component({
         hideModal: true
       })
     },
+    showModal() {
+      // 显示遮罩层
+      var animation = wx.createAnimation({
+        duration: 200,
+        timingFunction: "linear",
+        delay: 0  
+      })
+      this.animation = animation
+      animation.scale(0).step()
+      this.setData({
+        animationData: animation.export(),// export 方法每次调用后会清掉之前的动画操作。
+        hideModal:false
+      })
+      setTimeout(function () {
+        animation.scale(1).step()
+        this.setData({
+          animationData: animation.export()
+        })
+      }.bind(this), 200)
+    },
+    hideModal() {
+      // 隐藏遮罩层
+      var animation = wx.createAnimation({
+        duration: 200,
+        timingFunction: "linear",
+        delay: 0
+      })
+      this.animation = animation
+      animation.scale(1).step()
+      this.setData({
+        animationData: animation.export()
+      })
+      setTimeout(function () {
+        animation.scale(0).step()
+        this.setData({
+          animationData: animation.export()
+        })
+      }.bind(this), 200)
+      setTimeout(function () {
+        this.setData({
+          hideModal: true
+        })
+      }.bind(this), 500)
+    }
   }
 })

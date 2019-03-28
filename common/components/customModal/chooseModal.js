@@ -8,6 +8,10 @@ Component({
       type: Boolean,
       value: true
     },
+    animationData:{
+      type:JSON,
+      value:{}
+    },
     height: {
       type: String,
       value: '80%'
@@ -36,6 +40,7 @@ Component({
       this.setData({
         hideModal: true
       })
+      this.triggerEvent('cancelModal')
     },
     chooseOne(){
       this.triggerEvent('chooseOne')

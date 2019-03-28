@@ -9,8 +9,8 @@
 }
 
 .choose-upload-style image {
-  height: 97rpx;
-  width: 97rpx;
+  height: 70rpx;
+  width: 70rpx;
   margin-right: 20rpx;
 }
 

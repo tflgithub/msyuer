@@ -3,11 +3,16 @@
 
 .box{
   background-color: #FFFFFF;
-  padding:20rpx;
   display: flex;
   flex-direction: column;
-  margin: 30rpx 0 30rpx 0;
-  padding-left: 30rpx
+  padding: 20rpx;
+  margin-top: 10rpx;
+}
+
+.box .title{
+  display: flex;
+  flex-direction:row;
+  margin-bottom: 20rpx;
 }
 
 .scroll-header {
@@ -21,11 +26,9 @@
 
 .course-image{
   height: 686rpx;
-  width: 680rpx;
-  border-radius: 9rpx;
-  align-items: center;
-  margin: 20rpx;
-  box-shadow: 0px 0px 30rpx rgba(0, 0, 0, 0.2);
+  width: 710rpx;
+  /* border-radius: 24rpx; */
+  /* box-shadow: 0px 0px 2rpx rgba(0, 0, 0, 0.2); */
 }
 
 .add-button {

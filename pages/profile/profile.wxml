@@ -3,9 +3,10 @@
 <template name="workitem">
   <view class="item">
     <image class='thump' src="{{item.phoUrl[0]}}" mode="aspectFill"></image>
-    <image wx:if='{{item.flag_fail=="1"}}' src='../../image/ic_success.png' class='flag' />
-    <image wx:if='{{item.flag_fail=="0"}}' src='../../image/ic_failure.png' class='flag' />
-    <view class="content">{{item.content}}</view>
+    <view class="content">
+     <view style='color:#232323; width: 159rpx;overflow: hidden;text-overflow: ellipsis'>{{item.content}}</view>
+       <text style='color:#919191;'>{{item.flag_fail=="1"?'经验分享':'老师点评'}}</text>
+    </view>
   </view>
 </template>
 <view class='page'>
@@ -14,7 +15,7 @@
     <text>{{nickName}}</text>
   </view>
   <block wx:if='{{works.length>0}}'>
-    <view style='color:#575757;font-size:32rpx;margin:300rpx 0 10rpx 44rpx'>我的作业</view>
+    <view style='color:#575757;font-size:32rpx;margin:300rpx 0 10rpx 64rpx'>我的作业</view>
     <view class='work'>
       <view wx:for="{{works}}" wx:key="{{item}}" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd" bindtap='goDetail' data-id='{{item.workId}}' data-index='{{index}}' bindlongtap='openDelete'>
         <template is="workitem" data="{{item}}"></template>

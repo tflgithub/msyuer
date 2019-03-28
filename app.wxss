@@ -5,6 +5,7 @@ page {
   background-color: #fff;
   width: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
   flex-direction: column;
   display: flex;
@@ -50,4 +51,28 @@ button::after {
   width: 0;
   height: 0;
   color: transparent;
+}
+
+
+.bottom-line {
+  text-align: center;
+  height: 50rpx;
+} 
+
+.bottom-line-title {
+  display: table;
+  width: 100%;
+  line-height: 50rpx;
+  white-space: nowrap;
+  border-spacing: 1rem 0;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.bottom-line-title::before, .bottom-line-title::after {
+  display: table-cell;
+  content: " ";
+  width: 50%;
+  background: linear-gradient(#eee, #eee) repeat-x center;
+  background-size: 0.1rem 0.1rem;
 }
