@@ -11,10 +11,6 @@
             <text style='font-size:28rpx;color:#FFFFFF;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;'>{{item.course.title}}</text>
             <view>
               <text decode='{{true}}' style='font-size:20rpx;color:#FFFFFF'>{{item.course.learnNum}}人学过&nbsp;&nbsp;{{item.course.workNum}}人做过</text>
-              <text decode='{{true}}' style='font-size:20rpx;color:#FFFFFF'>&nbsp;&nbsp;&nbsp;口味&nbsp;</text>
-              <block wx:for='{{item.course.taste}}'>
-                <image style='width:16rpx;height:15rpx' src='../../image/ic_star_white.png' />
-              </block>
               <text decode='{{true}}' style='font-size:20rpx;color:#FFFFFF'>&nbsp;&nbsp;&nbsp;难度&nbsp;</text>
               <block wx:for='{{item.course.difficult}}'>
                 <image style='width:16rpx;height:15rpx' src='../../image/ic_star_white.png' />
@@ -51,10 +47,6 @@
     <text class='name'>{{item.course.title}}</text>
     <view>
       <text decode='{{true}}' style='font-size:20rpx;color:#737373'>{{item.course.learnNum}}人学过&nbsp;&nbsp;{{item.course.workNum}}人做过</text>
-      <text decode='{{true}}' style='font-size:20rpx;color:#737373'>&nbsp;&nbsp;&nbsp;口味&nbsp;</text>
-      <block wx:for='{{item.course.taste}}'>
-        <image style='width:16rpx;height:15rpx' src='../../image/ic_star_orange.png' />
-      </block>
       <text decode='{{true}}' style='font-size:20rpx;color:#737373'>&nbsp;&nbsp;&nbsp;难度&nbsp;</text>
       <block wx:for='{{item.course.difficult}}'>
         <image style='width:16rpx;height:15rpx' src='../../image/ic_star_orange.png' />

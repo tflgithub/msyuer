@@ -12,7 +12,7 @@
 		"nodeModules": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.2",
+	"libVersion": "2.6.6",
 	"appid": "wxaebf1ed1ab5d1472",
 	"projectname": "mishaoketang",
 	"isGameTourist": false,
@@ -39,7 +39,7 @@
 				{
 					"id": 0,
 					"name": "扫码",
-					"pathName": "pages/detail/detail",
+					"pathName": "pages/home/home",
 					"query": "",
 					"scene": "1011"
 				}

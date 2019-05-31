@@ -40,5 +40,8 @@
       <template is="wxParse" data="{{wxParseData:article.nodes}}" />
     </view>
   </view>
+  <view style="margin-top:10rpx">
+    <official-account></official-account>
+  </view>
   <button class='add-button' bindtap='uploadWork'></button>
 </view>

@@ -138,5 +138,8 @@ Page({
     if (this.data.haveNext) {
       this.getMoreData()
     }
+  },
+  onShareAppMessage:function(res){
+  
   }
 })
